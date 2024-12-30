@@ -36,7 +36,7 @@
       # Available through 'nixos-rebuild --flake .#your-hostname'
 
       nixosConfigurations = {
-        morphe = nixpkgs.lib.nixosSystem {
+        mac = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs;
             username = "morphe";
@@ -44,8 +44,25 @@
           # > Our main nixos configuration file <
           modules = [
             stylix.nixosModules.stylix
-            ./nixos/configuration.nix
+            ./hosts/mac.nix
             nixos-apple-silicon.nixosModules.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = false;
+              home-manager.useUserPackages = true;
+              home-manager.users.morphe = import home-manager/home.nix;
+            }
+          ];
+        };
+        pc = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs;
+            username = "morphe";
+          };
+          # > Our main nixos configuration file <
+          modules = [
+            stylix.nixosModules.stylix
+            ./hosts/pc.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = false;
