@@ -2,17 +2,17 @@
 {
   programs.tmux = {
     enable = true;
+    shell = "${pkgs.zsh}/bin/zsh";
     shortcut = "a";
     clock24 = true;
-    keyMode = "vi";
     baseIndex = 1;
     escapeTime = 0;
+    plugins = [
+      pkgs.tmuxPlugins.onedark-theme
+      pkgs.tmuxPlugins.better-mouse-mode
+    ];
     extraConfig = ''
-      setw -g mode-keys vi
-      bind-key -T copy-mode-vi 'v' send -X begin-selection     
-      bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle 
-      bind-key -T copy-mode-vi 'y' send -X copy-selection
-      unbind-key -T copy-mode-vi v
+      bind-key r send-keys 'tmux source ~/.config/tmux/tmux.conf'
     '';
   };
 }

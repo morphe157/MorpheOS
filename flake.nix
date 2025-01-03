@@ -34,6 +34,16 @@
     {
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
+      homeConfigurations = {
+        "mburdyna@mac" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = {inherit inputs outputs;};
+          # > Our main home-manager configuration file <
+          modules = [
+            ./home-manager/home-mac.nix
+          ];
+        };
+      };
 
       nixosConfigurations = {
         mac = nixpkgs.lib.nixosSystem {

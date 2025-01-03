@@ -30,6 +30,7 @@
     telescope.enable = true;
     dressing.enable = true;
     lsp-status.enable = true;
+    markdown-preview.enable = true;
     treesitter = {
       enable = true;
       settings.ensure_installed = "all";
