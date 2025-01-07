@@ -32,10 +32,10 @@
       bindkey '^F' autosuggest-accept
     '';
     initExtra = ''
-      eval $(thefuck --alias)
+      eval $(${pkgs.thefuck}/bin/thefuck --alias)
     '';
     loginExtra = ''
-      fastfetch
+      ${pkgs.fastfetch}/bin/fastfetch
     '';
     shellAliases = {
       ll = "eza -l";

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   imports = [
@@ -41,9 +41,9 @@
   console.keyMap = "pl2";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.morphe = {
+  users.users."${username}" = {
     isNormalUser = true;
-    description = "morphe";
+    description = "${username}";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -57,7 +57,7 @@
   };
 
   # Enable automatic login for the user.
-  services.getty.autologinUser = "morphe";
+  services.getty.autologinUser = "${username}";
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -146,7 +146,7 @@
       settings = {
         default_session = {
           command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
-          user = "morphe";
+          user = "${username}";
         };
       };
     };

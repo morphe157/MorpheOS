@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 let
@@ -8,19 +9,27 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
-  username = "mburdyna";
+  inherit (import ../config.nix) username;
 in
 {
-
   home = {
     inherit username;
+    homeDirectory = lib.mkForce "/Users/${username}";
     stateVersion = "24.11";
-    homeDirectory = "/Users/${username}";
     packages = with pkgs; [
       nerd-fonts.commit-mono
       fastfetch
       rustup
       thefuck
+      eza
+      zoxide
+      zsh
+      zsh-autocomplete
+      tmux
+      bat
+      ripgrep
+      tgpt
+      glow
     ];
     sessionPath = [
       "$HOME/.cargo/bin"
@@ -28,6 +37,7 @@ in
     sessionVariables = {
       TERMINAL = "alacritty";
       EDITOR = "nvim";
+      USERNAME = "${username}";
     };
   };
 
@@ -40,4 +50,5 @@ in
   programs.home-manager.enable = true;
 
   fonts.fontconfig.enable = true;
+
 }

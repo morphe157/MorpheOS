@@ -1,0 +1,3 @@
+{
+  username = builtins.getEnv "USERNAME";
+}

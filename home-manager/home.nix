@@ -1,15 +1,11 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  inputs,
-  lib,
-  config,
   pkgs,
+  username,
   ...
 }:
 let
-  username = "morphe";
-  host = "morphe";
   nixvim = import (
     builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
@@ -44,8 +40,8 @@ in
   };
 
   home = {
-    username = "morphe";
-    homeDirectory = "/home/morphe";
+    userName = "${username}";
+    homeDirectory = "/home/${username}";
     packages = with pkgs; [
       brightnessctl
       playerctl
@@ -76,8 +72,8 @@ in
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-    userName = "Morphe157";
-    userEmail = "mateusz_burdyna@protonmail.com";
+    userName = "${username}";
+    userEmail = "sample@email.com";
   };
 
   # Nicely reload system units when changing configs

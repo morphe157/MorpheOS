@@ -17,6 +17,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:danth/stylix";
+
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -26,21 +29,25 @@
       home-manager,
       nixos-apple-silicon,
       stylix,
+      nix-darwin,
       ...
     }@inputs:
     let
       inherit (self) outputs;
+      inherit (import ./config.nix) username;
     in
     {
-      # NixOS configuration entrypoint
-      # Available through 'nixos-rebuild --flake .#your-hostname'
-      homeConfigurations = {
-        "mburdyna@mac" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = {inherit inputs outputs;};
-          # > Our main home-manager configuration file <
+      darwinConfigurations = {
+        "${username}" = nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit inputs username; };
           modules = [
-            ./home-manager/home-mac.nix
+            ./hosts/darwin.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = false;
+              home-manager.useUserPackages = true;
+              home-manager.users."${username}" = import home-manager/home-mac.nix;
+            }
           ];
         };
       };
@@ -48,8 +55,7 @@
       nixosConfigurations = {
         mac = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
-            username = "morphe";
+            inherit inputs outputs username;
           };
           # > Our main nixos configuration file <
           modules = [
@@ -60,14 +66,13 @@
             {
               home-manager.useGlobalPkgs = false;
               home-manager.useUserPackages = true;
-              home-manager.users.morphe = import home-manager/home.nix;
+              home-manager.users."${username}" = import home-manager/home.nix;
             }
           ];
         };
         pc = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
-            username = "morphe";
+            inherit inputs outputs username;
           };
           # > Our main nixos configuration file <
           modules = [
@@ -77,7 +82,7 @@
             {
               home-manager.useGlobalPkgs = false;
               home-manager.useUserPackages = true;
-              home-manager.users.morphe = import home-manager/home.nix;
+              home-manager.users."${username}" = import home-manager/home.nix;
             }
           ];
         };
