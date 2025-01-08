@@ -1,9 +1,10 @@
 .PHONY: all
 
-
 UNAME_S := $(shell uname -s)
 $(info Detected os: $(UNAME_S))
-$(info Using username: $(USERNAME))
+$(info Using username: ${USERNAME})
+
+
 ifeq ($(UNAME_S),Darwin)
 build: check-user-provided
 	NIXPKGS_ALLOW_UNFREE=1 darwin-rebuild switch --flake .#$(USERNAME) --impure --show-trace

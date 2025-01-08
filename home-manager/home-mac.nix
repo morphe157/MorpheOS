@@ -30,6 +30,7 @@ in
       ripgrep
       tgpt
       glow
+      tldr
     ];
     sessionPath = [
       "$HOME/.cargo/bin"
