@@ -31,6 +31,7 @@ in
       tgpt
       glow
       tldr
+      git-lfs
     ];
     sessionPath = [
       "$HOME/.cargo/bin"

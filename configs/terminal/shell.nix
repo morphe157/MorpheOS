@@ -23,7 +23,7 @@
       # ^S
       zstyle ':autocomplete:menu-search:*' insert-unambiguous yes
 
-      zstyle ':autocomplete:*' default-context history-incremental-search-backward
+      # zstyle ':autocomplete:*' default-context history-incremental-search-backward
       zstyle ':autocomplete:*' min-input 2
 
       zstyle -e ':autocomplete:*:*' list-lines 'reply=( $(( 6 / 3 )) )'
