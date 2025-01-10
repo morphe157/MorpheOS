@@ -4,8 +4,13 @@
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     shortcut = "a";
+    keyMode = "vi";
     clock24 = true;
     baseIndex = 1;
     escapeTime = 0;
+    extraConfig = ''
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi y send-keys -X copy-selection
+    '';
   };
 }

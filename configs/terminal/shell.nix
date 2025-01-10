@@ -35,6 +35,7 @@
       eval $(${pkgs.thefuck}/bin/thefuck --alias)
     '';
     loginExtra = ''
+      source $(realpath ~/.profile) > /dev/null || true
       ${pkgs.fastfetch}/bin/fastfetch
     '';
     shellAliases = {

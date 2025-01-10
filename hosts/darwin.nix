@@ -12,6 +12,9 @@
 
   homebrew = {
     enable = true;
+    brews = [
+      "cocoapods"
+    ];
     casks = [
       "firefox"
     ];

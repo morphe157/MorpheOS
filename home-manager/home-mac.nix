@@ -32,9 +32,16 @@ in
       glow
       tldr
       git-lfs
+      nodejs
+      yarn
+      ruby
+      wtf
+      cmake
+      btop
     ];
     sessionPath = [
       "$HOME/.cargo/bin"
+      "$HOME/.gem/ruby/3.3.0/bin/"
     ];
     sessionVariables = {
       TERMINAL = "alacritty";
