@@ -86,7 +86,7 @@ with lib;
     extraConfig = concatStrings [
       ''
         env = NIXOS_OZONE_WL, 1
-        env = NIXPKGS_ALLOW_UNFREE, 1
+          env = NIXPKGS_ALLOW_UNFREE, 1
         env = XDG_CURRENT_DESKTOP, Hyprland
         env = XDG_SESSION_TYPE, wayland
         env = XDG_SESSION_DESKTOP, Hyprland
@@ -103,6 +103,8 @@ with lib;
           workspace_swipe = true
           workspace_swipe_fingers = 3
         }
+        monitor = DP-3, 1920x1080@240, 0x0, 1
+        monitor = HDMI-A-5, 1920x1080@144, 1920x0, 1
       ''
     ];
   };

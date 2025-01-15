@@ -9,12 +9,12 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
-  inherit (import ../config.nix) username;
+  inherit (import ../config.nix) usr;
 in
 {
   home = {
-    inherit username;
-    homeDirectory = lib.mkForce "/Users/${username}";
+    username = usr;
+    homeDirectory = lib.mkForce "/Users/${usr}";
     stateVersion = "24.11";
     packages = with pkgs; [
       nerd-fonts.commit-mono
@@ -46,7 +46,7 @@ in
     sessionVariables = {
       TERMINAL = "alacritty";
       EDITOR = "nvim";
-      USERNAME = "${username}";
+      USERNAME = "${usr}";
     };
   };
 

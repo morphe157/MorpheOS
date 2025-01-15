@@ -2,7 +2,7 @@
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   pkgs,
-  username,
+  lib,
   ...
 }:
 let
@@ -11,6 +11,7 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
+  inherit (import ../config.nix) username;
 in
 {
   # You can import other home-manager modules here
@@ -40,8 +41,8 @@ in
   };
 
   home = {
-    userName = "${username}";
-    homeDirectory = "/home/${username}";
+    username = "${username}";
+    homeDirectory = lib.mkForce "/home/${username}";
     packages = with pkgs; [
       brightnessctl
       playerctl

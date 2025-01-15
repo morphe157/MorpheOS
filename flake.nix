@@ -39,7 +39,7 @@
     {
       darwinConfigurations = {
         "${username}" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs username; };
+          specialArgs = { inherit inputs;  };
           modules = [
             ./hosts/darwin.nix
             home-manager.darwinModules.home-manager
@@ -55,7 +55,7 @@
       nixosConfigurations = {
         mac = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs username;
+            inherit inputs outputs;
           };
           # > Our main nixos configuration file <
           modules = [
@@ -72,12 +72,12 @@
         };
         pc = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs username;
+            inherit inputs outputs;
           };
           # > Our main nixos configuration file <
           modules = [
-            stylix.nixosModules.stylix
             ./hosts/pc.nix
+            stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = false;
