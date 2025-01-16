@@ -1,4 +1,7 @@
-{ pkgs, username, ... }:
+{ pkgs, ... }:
+let 
+  inherit (import ../config.nix) username;
+in
 {
   nix.settings.experimental-features = [
     "nix-command"
