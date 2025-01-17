@@ -2,28 +2,28 @@
 
 UNAME_S := $(shell uname -s)
 $(info Detected os: $(UNAME_S))
-$(info Using username: ${USER})
+$(info Using username: ${USERNAME})
 
 
 ifeq ($(UNAME_S),Darwin)
 build: check-user-provided make_config
-	NIXPKGS_ALLOW_UNFREE=1 USER=$(USER) darwin-rebuild switch --flake .#$(USER) --impure --show-trace
+	NIXPKGS_ALLOW_UNFREE=1 USERNAME=$(USERNAME) darwin-rebuild switch --flake .#$(USERNAME) --impure --show-trace
 else
 build: check-user-provided make_config
-	NIXPKGS_ALLOW_UNFREE=1 USER=$(USER) sudo nixos-rebuild switch --flake .#pc --impure
+	NIXPKGS_ALLOW_UNFREE=1 USERNAME=$(USERNAME) sudo nixos-rebuild switch --flake .#pc --impure
 endif
 
 all: build
 
 make_config:
 	echo "{" > config.nix
-	echo "  username = \"${USER}\";" >> config.nix
+	echo "  username = \"${USERNAME}\";" >> config.nix
 	echo "}" >> config.nix
 
 clean:
 	sudo nix-collect-garbage -d
 
 check-user-provided:
-ifndef USER
-	$(error "Please provide USER env variable, e.g. ./make USER=myuser")
+ifndef USERNAME
+	$(error "Please provide USERNAME env variable, e.g. ./make USERNAME=myuser")
 endif

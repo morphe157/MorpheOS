@@ -38,6 +38,9 @@ in
       wtf
       cmake
       btop
+      delta
+      openjdk23 
+      gradle
     ];
     sessionPath = [
       "$HOME/.cargo/bin"
@@ -59,5 +62,4 @@ in
   programs.home-manager.enable = true;
 
   fonts.fontconfig.enable = true;
-
 }

@@ -2,6 +2,14 @@
   keymaps = [
     {
       mode = "n";
+      key = "<C-q>";
+      options.silent = true;
+      options.desc = "Write all and quit";
+      options.noremap = true;
+      action = "<cmd>wq<CR>";
+    }
+    {
+      mode = "n";
       key = "<space>[";
       options.silent = true;
       options.desc = "[Telescope] find files";

@@ -9,9 +9,13 @@
   imports = [
     ./keymaps.nix
     ./dap.nix
+    ./cmp.nix
   ];
   colorschemes = {
-    oxocarbon.enable = true;
+    modus = {
+      enable = true;
+      settings.style = "modus_vivendi";
+    };
   };
   clipboard.providers.wl-copy.enable = true;
   performance = {
@@ -22,13 +26,24 @@
     #combinePlugins.enable = true;
 
   };
+  extraPlugins = [
+    (pkgs.vimUtils.buildVimPlugin {
+      name = "kotlin-vim";
+      src = pkgs.fetchFromGitHub {
+        owner = "udalov";
+        repo = "kotlin-vim";
+        rev = "master";
+        hash = "sha256-Eiwn2nQxb92gmcf3M5JW4HEnr9Uljyj5Sg/MA7Nc7ro=";
+      };
+    })
+  ];
   plugins = {
     nix.enable = true;
-    copilot-vim.enable = true;
     gitsigns.enable = true;
     web-devicons.enable = true;
     telescope.enable = true;
     dressing.enable = true;
+    copilot-vim.enable = true;
     lsp-status.enable = true;
     markdown-preview.enable = true;
     treesitter = {
@@ -62,35 +77,6 @@
         };
       };
     };
-    cmp = {
-      enable = true;
-      settings = {
-        # Preselect first entry
-        completion.completeopt = "menu,menuone,noinsert";
-        mapping = {
-          "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-          "<C-u>" = "cmp.mapping.scroll_docs(4)";
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<C-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-          "<C-n>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-        };
-        window = {
-          completion.border = "rounded";
-          documentation.border = "rounded";
-        };
-        sources = [
-          {
-            name = "nvim_lsp";
-          }
-          {
-            name = "path";
-          }
-          {
-            name = "buffer";
-          }
-        ];
-      };
-    };
     lspsaga = {
       enable = true;
       ui = {
@@ -102,6 +88,7 @@
       enable = true;
       servers = {
         nil_ls.enable = true;
+        kotlin_language_server.enable = true;
         nixd = {
           enable = true;
         };
@@ -127,13 +114,7 @@
     };
     lspkind = {
       enable = true;
-
-      cmp = {
-        enable = true;
-        maxWidth = 30;
-      };
     };
-    cmp-nvim-lsp.enable = true;
   };
 
   opts = {

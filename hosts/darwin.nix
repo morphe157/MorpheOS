@@ -28,6 +28,10 @@ in
     ../configs/aerospace.nix
   ];
 
+  fonts.packages = [
+    pkgs.nerd-fonts.commit-mono
+  ];
+
   system = {
     keyboard = {
       enableKeyMapping = true;
