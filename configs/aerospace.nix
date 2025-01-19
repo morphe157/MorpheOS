@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       mode.main.binding = {
-        "alt-enter" = "exec-and-forget ${pkgs.alacritty}/bin/alacritty";
+        "alt-enter" = "exec-and-forget alacritty";
         "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
 
         "alt-q" = "close";

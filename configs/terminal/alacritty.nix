@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   programs.alacritty = {
     package = pkgs.alacritty;
@@ -14,8 +14,8 @@
         startup_mode = "Maximized";
         decorations = "Buttonless";
       };
-      font = {
-        size = 25;
+      font = lib.mkForce {
+        size = 20;
         normal = {
           family = "CommitMono Nerd Font Mono";
           style = "Regular";

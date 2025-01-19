@@ -66,7 +66,18 @@ in
       openssl_3_3
       gcc
       pkg-config
+      jdk
+      jre
+      gradle
+      prismlauncher
+      jetbrains.idea-community
     ];
+
+    sessionVariables = {
+      TERMINAL = "alacritty";
+      EDITOR = "nvim";
+      USERNAME = "${username}";
+    };
   };
 
   programs.nixvim = import ../configs/neovim;

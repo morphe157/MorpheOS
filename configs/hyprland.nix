@@ -19,7 +19,7 @@ with lib;
         "ALT, mouse:272, movewindow"
       ];
       bind = [
-        "$mod,RETURN, exec, ${pkgs.alacritty}/bin/alacritty"
+        "$mod,RETURN, exec, alacritty"
         "$mod,Q, killactive,"
         "$mod,M, fullscreen,"
         "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc'"

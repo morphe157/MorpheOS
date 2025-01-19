@@ -2,7 +2,23 @@
   keymaps = [
     {
       mode = "n";
+      key = "<Space>w";
+      options.silent = true;
+      options.desc = "Write all";
+      options.noremap = true;
+      action = "<cmd>wa<CR>";
+    }
+    {
+      mode = "n";
       key = "<C-q>";
+      options.silent = true;
+      options.desc = "Write all and quit";
+      options.noremap = true;
+      action = "<cmd>wq<CR>";
+    }
+    {
+      mode = "n";
+      key = "<Space>q";
       options.silent = true;
       options.desc = "Write all and quit";
       options.noremap = true;

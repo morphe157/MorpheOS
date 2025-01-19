@@ -76,10 +76,12 @@ in
   ];
 
   fonts = {
+    enableDefaultPackages = true;
     packages = with pkgs; [
       nerd-fonts.commit-mono
     ];
     fontconfig = {
+      enable = true;
       defaultFonts = {
         monospace = [ "Commit Mono" ];
         emoji = [ "Commit Mono" ];
@@ -112,10 +114,9 @@ in
     NIXOS_OZONE_WL = "1";
   };
   hardware = {
-    opengl.enable = true;
-    opengl.driSupport32Bit = true;
+    graphics.enable = true;
+    graphics.enable32Bit = true;
     pulseaudio.support32Bit = true;
-    nvidia.modesetting.enable = true;
   };
   networking = {
     networkmanager.wifi.backend = "iwd";
