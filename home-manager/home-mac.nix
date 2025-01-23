@@ -40,7 +40,6 @@ in
       btop
       delta
       openjdk21
-      vieb
     ];
     sessionPath = [
       "$HOME/.cargo/bin"
@@ -56,6 +55,7 @@ in
   imports = [
     nixvim.homeManagerModules.nixvim
     ../configs/terminal
+    ../configs/tridactyl.nix
   ];
 
   programs.nixvim = import ../configs/neovim;

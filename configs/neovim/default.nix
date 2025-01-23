@@ -58,6 +58,7 @@
         clue = { };
         colors = { };
         comment = { };
+        surround = { };
         diff = { };
         git = { };
         hipatterns = { };
@@ -89,6 +90,8 @@
       servers = {
         nil_ls.enable = true;
         kotlin_language_server.enable = true;
+        html.enable = true;
+        htmx.enable = true;
         nixd = {
           enable = true;
         };

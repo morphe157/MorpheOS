@@ -5,14 +5,15 @@
     settings = {
       mode.main.binding = {
         "alt-enter" = "exec-and-forget alacritty";
-        "alt-p" = "exec-and-forget bash -c ${pkgs.vieb}/bin/vieb";
+        "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
         "alt-q" = "close";
-        "alt-h" = "focus left";
-        "alt-j" = "focus down";
-        "alt-k" = "focus up";
-        "alt-l" = "focus right";
+
+        "alt-j" = "focus --boundaries-action wrap-around-the-workspace down";
+        "alt-k" = "focus --boundaries-action wrap-around-the-workspace up";
+        "alt-h" = "focus --boundaries-action wrap-around-the-workspace left";
+        "alt-l" = "focus --boundaries-action wrap-around-the-workspace right";
 
         "alt-1" = "workspace 1";
         "alt-2" = "workspace 2";
@@ -24,6 +25,7 @@
         "alt-8" = "workspace 8";
         "alt-9" = "workspace 9";
         "alt-0" = "workspace 10";
+
 
         "alt-shift-1" = "move-node-to-workspace --focus-follows-window 1";
         "alt-shift-2" = "move-node-to-workspace --focus-follows-window 2";
@@ -49,6 +51,8 @@
 
         "alt-shift-b" = "move-node-to-monitor --focus-follows-window left";
         "alt-shift-n" = "move-node-to-monitor --focus-follows-window right";
+
+        "alt-shift-q" = "close-all-windows-but-current --quit-if-last-window";
 
         "alt-m" = "fullscreen";
       };
