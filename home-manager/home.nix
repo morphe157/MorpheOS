@@ -71,6 +71,7 @@ in
       gradle
       prismlauncher
       jetbrains.idea-community
+      vesktop
     ];
 
     sessionVariables = {

@@ -43,7 +43,7 @@
     web-devicons.enable = true;
     telescope.enable = true;
     dressing.enable = true;
-    copilot-vim.enable = true;
+    copilot-lua.enable = true;
     lsp-status.enable = true;
     markdown-preview.enable = true;
     treesitter = {

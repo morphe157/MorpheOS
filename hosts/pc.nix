@@ -111,6 +111,10 @@ in
     graphics.enable = true;
     graphics.enable32Bit = true;
     pulseaudio.support32Bit = true;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
   };
   networking = {
     networkmanager.wifi.backend = "iwd";
@@ -122,6 +126,7 @@ in
 
   qt.enable = true;
   services = {
+    blueman.enable = true;
     greetd = {
       enable = true;
       settings = {
