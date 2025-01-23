@@ -5,7 +5,8 @@
     settings = {
       mode.main.binding = {
         "alt-enter" = "exec-and-forget alacritty";
-        "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
+        "alt-p" = "exec-and-forget bash -c ${pkgs.vieb}/bin/vieb";
+        "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
         "alt-q" = "close";
         "alt-h" = "focus left";

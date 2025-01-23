@@ -39,8 +39,8 @@ in
       cmake
       btop
       delta
-      openjdk23 
-      gradle
+      openjdk21
+      vieb
     ];
     sessionPath = [
       "$HOME/.cargo/bin"

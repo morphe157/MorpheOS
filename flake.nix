@@ -41,6 +41,7 @@
         "${username}" = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs;  };
           modules = [
+            stylix.darwinModules.stylix
             ./hosts/darwin.nix
             home-manager.darwinModules.home-manager
             {

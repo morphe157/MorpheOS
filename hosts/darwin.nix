@@ -20,11 +20,13 @@ in
     ];
     casks = [
       "firefox"
+      "proton-pass"
     ];
   };
 
 
   imports = [
+    ../configs/stylix.nix
     ../configs/aerospace.nix
   ];
 

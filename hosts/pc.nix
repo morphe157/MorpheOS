@@ -6,6 +6,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../modules/nvidia-drivers.nix
+    ../configs/stylix.nix
   ];
   drivers.nvidia.enable = true;
 
@@ -89,13 +90,6 @@ in
         sansSerif = [ "Commit Mono" ];
       };
     };
-  };
-
-  stylix = {
-    enable = true;
-    image = ../assets/solid_black.png;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gotham.yaml";
-    polarity = "dark";
   };
 
   programs.hyprland = {

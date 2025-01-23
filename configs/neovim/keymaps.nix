@@ -154,6 +154,14 @@
     }
     {
       mode = "n";
+      key = "<C-]>";
+      options.silent = true;
+      options.desc = "[Lspsaga] Go to definition";
+      options.noremap = true;
+      action = "<cmd>Lspsaga goto_definition<CR>";
+    }
+    {
+      mode = "n";
       key = "K";
       options.silent = true;
       options.desc = "[Lspsaga] Hover";
