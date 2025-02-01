@@ -58,7 +58,6 @@ in
       tgpt
       glow
       manix
-      wl-clipboard
       btop
       bat
       pavucontrol
@@ -72,6 +71,14 @@ in
       prismlauncher
       jetbrains.idea-community
       vesktop
+      rbw
+      rofi-rbw-wayland
+      bitwarden-cli
+      pinentry-all
+      wtype
+      vieb
+      wtype
+      copyq
     ];
 
     sessionVariables = {
