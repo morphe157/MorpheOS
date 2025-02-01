@@ -43,7 +43,10 @@
     web-devicons.enable = true;
     telescope.enable = true;
     dressing.enable = true;
-    copilot-lua.enable = true;
+    copilot-lua = {
+      enable = true;
+      settings.suggestion.auto_trigger = true;
+    };
     lsp-status.enable = true;
     markdown-preview.enable = true;
     treesitter = {
