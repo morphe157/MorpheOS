@@ -87,6 +87,22 @@
             }
           ];
         };
+        wsl = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs;
+          };
+          # > Our main nixos configuration file <
+          modules = [
+            ./hosts/wsl.nix
+            stylix.nixosModules.stylix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = false;
+              home-manager.useUserPackages = true;
+              home-manager.users."${username}" = import home-manager/home-wsl.nix;
+            }
+          ];
+        };
       };
     };
 }
