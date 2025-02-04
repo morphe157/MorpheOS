@@ -39,6 +39,7 @@ in
       delta
       openjdk21
       rbw
+      vieb
     ];
     sessionPath = [
       "$HOME/.cargo/bin"
@@ -56,8 +57,8 @@ in
     nixvim.homeManagerModules.nixvim
     ../configs/terminal
     ../configs/tridactyl.nix
+    ../configs/vieb.nix 
   ];
-
 
   programs.nixvim = import ../configs/neovim;
   programs.home-manager.enable = true;
