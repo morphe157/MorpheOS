@@ -17,21 +17,10 @@ in
   # You can import other home-manager modules here
   imports = [
     nixvim.homeManagerModules.nixvim
-    ../configs/hyprland.nix
-    ../configs/hyprlock.nix
-    ../configs/rofi.nix
-    ../configs/waybar.nix
     ../configs/terminal
-
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
     ];
     config = {
@@ -44,41 +33,16 @@ in
     username = "${username}";
     homeDirectory = lib.mkForce "/home/${username}";
     packages = with pkgs; [
-      brightnessctl
-      playerctl
       ripgrep
       tldr
-      rofi-mpd
-      rofi-screenshot
-      spotify-player
-      wev
       rustup
-      firefox
       fastfetch
       tgpt
       glow
-      manix
       btop
       bat
-      pavucontrol
-      openssh
-      openssl_3_3
-      gcc
-      pkg-config
-      jdk
-      jre
-      gradle
-      prismlauncher
-      jetbrains.idea-community
-      vesktop
       rbw
-      rofi-rbw-wayland
       bitwarden-cli
-      pinentry-all
-      wtype
-      vieb
-      wtype
-      copyq
     ];
 
     sessionVariables = {
@@ -94,18 +58,6 @@ in
     enable = true;
     userName = "${username}";
     userEmail = "sample@email.com";
-  };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
-  services = {
-    spotifyd = {
-      enable = true;
-    };
-    playerctld = {
-      enable = true;
-    };
-    dunst.enable = true;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

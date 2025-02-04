@@ -95,7 +95,6 @@
       servers = {
         ts_ls.enable = true;
         nil_ls.enable = true;
-        pylsp.enable = true;
         kotlin_language_server.enable = true;
         html.enable = true;
         htmx.enable = true;

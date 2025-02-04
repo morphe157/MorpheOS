@@ -1,5 +1,3 @@
-.PHONY: all
-
 UNAME_S := $(shell uname -s)
 $(info Detected os: $(UNAME_S))
 $(info Using username: ${USERNAME})
@@ -13,7 +11,8 @@ build: check-user-provided make_config
 	NIXPKGS_ALLOW_UNFREE=1 USERNAME=$(USERNAME) sudo nixos-rebuild switch --flake .#pc --impure
 endif
 
-all: build
+wsl: check-user-provided make_config
+	USERNAME=$(USERNAME) sudo nixos-rebuild switch --flake .#wsl --impure
 
 make_config:
 	echo "{" > config.nix
