@@ -43,7 +43,12 @@
     web-devicons.enable = true;
     telescope.enable = true;
     dressing.enable = true;
-    copilot-lua.enable = true;
+    copilot-lua = {
+      enable = true;
+      settings = {
+        suggestion.auto_trigger = true;
+      };
+    };
     lsp-status.enable = true;
     markdown-preview.enable = true;
     treesitter = {
@@ -88,7 +93,9 @@
     lsp = {
       enable = true;
       servers = {
+        ts_ls.enable = true;
         nil_ls.enable = true;
+        pylsp.enable = true;
         kotlin_language_server.enable = true;
         html.enable = true;
         htmx.enable = true;

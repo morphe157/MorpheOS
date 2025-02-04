@@ -47,7 +47,7 @@ in
       "networkmanager"
       "wheel"
     ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     ignoreShellProgramCheck = true;
     packages = with pkgs; [
       vulkan-tools

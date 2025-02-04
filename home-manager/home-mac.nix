@@ -23,8 +23,6 @@ in
       thefuck
       eza
       zoxide
-      zsh
-      zsh-autocomplete
       tmux
       bat
       ripgrep
@@ -40,10 +38,12 @@ in
       btop
       delta
       openjdk21
+      rbw
     ];
     sessionPath = [
       "$HOME/.cargo/bin"
       "$HOME/.gem/ruby/3.3.0/bin/"
+      "/opt/homebrew/bin/"
     ];
     sessionVariables = {
       TERMINAL = "alacritty";
@@ -57,6 +57,7 @@ in
     ../configs/terminal
     ../configs/tridactyl.nix
   ];
+
 
   programs.nixvim = import ../configs/neovim;
   programs.home-manager.enable = true;

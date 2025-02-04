@@ -94,7 +94,7 @@
     initialPassword = "${username}";
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     ignoreShellProgramCheck = true;
   };
 

@@ -9,18 +9,24 @@ in
   ];
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
+  programs.fish.enable = true;
   users.users."${username}" = {
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   homebrew = {
     enable = true;
+    taps = [
+      "jorgelbg/tap"
+    ];
     brews = [
       "cocoapods"
+      "pinentry-touchid"
     ];
     casks = [
       "firefox"
       "proton-pass"
+      "dmenu-mac"
     ];
   };
 
