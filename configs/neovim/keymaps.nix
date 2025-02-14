@@ -192,5 +192,13 @@
       options.noremap = true;
       action = "<cmd>DapToggleBreakpoint<CR>";
     }
+    {
+      mode = "i";
+      key = "<C-]>";
+      options.silent = true;
+      options.desc = "[Copilot] Accept line";
+      options.noremap = true;
+      action = "<cmd>Copilot suggestion accept<CR>";
+    }
   ];
 }
