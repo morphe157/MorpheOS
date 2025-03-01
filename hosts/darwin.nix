@@ -14,23 +14,6 @@ in
     shell = pkgs.fish;
   };
 
-  homebrew = {
-    enable = true;
-    taps = [
-      "jorgelbg/tap"
-    ];
-    brews = [
-      "cocoapods"
-      "pinentry-touchid"
-    ];
-    casks = [
-      "firefox"
-      "proton-pass"
-      "dmenu-mac"
-    ];
-  };
-
-
   imports = [
     ../configs/stylix.nix
     ../configs/aerospace.nix

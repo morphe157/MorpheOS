@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       mode.main.binding = {
-        "alt-enter" = "exec-and-forget alacritty";
+        "alt-enter" = "exec-and-forget zsh -c alacritty";
         "alt-p" = "exec-and-forget ${pkgs.vieb}/bin/vieb";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
