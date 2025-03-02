@@ -14,6 +14,14 @@ in
     shell = pkgs.fish;
   };
 
+  homebrew = {
+    enable = true;
+    casks = [
+      "qutebrowser"
+    ];
+  };
+
+
   imports = [
     ../configs/stylix.nix
     ../configs/aerospace.nix

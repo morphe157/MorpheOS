@@ -31,25 +31,22 @@ in
       tldr
       git-lfs
       nodejs
-      yarn
-      ruby
       wtf
-      cmake
       btop
       delta
       openjdk21
       rbw
-      vieb
+      python312
     ];
+
     sessionPath = [
-      "$HOME/.cargo/bin"
-      "$HOME/.gem/ruby/3.3.0/bin/"
       "/opt/homebrew/bin/"
     ];
     sessionVariables = {
       TERMINAL = "alacritty";
       EDITOR = "nvim";
       USERNAME = "${username}";
+      LIBRARY_PATH = ''${lib.makeLibraryPath [ pkgs.libiconv ]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
     };
   };
 
@@ -57,7 +54,7 @@ in
     nixvim.homeManagerModules.nixvim
     ../configs/terminal
     ../configs/tridactyl.nix
-    ../configs/vieb.nix 
+    ../configs/vieb.nix
   ];
 
   programs.nixvim = import ../configs/neovim;
