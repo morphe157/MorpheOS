@@ -67,8 +67,8 @@ in
           "/Applications/Firefox.app"
         ];
         persistent-others = [
-          "~/Downloads/"
-          "~/Workspace/"
+          "/Users/${username}/Workspace/"
+          "/Users/${username}/Downloads/"
         ];
       };
       finder = {
