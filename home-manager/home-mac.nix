@@ -54,7 +54,7 @@ in
     nixvim.homeManagerModules.nixvim
     ../configs/terminal
     ../configs/tridactyl.nix
-    ../configs/vieb.nix
+    ../configs/qutebrowser.nix
   ];
 
   programs.nixvim = import ../configs/neovim;

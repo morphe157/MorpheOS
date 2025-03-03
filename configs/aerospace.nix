@@ -5,7 +5,7 @@
     settings = {
       mode.main.binding = {
         "alt-enter" = "exec-and-forget zsh -c alacritty";
-        "alt-p" = "exec-and-forget open -n /Applications/qutebrowser.app/";
+        "alt-p" = "exec-and-forget zsh -c 'open /Applications/qutebrowser.app'";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
         "alt-q" = "close";
