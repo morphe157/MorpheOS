@@ -31,7 +31,6 @@ in
       tldr
       git-lfs
       nodejs
-      wtf
       btop
       delta
       openjdk21
@@ -55,6 +54,7 @@ in
     ../configs/terminal
     ../configs/tridactyl.nix
     ../configs/qutebrowser.nix
+    ../configs/sketchybar.nix
   ];
 
   programs.nixvim = import ../configs/neovim;

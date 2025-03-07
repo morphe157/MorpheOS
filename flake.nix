@@ -48,6 +48,7 @@
               home-manager.useGlobalPkgs = false;
               home-manager.useUserPackages = true;
               home-manager.users."${username}" = import home-manager/home-mac.nix;
+              home-manager.backupFileExtension = "backup";
             }
           ];
         };

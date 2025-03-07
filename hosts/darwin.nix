@@ -21,11 +21,16 @@ in
     ];
   };
 
-
   imports = [
     ../configs/stylix.nix
     ../configs/aerospace.nix
   ];
+
+  services.sketchybar = {
+    enable = true;
+    # load sketchybarrc from the home directory
+    config = builtins.readFile "/Users/${username}/.config/sketchybar/sketchybarrc";
+  };
 
   fonts.packages = [
     pkgs.nerd-fonts.commit-mono

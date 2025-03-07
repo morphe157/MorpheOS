@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -11,12 +10,6 @@
     ./dap.nix
     ./cmp.nix
   ];
-  colorschemes = {
-    modus = {
-      enable = true;
-      settings.style = "modus_vivendi";
-    };
-  };
   clipboard.providers.wl-copy.enable = true;
   performance = {
     byteCompileLua = {
@@ -26,6 +19,9 @@
     #combinePlugins.enable = true;
 
   };
+  extraConfigLua = ''
+    vim.cmd('colorscheme elflord')
+  '';
   extraPlugins = [
     (pkgs.vimUtils.buildVimPlugin {
       name = "kotlin-vim";
