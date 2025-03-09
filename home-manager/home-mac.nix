@@ -55,6 +55,7 @@ in
     ../configs/tridactyl.nix
     ../configs/qutebrowser.nix
     ../configs/sketchybar.nix
+    ../configs/vim.nix
   ];
 
   programs.nixvim = import ../configs/neovim;

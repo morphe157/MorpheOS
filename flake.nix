@@ -39,7 +39,7 @@
     {
       darwinConfigurations = {
         "${username}" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs;  };
+          specialArgs = { inherit inputs; };
           modules = [
             stylix.darwinModules.stylix
             ./hosts/darwin.nix
