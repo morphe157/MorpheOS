@@ -9,7 +9,7 @@
       gpt = "tgpt -q -w | glow";
       cat = "bat";
     };
-    shellInit = '' 
+    shellInit = ''
       source ~/init.fish
     '';
   };
@@ -19,5 +19,15 @@
   };
   programs.starship = {
     enable = true;
+    settings = {
+      add_newline = true;
+      command_timeout = 1300;
+      scan_timeout = 50;
+      format = "$git_branch$git_status $username$hostname$directory";
+      character = {
+        success_symbol = "[](bold green) ";
+        error_symbol = "[✗](bold red) ";
+      };
+    };
   };
 }
