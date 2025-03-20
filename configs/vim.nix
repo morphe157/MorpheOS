@@ -43,7 +43,9 @@ in
       nmap <Space>a :ALECodeAction<CR>
       nmap <C-]> :ALEGoToDefinition<CR>
       nmap <Space>[ :LeaderfFile<CR>
-      nnoremap <silent> <Space>m :LeaderfQuickFix<CR>
+      nmap <Space>' :LeaderfRgInteractive<CR>
+      nmap <Space><Space> :LeaderfQuickFix<CR>
+      nmap <Space>l :LeaderfQuickFix<CR>
       imap <silent><script><expr> <C-]> copilot#Accept("\<CR>") 
       let g:copilot_no_tab_map = v:true
 
@@ -53,6 +55,20 @@ in
       \    'features': 'all'
       \  }
       \}
+
+      " Netrw
+      let g:netrw_winsize = 30
+      let g:netrw_keepdir = 0
+      nnoremap N :Lexplore %:p:h<CR>
+      function! NetrwMapping()
+        nmap <buffer> N :Lexplore<CR>
+        nmap <buffer> ff %:w<CR>:buffer #<CR>
+      endfunction
+
+      augroup netrw_mapping
+        autocmd!
+          autocmd filetype netrw call NetrwMapping()
+      augroup END
     '';
     plugins = with pkgs.vimPlugins; [
       vim-sensible
@@ -61,6 +77,8 @@ in
       copilot-vim
       leaderf
       auto-pairs
+      vim-surround
+      vinegar
     ];
   };
 }

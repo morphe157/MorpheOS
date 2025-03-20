@@ -3,6 +3,91 @@
   services.aerospace = {
     enable = true;
     settings = {
+      gaps = {
+        inner = {
+          horizontal = 20;
+          vertical = 20;
+        };
+
+        outer = {
+          left = 20;
+          bottom = 10;
+          top = 10;
+          right = 20;
+        };
+      };
+
+      workspace-to-monitor-force-assignment = {
+        "1" = "1";
+        "2" = "2";
+        "3" = "1";
+        "4" = "2";
+        "5" = "2";
+        "6" = "2";
+        "7" = "built-in";
+        "8" = "built-in";
+        "9" = "built-in";
+        "10" = "built-in";
+      };
+
+      on-window-detected = [
+        {
+          "if" = {
+            app-id = "com.tinyspeck.slackmacgap";
+          };
+          run = [
+            "move-node-to-workspace 9"
+          ];
+        }
+        {
+          "if" = {
+            app-id = "com.spotify.client";
+          };
+          run = [
+            "move-node-to-workspace 10"
+          ];
+        }
+        {
+          "if" = {
+            app-id = "com.apple.iCal";
+          };
+          run = [
+            "move-node-to-workspace 8"
+          ];
+        }
+        {
+          "if" = {
+            app-id = "org.mozilla.firefox";
+          };
+          run = [
+            "move-node-to-workspace 2"
+          ];
+        }
+        {
+          "if" = {
+            app-id = "org.alacritty";
+          };
+          run = [
+            "move-node-to-workspace 1"
+          ];
+        }
+        {
+          "if" = {
+            app-id = "com.google.android.studio";
+          };
+          run = [
+            "move-node-to-workspace 4"
+          ];
+        }
+        {
+          "if" = {
+            app-id = "us.zoom.xos";
+          };
+          run = [
+            "move-node-to-workspace 7"
+          ];
+        }
+      ];
       mode.main.binding = {
         "alt-enter" = "exec-and-forget zsh -c alacritty";
         "alt-p" = "exec-and-forget zsh -c 'open -n /Applications/qutebrowser.app'";
@@ -25,7 +110,6 @@
         "alt-8" = "workspace 8";
         "alt-9" = "workspace 9";
         "alt-0" = "workspace 10";
-
 
         "alt-shift-1" = "move-node-to-workspace --focus-follows-window 1";
         "alt-shift-2" = "move-node-to-workspace --focus-follows-window 2";

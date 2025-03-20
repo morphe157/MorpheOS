@@ -19,8 +19,6 @@ in
     packages = with pkgs; [
       nerd-fonts.commit-mono
       fastfetch
-      rustup
-      thefuck
       eza
       zoxide
       tmux
@@ -36,6 +34,7 @@ in
       openjdk21
       rbw
       python312
+      cmake
     ];
 
     sessionPath = [

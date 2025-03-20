@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let 
+let
   inherit (import ../config.nix) username;
 in
 {
@@ -22,8 +22,8 @@ in
   };
 
   imports = [
-    ../configs/stylix.nix
     ../configs/aerospace.nix
+    ../configs/stylix.nix
   ];
 
   services.sketchybar = {
@@ -32,8 +32,17 @@ in
     config = builtins.readFile "/Users/${username}/.config/sketchybar/sketchybarrc";
   };
 
-  fonts.packages = [
-    pkgs.nerd-fonts.commit-mono
+  fonts.packages = with pkgs; [
+    nerd-fonts.commit-mono
+    cmake
+    libiconv
+    zlib
+    libpng
+    libjpeg
+    libtiff
+    giflib
+    gcc
+    pkg-config
   ];
 
   system = {

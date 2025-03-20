@@ -97,6 +97,20 @@
         nixd = {
           enable = true;
         };
+        rust_analyzer = {
+          enable = true;
+          installCargo = false;
+          installRustc = false;
+          #cmd = ["/Users/mburdyna/.cargo/bin/rust-analyzer"];
+          package = null;
+          settings = {
+            check = {
+              command = "clippy";
+              features = ["analytics" "logging"];
+              noDefaultFeatures = true;
+            };
+          };
+        };
       };
     };
     conform-nvim = {
@@ -112,11 +126,6 @@
           };
         };
       };
-    };
-    rustaceanvim = {
-      enable = true;
-      settings.server.default_settings.rust-analyzer.check.command = "clippy";
-      settings.server.default_settings.rust-analyzer.cargo.features = "all";
     };
     lspkind = {
       enable = true;
