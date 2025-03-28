@@ -94,7 +94,7 @@
     initialPassword = "${username}";
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     ignoreShellProgramCheck = true;
   };
 
@@ -113,7 +113,7 @@
       settings = {
         default_session = {
           command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
-          user = "morphe";
+          user = "${username}";
         };
       };
     };

@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -9,10 +8,9 @@
   imports = [
     ./keymaps.nix
     ./dap.nix
+    ./cmp.nix
+    ./lsp.nix
   ];
-  colorschemes = {
-    oxocarbon.enable = true;
-  };
   clipboard.providers.wl-copy.enable = true;
   performance = {
     byteCompileLua = {
@@ -22,17 +20,53 @@
     #combinePlugins.enable = true;
 
   };
+  colorschemes.oxocarbon.enable = true;
+  
+  extraPlugins = [
+    (pkgs.vimUtils.buildVimPlugin {
+      name = "popviewer";
+      src = pkgs.fetchFromGitHub {
+        owner = "morphe157";
+        repo = "popviewer.nvim";
+        rev = "fa4feafdd783e7648a6fa59177eff9ce39875509";
+        hash = "sha256-dPolS56yk8eGLSNNIm5cn5eecgGDyKTzuUzr7UwvoPc=";
+      };
+    })
+  ];
+  extraConfigLua = ''
+    require('popviewer').setup()
+  '';
   plugins = {
+    codesnap = {
+      enable = true;
+      settings = {
+        mac_window_bar = false;
+        watermark = "";
+        save_path = "~/Desktop/";
+        has_line_number = true;
+        show_workspace = true;
+        bg_theme = "grape";
+      };
+    };
     nix.enable = true;
-    copilot-vim.enable = true;
     gitsigns.enable = true;
     web-devicons.enable = true;
     telescope.enable = true;
     dressing.enable = true;
+    copilot-lua = {
+      enable = true;
+      settings = {
+        suggestion.auto_trigger = true;
+      };
+    };
     lsp-status.enable = true;
+    markdown-preview.enable = true;
     treesitter = {
       enable = true;
       settings.ensure_installed = "all";
+    };
+    flash = {
+      enable = true;
     };
     mini = {
       enable = true;
@@ -42,6 +76,7 @@
         clue = { };
         colors = { };
         comment = { };
+        surround = { };
         diff = { };
         git = { };
         hipatterns = { };
@@ -61,47 +96,11 @@
         };
       };
     };
-    cmp = {
-      enable = true;
-      settings = {
-        # Preselect first entry
-        completion.completeopt = "menu,menuone,noinsert";
-        mapping = {
-          "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-          "<C-u>" = "cmp.mapping.scroll_docs(4)";
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<C-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-          "<C-n>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-        };
-        window = {
-          completion.border = "rounded";
-          documentation.border = "rounded";
-        };
-        sources = [
-          {
-            name = "nvim_lsp";
-          }
-          {
-            name = "path";
-          }
-          {
-            name = "buffer";
-          }
-        ];
-      };
-    };
     lspsaga = {
       enable = true;
       ui = {
         title = true;
         border = "rounded";
-      };
-    };
-    lsp = {
-      enable = true;
-      servers = {
-        nil_ls.enable = true;
-        nixd.enable = true;
       };
     };
     conform-nvim = {
@@ -118,19 +117,9 @@
         };
       };
     };
-    rustaceanvim = {
-      enable = true;
-      settings.server.default_settings.rust-analyzer.check.command = "clippy";
-    };
     lspkind = {
       enable = true;
-
-      cmp = {
-        enable = true;
-        maxWidth = 30;
-      };
     };
-    cmp-nvim-lsp.enable = true;
   };
 
   opts = {

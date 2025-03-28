@@ -2,6 +2,30 @@
   keymaps = [
     {
       mode = "n";
+      key = "<Space>w";
+      options.silent = true;
+      options.desc = "Write all";
+      options.noremap = true;
+      action = "<cmd>wa<CR>";
+    }
+    {
+      mode = "n";
+      key = "<C-q>";
+      options.silent = true;
+      options.desc = "Write all and quit";
+      options.noremap = true;
+      action = "<cmd>wq<CR>";
+    }
+    {
+      mode = "n";
+      key = "<Space>q";
+      options.silent = true;
+      options.desc = "Write all and quit";
+      options.noremap = true;
+      action = "<cmd>wq<CR>";
+    }
+    {
+      mode = "n";
       key = "<space>[";
       options.silent = true;
       options.desc = "[Telescope] find files";
@@ -130,6 +154,14 @@
     }
     {
       mode = "n";
+      key = "<C-]>";
+      options.silent = true;
+      options.desc = "[Lspsaga] Go to definition";
+      options.noremap = true;
+      action = "<cmd>Lspsaga goto_definition<CR>";
+    }
+    {
+      mode = "n";
       key = "K";
       options.silent = true;
       options.desc = "[Lspsaga] Hover";
@@ -159,6 +191,30 @@
       options.desc = "[DAP] Toggle breakpoint";
       options.noremap = true;
       action = "<cmd>DapToggleBreakpoint<CR>";
+    }
+    {
+      mode = "i";
+      key = "<C-]>";
+      options.silent = true;
+      options.desc = "[Copilot] Accept line";
+      options.noremap = true;
+      action = "<cmd>Copilot suggestion accept<CR>";
+    }
+    {
+      mode = "n";
+      key = "f";
+      options.silent = true;
+      options.desc = "[Flash] Jump";
+      options.noremap = true;
+      action = "<cmd>lua require('flash').jump()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<Space>m";
+      options.silent = true;
+      options.desc = "[Telescope] Marks";
+      options.noremap = true;
+      action = "<cmd>lua require('telescope.builtin').marks{ mark_type = \"global\" }<CR>";
     }
   ];
 }
