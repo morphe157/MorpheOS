@@ -9,7 +9,6 @@
       nil_ls.enable = true;
       kotlin_language_server.enable = true;
       html.enable = true;
-      htmx.enable = true;
       nixd = {
         enable = true;
       };
@@ -20,10 +19,10 @@
         #cmd = ["/Users/mburdyna/.cargo/bin/rust-analyzer"];
         package = null;
         settings = {
+          diagnostics.disabled = ["inactive-code"];
           check = {
             command = "clippy";
             features = [
-              "analytics"
               "logging"
               "analytics"
             ];

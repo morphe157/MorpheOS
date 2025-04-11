@@ -208,13 +208,5 @@
       options.noremap = true;
       action = "<cmd>lua require('flash').jump()<CR>";
     }
-    {
-      mode = "n";
-      key = "<Space>m";
-      options.silent = true;
-      options.desc = "[Telescope] Marks";
-      options.noremap = true;
-      action = "<cmd>lua require('telescope.builtin').marks{ mark_type = \"global\" }<CR>";
-    }
   ];
 }
