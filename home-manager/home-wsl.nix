@@ -43,6 +43,9 @@ in
       bat
       rbw
       bitwarden-cli
+      eslint
+      gnumake
+      nodejs
     ];
 
     sessionVariables = {

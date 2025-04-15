@@ -5,7 +5,6 @@
       lua_ls = {
         enable = true;
       };
-      ts_ls.enable = true;
       nil_ls.enable = true;
       kotlin_language_server.enable = true;
       html.enable = true;

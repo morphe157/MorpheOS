@@ -37,6 +37,7 @@
     require('popviewer').setup()
   '';
   plugins = {
+    typescript-tools.enable = true;
     codesnap = {
       enable = true;
       settings = {
