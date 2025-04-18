@@ -37,6 +37,14 @@
     require('popviewer').setup()
   '';
   plugins = {
+    avante = {
+      enable = true;
+      settings = {
+        provider = "copilot";
+      };
+    };
+    dressing.enable = true;
+    nui.enable = true;
     typescript-tools.enable = true;
     codesnap = {
       enable = true;
@@ -53,7 +61,6 @@
     gitsigns.enable = true;
     web-devicons.enable = true;
     telescope.enable = true;
-    dressing.enable = true;
     copilot-lua = {
       enable = true;
       settings = {
