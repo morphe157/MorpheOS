@@ -19,13 +19,11 @@
         package = null;
         settings = {
           diagnostics.disabled = ["inactive-code"];
+          cargo = {
+            features = "all";
+          };
           check = {
             command = "clippy";
-            features = [
-              "logging"
-              "analytics"
-            ];
-            noDefaultFeatures = true;
           };
         };
       };
