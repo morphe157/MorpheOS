@@ -16,6 +16,7 @@ in
       efiSupport = true;
       device = "nodev";
       useOSProber = true;
+      default = "2";
     };
   };
   boot.kernelParams = [
