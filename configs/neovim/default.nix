@@ -21,7 +21,7 @@
 
   };
   colorschemes.oxocarbon.enable = true;
-  
+
   extraPlugins = [
     (pkgs.vimUtils.buildVimPlugin {
       name = "popviewer";
@@ -35,6 +35,20 @@
   ];
   extraConfigLua = ''
     require('popviewer').setup()
+
+    local dap, dapui = require("dap"), require("dapui")
+    dap.listeners.before.attach.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated.dapui_config = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+      dapui.close()
+    end
   '';
   plugins = {
     avante = {
@@ -45,6 +59,16 @@
     };
     dressing.enable = true;
     nui.enable = true;
+    rustaceanvim = {
+      enable = true;
+      settings.server.default_settings = {
+        diagnostics.disabled = [ "inactive-code" ];
+        check = {
+          command = "clippy";
+          features = "all";
+        };
+      };
+    };
     typescript-tools.enable = true;
     codesnap = {
       enable = true;

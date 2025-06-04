@@ -11,22 +11,6 @@
       nixd = {
         enable = true;
       };
-      rust_analyzer = {
-        enable = true;
-        installCargo = false;
-        installRustc = false;
-        #cmd = ["/Users/mburdyna/.cargo/bin/rust-analyzer"];
-        package = null;
-        settings = {
-          diagnostics.disabled = ["inactive-code"];
-          cargo = {
-            features = "all";
-          };
-          check = {
-            command = "clippy";
-          };
-        };
-      };
     };
     luaConfig.post = ''
       require'lspconfig'.lua_ls.setup {

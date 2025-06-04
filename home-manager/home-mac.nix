@@ -35,6 +35,8 @@ in
       rbw
       python312
       cmake
+      fselect
+      codelldb
     ];
 
     sessionPath = [
@@ -48,9 +50,27 @@ in
     };
   };
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      codelldb = final.stdenv.mkDerivation {
+        pname = "codelldb";
+        version = final.vscode-extensions.vadimcn.vscode-lldb.version;
+
+        src = pkgs.vscode-extensions.vadimcn.vscode-lldb;
+
+        phases = [ "installPhase" ];
+
+        installPhase = ''
+          mkdir -p $out/bin
+          cp ${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb $out/bin/
+        '';
+      };
+    })
+  ];
+
   imports = [
     nixvim.homeManagerModules.nixvim
-    ../configs/terminal
+    ../configs/terminal 
     ../configs/tridactyl.nix
     ../configs/qutebrowser.nix
     ../configs/sketchybar.nix

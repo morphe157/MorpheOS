@@ -7,6 +7,8 @@ in
     "nix-command"
     "flakes"
   ];
+  system.primaryUser = "${username}";
+
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
   programs.fish.enable = true;
