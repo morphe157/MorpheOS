@@ -193,6 +193,14 @@
       action = "<cmd>DapToggleBreakpoint<CR>";
     }
     {
+      mode = "n";
+      key = "<Space>dB";
+      options.silent = true;
+      options.desc = "[DAP] Toggle conditional breakpoint";
+      options.noremap = true;
+      action = "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Condition: '))<CR>";
+    }
+    {
       mode = "i";
       key = "<C-]>";
       options.silent = true;
@@ -202,11 +210,107 @@
     }
     {
       mode = "n";
-      key = "f";
+      key = "<Tab>";
       options.silent = true;
-      options.desc = "[Flash] Jump";
+      options.desc = "[Bar] Buffer Next";
       options.noremap = true;
-      action = "<cmd>lua require('flash').jump()<CR>";
+      action = "<cmd>BufferNext<CR>";
+    }
+    {
+      mode = "n";
+      key = "<S-Tab>";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Prev";
+      options.noremap = true;
+      action = "<cmd>BufferPrevious<CR>";
+    }
+    {
+      mode = "n";
+      key = "<Space>c";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Close";
+      options.noremap = true;
+      action = "<cmd>BufferClose<CR>";
+    }
+    {
+      mode = "n";
+      key = "<Space>b";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Pick";
+      options.noremap = true;
+      action = "<cmd>BufferPick<CR>";
+    }
+    {
+      mode = "n";
+      key = "<Space>B";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Pick Delete";
+      options.noremap = true;
+      action = "<cmd>BufferPickDelete<CR>";
+    }
+    {
+      mode = "n";
+      key = "<Space>bb";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Close All But Current";
+      options.noremap = true;
+      action = "<cmd>BufferCloseAllButCurrent<CR>";
+    }
+    {
+      mode = "n";
+      key = "<space>1";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Goto 1";
+      options.noremap = true;
+      action = "<cmd>BufferGoto 1<CR>";
+    }
+    {
+      mode = "n";
+      key = "<space>2";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Goto 2";
+      options.noremap = true;
+      action = "<cmd>BufferGoto 2<CR>";
+    }
+    {
+      mode = "n";
+      key = "<space>3";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Goto 3";
+      options.noremap = true;
+      action = "<cmd>BufferGoto 3<CR>";
+    }
+    {
+      mode = "n";
+      key = "<space>4";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Goto 4";
+      options.noremap = true;
+      action = "<cmd>BufferGoto 4<CR>";
+    }
+    {
+      mode = "n";
+      key = "<space>5";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Goto 5";
+      options.noremap = true;
+      action = "<cmd>BufferGoto 5<CR>";
+    }
+    {
+      mode = "n";
+      key = "<space>6";
+      options.silent = true;
+      options.desc = "[Bar] Buffer Goto 6";
+      options.noremap = true;
+      action = "<cmd>BufferGoto 6<CR>";
+    }
+    {
+      mode = "n";
+      key = "<space>e";
+      options.silent = true;
+      options.desc = "[Avante] Toggle";
+      options.noremap = true;
+      action = "<cmd>AvanteToggle<CR>";
     }
   ];
 }

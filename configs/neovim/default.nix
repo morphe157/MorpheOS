@@ -54,7 +54,20 @@
     avante = {
       enable = true;
       settings = {
+        behaviour = {
+          use_cwd_as_project_root = true;
+          enable_cursor_planning_mode = true;
+        };
+        windows = {
+          width = 50;
+          wrap = true;
+        };
         provider = "copilot";
+        providers = {
+          copilot = {
+            model = "claude-sonnet-4";
+          };
+        };
       };
     };
     dressing.enable = true;
@@ -84,6 +97,7 @@
     nix.enable = true;
     gitsigns.enable = true;
     web-devicons.enable = true;
+    #barbar.enable = true;
     telescope.enable = true;
     copilot-lua = {
       enable = true;
@@ -96,9 +110,6 @@
     treesitter = {
       enable = true;
       settings.ensure_installed = "all";
-    };
-    flash = {
-      enable = true;
     };
     mini = {
       enable = true;
@@ -155,6 +166,7 @@
   };
 
   opts = {
+    autowriteall = true;
     number = true;
     relativenumber = true;
     shiftwidth = 2;

@@ -31,7 +31,7 @@ in
       nodejs
       btop
       delta
-      openjdk21
+      openjdk17
       rbw
       python312
       cmake

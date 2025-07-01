@@ -7,6 +7,7 @@
       };
       nil_ls.enable = true;
       kotlin_language_server.enable = true;
+      java_language_server.enable = true;
       html.enable = true;
       nixd = {
         enable = true;
