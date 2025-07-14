@@ -3,6 +3,14 @@
   plugins = {
     dap = {
       enable = true;
+      lazyLoad.settings.cmd = [
+        "DapContinue"
+        "DapToggleBreakpoint"
+        "DapStepOver"
+        "DapStepInto"
+        "DapStepOut"
+        "DapTerminate"
+      ];
       adapters.servers.lldb = {
         port = "\${port}";
         executable = {
@@ -31,6 +39,16 @@
         }
       ];
     };
-    dap-ui.enable = true;
+    dap-ui = {
+      enable = true;
+      lazyLoad.settings = {
+	cmd = [
+	    "DapUiToggle"
+	    "DapUiOpen"
+	    "DapUiClose"
+	    "DapUiFloatElement"
+	];
+      };
+    };
   };
 }

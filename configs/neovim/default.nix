@@ -35,24 +35,15 @@
   ];
   extraConfigLua = ''
     require('popviewer').setup()
-
-    local dap, dapui = require("dap"), require("dapui")
-    dap.listeners.before.attach.dapui_config = function()
-      dapui.open()
-    end
-    dap.listeners.before.launch.dapui_config = function()
-      dapui.open()
-    end
-    dap.listeners.before.event_terminated.dapui_config = function()
-      dapui.close()
-    end
-    dap.listeners.before.event_exited.dapui_config = function()
-      dapui.close()
-    end
   '';
   plugins = {
+    lz-n.enable = true;
     avante = {
       enable = true;
+      lazyLoad.settings.cmd = [
+        "AvanteToggle"
+        "AvanteChatNew"
+      ];
       settings = {
         behaviour = {
           use_cwd_as_project_root = true;
@@ -70,10 +61,10 @@
         };
       };
     };
-    dressing.enable = true;
-    nui.enable = true;
+    snacks.enable = true;
     rustaceanvim = {
       enable = true;
+      lazyLoad.settings.ft = [ "rust" ];
       settings.server.default_settings = {
         diagnostics.disabled = [ "inactive-code" ];
         check = {
@@ -82,9 +73,20 @@
         };
       };
     };
-    typescript-tools.enable = true;
+    typescript-tools = {
+      enable = true;
+      lazyLoad.settings.ft = [
+        "typescript"
+        "typescriptreact"
+        "typescript.tsx"
+      ];
+    };
     codesnap = {
       enable = true;
+      lazyLoad.settings.cmd = [
+        "CodeSnap"
+        "CodeSnapHighlight"
+      ];
       settings = {
         mac_window_bar = false;
         watermark = "";
@@ -94,11 +96,18 @@
         bg_theme = "grape";
       };
     };
-    nix.enable = true;
     gitsigns.enable = true;
     web-devicons.enable = true;
-    #barbar.enable = true;
-    telescope.enable = true;
+    telescope = {
+      enable = true;
+      lazyLoad.settings.cmd = [
+        "Telescope"
+        "TelescopeLiveGrep"
+        "TelescopeGrepString"
+        "TelescopeFindFiles"
+        "TelescopeBuffers"
+      ];
+    };
     copilot-lua = {
       enable = true;
       settings = {
@@ -106,7 +115,9 @@
       };
     };
     lsp-status.enable = true;
-    markdown-preview.enable = true;
+    markdown-preview = {
+      enable = true; 
+    };
     treesitter = {
       enable = true;
       settings.ensure_installed = "all";
@@ -144,20 +155,6 @@
       ui = {
         title = true;
         border = "rounded";
-      };
-    };
-    conform-nvim = {
-      enable = true;
-      settings = {
-        default_format_opts.lsp_format = "fallback";
-        formatters_by_ft = {
-          nix = [ "nixfmt" ];
-        };
-        formatters = {
-          nixfmt = {
-            command = lib.getExe pkgs.nixfmt-rfc-style;
-          };
-        };
       };
     };
     lspkind = {

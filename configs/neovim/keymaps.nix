@@ -312,5 +312,13 @@
       options.noremap = true;
       action = "<cmd>AvanteToggle<CR>";
     }
+    {
+      mode = "n";
+      key = "<space>E";
+      options.silent = true;
+      options.desc = "[Avante] New chat";
+      options.noremap = true;
+      action = "<cmd>AvanteChatNew<CR>";
+    }
   ];
 }

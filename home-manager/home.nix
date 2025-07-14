@@ -75,7 +75,6 @@ in
       bitwarden-cli
       pinentry-all
       wtype
-      vieb
       wtype
       copyq
       mpv 
