@@ -61,7 +61,16 @@
         };
       };
     };
-    snacks.enable = true;
+    snacks = {
+      enable = true;
+      settings = {
+	bigfile.enabled = true;
+	dim.enabled = true;
+	indent.enabled = true;
+	quickfile.enabled = true;
+	statuscolumn.enabled = true;
+      };
+    };
     rustaceanvim = {
       enable = true;
       lazyLoad.settings.ft = [ "rust" ];
