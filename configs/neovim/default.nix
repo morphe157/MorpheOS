@@ -64,11 +64,14 @@
     snacks = {
       enable = true;
       settings = {
-	bigfile.enabled = true;
-	dim.enabled = true;
-	indent.enabled = true;
-	quickfile.enabled = true;
-	statuscolumn.enabled = true;
+        bigfile.enabled = true;
+        dim.enabled = true;
+        indent.enabled = true;
+        quickfile.enabled = true;
+        statuscolumn = {
+          enabled = true;
+          left = [ "mark" ];
+        };
       };
     };
     rustaceanvim = {
@@ -125,11 +128,15 @@
     };
     lsp-status.enable = true;
     markdown-preview = {
-      enable = true; 
+      enable = true;
     };
     treesitter = {
       enable = true;
-      settings.ensure_installed = "all";
+      settings.ensure_installed = [
+        "rust"
+        "bash"
+        "json"
+      ];
     };
     mini = {
       enable = true;
