@@ -66,7 +66,6 @@
       settings = {
         bigfile.enabled = true;
         dim.enabled = true;
-        indent.enabled = true;
         quickfile.enabled = true;
         statuscolumn = {
           enabled = true;
@@ -118,6 +117,15 @@
         "TelescopeGrepString"
         "TelescopeFindFiles"
         "TelescopeBuffers"
+      ];
+      settings.defaults.file_ignore_patterns = [
+        "%.jar"
+        "%.dat"
+        "%.dat"
+	"run/"
+	"gradle/"
+	"%.db"
+	"build/"
       ];
     };
     copilot-lua = {
@@ -184,5 +192,7 @@
     relativenumber = true;
     shiftwidth = 2;
     swapfile = false;
+    autoindent = true;
+    breakindent = true;
   };
 }
