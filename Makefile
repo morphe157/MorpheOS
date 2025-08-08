@@ -15,11 +15,11 @@ wsl: check-user-provided make_config
 	USERNAME=$(USERNAME) sudo nixos-rebuild switch --flake .#wsl --impure
 
 make_config:
-	echo "{" > config.nix
-	echo "  username = \"${USERNAME}\";" >> config.nix
-	echo "  gituser = \"${GITUSER}\";" >> config.nix
-	echo "  gitemail = \"${GITEMAIL}\";" >> config.nix
-	echo "}" >> config.nix
+	@echo "{" > config.nix
+	@echo "  username = \"${USERNAME}\";" >> config.nix
+	@echo "  gituser = \"${GITUSER}\";" >> config.nix
+	@echo "  gitemail = \"${GITEMAIL}\";" >> config.nix
+	@echo "}" >> config.nix
 
 clean:
 	sudo nix-collect-garbage -d

@@ -11,7 +11,6 @@
     ./cmp.nix
     ./lsp.nix
   ];
-  clipboard.providers.wl-copy.enable = true;
   performance = {
     byteCompileLua = {
       configs = true;
@@ -183,6 +182,7 @@
     };
     lspkind = {
       enable = true;
+      cmp.enable = false;
     };
   };
 

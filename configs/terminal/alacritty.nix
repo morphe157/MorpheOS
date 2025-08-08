@@ -6,7 +6,7 @@
 
     settings = {
       general.import = [
-        "${pkgs.alacritty-theme}/aura.toml"
+        "${pkgs.alacritty-theme}/blood_moon.toml"
       ];
       terminal.shell = "${pkgs.tmux}/bin/tmux";
       scrolling.history = 10000;

@@ -19,8 +19,7 @@ in
   homebrew = {
     enable = true;
     casks = [
-      "qutebrowser"
-      "bluesnooze"
+      "sol"
     ];
   };
 
