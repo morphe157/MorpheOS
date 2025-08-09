@@ -93,7 +93,9 @@
         "alt-p" = "exec-and-forget zsh -c 'open -n /Applications/Firefox.app'";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
-        "alt-q" = "close";
+        "alt-q" = "close --quit-if-last-window";
+
+	"alt-w" = "fullscreen off";
 
         "alt-j" = "focus --boundaries-action wrap-around-the-workspace down";
         "alt-k" = "focus --boundaries-action wrap-around-the-workspace up";
