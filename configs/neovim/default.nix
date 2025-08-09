@@ -121,16 +121,16 @@
         "%.jar"
         "%.dat"
         "%.dat"
-	"run/"
-	"gradle/"
-	"%.db"
-	"build/"
+        "run/"
+        "gradle/"
+        "%.db"
+        "build/"
       ];
     };
     copilot-lua = {
       enable = true;
       settings = {
-        suggestion.auto_trigger = true;
+        suggestion.auto_trigger = false;
       };
     };
     lsp-status.enable = true;
@@ -139,11 +139,15 @@
     };
     treesitter = {
       enable = true;
-      settings.ensure_installed = [
-        "rust"
-        "bash"
-        "json"
-      ];
+      settings = {
+        highlight.enable = true;
+        indent.enable = true;
+        ensure_installed = [
+          "rust"
+          "bash"
+          "json"
+        ];
+      };
     };
     mini = {
       enable = true;
@@ -185,14 +189,13 @@
       cmp.enable = false;
     };
   };
-
   opts = {
     autowriteall = true;
     number = true;
     relativenumber = true;
     shiftwidth = 2;
     swapfile = false;
-    autoindent = true;
+    smartindent = true;
     breakindent = true;
   };
 }

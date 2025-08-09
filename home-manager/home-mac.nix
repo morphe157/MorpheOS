@@ -75,6 +75,7 @@ in
     ../configs/qutebrowser.nix
     ../configs/sketchybar.nix
     ../configs/vim.nix
+    ../configs/direnv.nix
   ];
 
   programs.nixvim = import ../configs/neovim;
