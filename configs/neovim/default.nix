@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -9,11 +8,9 @@
   imports = [
     ./keymaps.nix
     ./dap.nix
+    ./cmp.nix
+    ./lsp.nix
   ];
-  colorschemes = {
-    oxocarbon.enable = true;
-  };
-  clipboard.providers.wl-copy.enable = true;
   performance = {
     byteCompileLua = {
       configs = true;
@@ -22,17 +19,135 @@
     #combinePlugins.enable = true;
 
   };
+  colorschemes.oxocarbon.enable = true;
+
+  extraPlugins = [
+    (pkgs.vimUtils.buildVimPlugin {
+      name = "popviewer";
+      src = pkgs.fetchFromGitHub {
+        owner = "morphe157";
+        repo = "popviewer.nvim";
+        rev = "fa4feafdd783e7648a6fa59177eff9ce39875509";
+        hash = "sha256-dPolS56yk8eGLSNNIm5cn5eecgGDyKTzuUzr7UwvoPc=";
+      };
+    })
+  ];
+  extraConfigLua = ''
+    require('popviewer').setup()
+  '';
   plugins = {
-    nix.enable = true;
-    copilot-vim.enable = true;
+    lz-n.enable = true;
+    avante = {
+      enable = true;
+      lazyLoad.settings.cmd = [
+        "AvanteToggle"
+        "AvanteChatNew"
+      ];
+      settings = {
+        behaviour = {
+          use_cwd_as_project_root = true;
+          enable_cursor_planning_mode = true;
+        };
+        windows = {
+          width = 50;
+          wrap = true;
+        };
+        provider = "copilot";
+        providers = {
+          copilot = {
+            model = "claude-sonnet-4";
+          };
+        };
+      };
+    };
+    snacks = {
+      enable = true;
+      settings = {
+        bigfile.enabled = true;
+        dim.enabled = true;
+        quickfile.enabled = true;
+        statuscolumn = {
+          enabled = true;
+          left = [ "mark" ];
+        };
+      };
+    };
+    rustaceanvim = {
+      enable = true;
+      lazyLoad.settings.ft = [ "rust" ];
+      settings.server.default_settings = {
+        diagnostics.disabled = [ "inactive-code" ];
+        check = {
+          command = "clippy";
+          features = "all";
+        };
+      };
+    };
+    typescript-tools = {
+      enable = true;
+      lazyLoad.settings.ft = [
+        "typescript"
+        "typescriptreact"
+        "typescript.tsx"
+      ];
+    };
+    codesnap = {
+      enable = true;
+      lazyLoad.settings.cmd = [
+        "CodeSnap"
+        "CodeSnapHighlight"
+      ];
+      settings = {
+        mac_window_bar = false;
+        watermark = "";
+        save_path = "~/Desktop/";
+        has_line_number = true;
+        show_workspace = true;
+        bg_theme = "grape";
+      };
+    };
     gitsigns.enable = true;
     web-devicons.enable = true;
-    telescope.enable = true;
-    dressing.enable = true;
+    telescope = {
+      enable = true;
+      lazyLoad.settings.cmd = [
+        "Telescope"
+        "TelescopeLiveGrep"
+        "TelescopeGrepString"
+        "TelescopeFindFiles"
+        "TelescopeBuffers"
+      ];
+      settings.defaults.file_ignore_patterns = [
+        "%.jar"
+        "%.dat"
+        "%.dat"
+        "run/"
+        "gradle/"
+        "%.db"
+        "build/"
+      ];
+    };
+    copilot-lua = {
+      enable = true;
+      settings = {
+        suggestion.auto_trigger = false;
+      };
+    };
     lsp-status.enable = true;
+    markdown-preview = {
+      enable = true;
+    };
     treesitter = {
       enable = true;
-      settings.ensure_installed = "all";
+      settings = {
+        highlight.enable = true;
+        indent.enable = true;
+        ensure_installed = [
+          "rust"
+          "bash"
+          "json"
+        ];
+      };
     };
     mini = {
       enable = true;
@@ -42,6 +157,7 @@
         clue = { };
         colors = { };
         comment = { };
+        surround = { };
         diff = { };
         git = { };
         hipatterns = { };
@@ -61,35 +177,6 @@
         };
       };
     };
-    cmp = {
-      enable = true;
-      settings = {
-        # Preselect first entry
-        completion.completeopt = "menu,menuone,noinsert";
-        mapping = {
-          "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-          "<C-u>" = "cmp.mapping.scroll_docs(4)";
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<C-p>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-          "<C-n>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-        };
-        window = {
-          completion.border = "rounded";
-          documentation.border = "rounded";
-        };
-        sources = [
-          {
-            name = "nvim_lsp";
-          }
-          {
-            name = "path";
-          }
-          {
-            name = "buffer";
-          }
-        ];
-      };
-    };
     lspsaga = {
       enable = true;
       ui = {
@@ -97,46 +184,18 @@
         border = "rounded";
       };
     };
-    lsp = {
-      enable = true;
-      servers = {
-        nil_ls.enable = true;
-        nixd.enable = true;
-      };
-    };
-    conform-nvim = {
-      enable = true;
-      settings = {
-        default_format_opts.lsp_format = "fallback";
-        formatters_by_ft = {
-          nix = [ "nixfmt" ];
-        };
-        formatters = {
-          nixfmt = {
-            command = lib.getExe pkgs.nixfmt-rfc-style;
-          };
-        };
-      };
-    };
-    rustaceanvim = {
-      enable = true;
-      settings.server.default_settings.rust-analyzer.check.command = "clippy";
-    };
     lspkind = {
       enable = true;
-
-      cmp = {
-        enable = true;
-        maxWidth = 30;
-      };
+      cmp.enable = false;
     };
-    cmp-nvim-lsp.enable = true;
   };
-
   opts = {
+    autowriteall = true;
     number = true;
     relativenumber = true;
     shiftwidth = 2;
     swapfile = false;
+    smartindent = true;
+    breakindent = true;
   };
 }

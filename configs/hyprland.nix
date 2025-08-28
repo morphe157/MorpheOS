@@ -19,12 +19,17 @@ with lib;
         "ALT, mouse:272, movewindow"
       ];
       bind = [
-        "$mod,RETURN, exec, ${pkgs.alacritty}/bin/alacritty"
+        "$mod,RETURN, exec, alacritty"
         "$mod,Q, killactive,"
         "$mod,M, fullscreen,"
         "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc'"
         "$mod,P, exec, ${pkgs.firefox}/bin/firefox"
+        "$mod,S, exec, rofi-rbw --action copy"
         "$mod,B, exec, pkill -SIGUSR1 waybar"
+        "ALT,1, exec, copyq read 0 | copyq copy -"
+        "ALT,2, exec, copyq read 1 | copyq copy -"
+        "ALT,3, exec, copyq read 2 | copyq copy -"
+        "$mod,C, exec, copyq read 0 1 2 3 4 5 6 7 8 9 | grep . | rofi -dmenu | copyq copy -"
         "$mod, 1, workspace, 1"
         "$mod, 2, workspace, 2"
         "$mod, 3, workspace, 3"
@@ -103,6 +108,9 @@ with lib;
           workspace_swipe = true
           workspace_swipe_fingers = 3
         }
+        monitor = DP-3, 1920x1080@240, 0x0, 1
+        monitor = HDMI-A-5, 1920x1080@144, 1920x0, 1
+        exec-once = copyq
       ''
     ];
   };

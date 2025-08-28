@@ -1,22 +1,17 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  inputs,
-  lib,
-  config,
   pkgs,
+  lib,
   ...
 }:
 let
-  username = "morphe";
-  host = "morphe";
   nixvim = import (
     builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
-      # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-      ref = "main";
     }
   );
+  inherit (import ../config.nix) username gituser gitemail;
 in
 {
   # You can import other home-manager modules here
@@ -46,8 +41,8 @@ in
   };
 
   home = {
-    username = "morphe";
-    homeDirectory = "/home/morphe";
+    username = "${username}";
+    homeDirectory = lib.mkForce "/home/${username}";
     packages = with pkgs; [
       brightnessctl
       playerctl
@@ -63,18 +58,44 @@ in
       tgpt
       glow
       manix
-      wl-clipboard
       btop
       bat
+      pavucontrol
+      openssh
+      gcc
+      pkg-config
+      jdk
+      jre
+      gradle
+      prismlauncher
+      jetbrains.idea-community
+      vesktop
+      rbw
+      rofi-rbw-wayland
+      bitwarden-cli
+      pinentry-all
+      wtype
+      wtype
+      copyq
+      mpv 
+      wf-recorder
     ];
+
+    sessionVariables = {
+      TERMINAL = "alacritty";
+      EDITOR = "nvim";
+      USERNAME = "${username}";
+      GITUSER = "${gituser}";
+      GITEMAIL = "${gitemail}";
+    };
   };
 
   programs.nixvim = import ../configs/neovim;
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-    userName = "Morphe157";
-    userEmail = "mateusz_burdyna@protonmail.com";
+    userName = "${gituser}";
+    userEmail = "${gitemail}";
   };
 
   # Nicely reload system units when changing configs

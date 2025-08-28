@@ -12,6 +12,7 @@
         position = "top";
         modules-center = [ "hyprland/workspaces" ];
         modules-left = [
+          "custom/clipboard"
           "cpu"
           "memory"
           "pulseaudio"
@@ -31,6 +32,14 @@
           };
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
+        };
+        "custom/clipboard" = {
+          format = "{}";
+          max-length = 40;
+          restart-interval = "5";
+          exec = pkgs.writeShellScript "interval" ''
+            echo "$(copyq clipboard)"
+          '';
         };
         "clock" = {
           format = '' {:L%H:%M}'';

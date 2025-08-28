@@ -1,43 +1,54 @@
+{ pkgs, ... }:
 {
-  plugins.dap = {
-    enable = true;
-
-    adapters = {
-      servers.codelldb = {
-        port = 13000;
+  plugins = {
+    dap = {
+      enable = true;
+      lazyLoad.settings.cmd = [
+        "DapContinue"
+        "DapToggleBreakpoint"
+        "DapStepOver"
+        "DapStepInto"
+        "DapStepOut"
+        "DapTerminate"
+      ];
+      adapters.servers.lldb = {
+        port = "\${port}";
         executable = {
           command = "codelldb";
           args = [
             "--port"
-            "13000"
+            "\${port}"
           ];
         };
       };
-    };
-
-    configurations = {
-      rust = [
+      configurations.rust = [
         {
-          name = "rust";
-          type = "codelldb";
+          type = "lldb";
           request = "launch";
-          cwd = "\${workspaceFolder}";
-          program.__raw = ''
-            function()
-              return vim.fn.input('Executable path: ', vim.fn.getcwd() .. '/', 'file')
-            end
-          '';
+          name = "Debug (Main)";
+          sourceLanguages = [ "rust" ];
+          program = {
+            __raw = ''
+              function()
+                 local cwd = string.format("%s%s", vim.fn.getcwd(), sep)
+                 return vim.fn.input("Path to executable: ", cwd, "file")
+              end
+            '';
+          };
+          stopOnEntry = false;
         }
       ];
     };
-    extensions = {
-      dap-ui.enable = true;
-      dap-virtual-text.enable = true;
+    dap-ui = {
+      enable = true;
+      lazyLoad.settings = {
+	cmd = [
+	    "DapUiToggle"
+	    "DapUiOpen"
+	    "DapUiClose"
+	    "DapUiFloatElement"
+	];
+      };
     };
   };
-  extraConfigLua = ''
-    require('dap').listeners.after.event_initialized['dapui_config'] = require('dapui').open
-    require('dap').listeners.before.event_terminated['dapui_config'] = require('dapui').close
-    require('dap').listeners.before.event_exited['dapui_config'] = require('dapui').close
-  '';
 }

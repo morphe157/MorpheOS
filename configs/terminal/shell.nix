@@ -1,13 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  programs.zsh = {
+  programs.fish = {
     enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    loginExtra = ''
-      fastfetch
-    '';
     shellAliases = {
       ll = "eza -l";
       lla = "eza -la";
@@ -15,6 +9,9 @@
       gpt = "tgpt -q -w | glow";
       cat = "bat";
     };
+    shellInit = ''
+      source ~/init.fish
+    '';
   };
   programs.eza.enable = true;
   programs.zoxide = {
@@ -22,5 +19,15 @@
   };
   programs.starship = {
     enable = true;
+    settings = {
+      add_newline = true;
+      command_timeout = 1300;
+      scan_timeout = 50;
+      format = "$git_branch$git_status $username$hostname$directory";
+      character = {
+        success_symbol = "[](bold green) ";
+        error_symbol = "[✗](bold red) ";
+      };
+    };
   };
 }
