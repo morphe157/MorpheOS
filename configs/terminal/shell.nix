@@ -14,6 +14,7 @@
     '';
   };
   programs.eza.enable = true;
+  programs.direnv.enable = true;
   programs.zoxide = {
     enable = true;
   };
