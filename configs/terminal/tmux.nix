@@ -7,6 +7,7 @@
     keyMode = "vi";
     clock24 = true;
     baseIndex = 1;
+    plugins = [ pkgs.tmuxPlugins.dracula ];
     escapeTime = 0;
     extraConfig = ''
       bind-key -T copy-mode-vi v send-keys -X begin-selection
