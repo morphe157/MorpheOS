@@ -5,9 +5,14 @@
 # NixOS-WSL specific options are documented on the NixOS-WSL repository:
 # https://github.com/nix-community/NixOS-WSL
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let 
+let
   inherit (import ../config.nix) username;
 in
 {
@@ -18,6 +23,25 @@ in
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
+  environment.systemPackages = with pkgs; [
+    sshfs
+  ];
+
+  fileSystems."/home/morphe/rpi" = {
+    device = "morphe@192.168.0.221:/home/morphe";
+    fsType = "fuse.sshfs";
+    options = [
+      "IdentityFile=/home/morphe/.ssh/id_ed25519"
+      "allow_other"
+      "reconnect"
+      "ServerAliveInterval=15"
+      "ServerAliveCountMax=3"
+      "_netdev"
+      "x-systemd.automount"
+      "noauto"
+    ];
+  };
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -25,7 +49,6 @@ in
 
   wsl.enable = true;
   wsl.defaultUser = "morphe";
-  
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
