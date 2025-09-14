@@ -46,6 +46,7 @@ in
       eslint
       gnumake
       nodejs
+      (callPackage ../modules/kotlin_lsp.nix {})
     ];
 
     sessionVariables = {
