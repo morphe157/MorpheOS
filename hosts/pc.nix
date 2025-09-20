@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   inherit (import ../config.nix) username;
 in
@@ -10,18 +10,14 @@ in
   ];
   drivers.nvidia.enable = true;
 
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    grub = {
-      efiSupport = true;
-      device = "nodev";
-      useOSProber = true;
-      default = "2";
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+    settings = {
+      sortKey = "windows";
     };
   };
-  boot.kernelParams = [
-    "initcall_blacklist=simpledrm_platform_driver_init"
-  ];
 
   time.timeZone = "Europe/Warsaw";
 
@@ -70,6 +66,7 @@ in
     kitty
     gnumake
     greetd.tuigreet
+    sbctl
   ];
 
   networking.nameservers = [

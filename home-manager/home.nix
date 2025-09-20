@@ -79,6 +79,8 @@ in
       copyq
       mpv 
       wf-recorder
+      sbctl
+      niv
     ];
 
     sessionVariables = {
