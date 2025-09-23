@@ -39,10 +39,6 @@
     lz-n.enable = true;
     avante = {
       enable = true;
-      lazyLoad.settings.cmd = [
-        "AvanteToggle"
-        "AvanteChatNew"
-      ];
       settings = {
         behaviour = {
           use_cwd_as_project_root = true;
