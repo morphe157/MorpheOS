@@ -11,9 +11,6 @@ with lib;
     xwayland.enable = true;
     systemd.enable = true;
     settings = {
-      hyprlock = {
-
-      };
       "$mod" = "SUPER";
       bindm = [
         "ALT, mouse:272, movewindow"
@@ -22,9 +19,11 @@ with lib;
         "$mod,RETURN, exec, alacritty"
         "$mod,Q, killactive,"
         "$mod,M, fullscreen,"
-        "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc'"
+        "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc,ssh'"
+	"$mod,S, exec, hyprshot -m monitor output --clipboard-only"
+	"$mod + SHIFT, S, exec, hyprshot -m region output --clipboard-only"
         "$mod,P, exec, ${pkgs.firefox}/bin/firefox"
-        "$mod,S, exec, rofi-rbw --action copy"
+	"$mod,O, exec, ${pkgs.caprine}/bin/caprine"
         "$mod,B, exec, pkill -SIGUSR1 waybar"
         "ALT,1, exec, copyq read 0 | copyq copy -"
         "ALT,2, exec, copyq read 1 | copyq copy -"
@@ -104,10 +103,6 @@ with lib;
         env = MOZ_ENABLE_WAYLAND, 1
         exec-once = [workspace 1 silent] alacritty
         exec-once = [workspace 2 silent] firefox
-        gestures {
-          workspace_swipe = true
-          workspace_swipe_fingers = 3
-        }
         monitor = DP-3, 1920x1080@240, 0x0, 1
         monitor = HDMI-A-5, 1920x1080@144, 1920x0, 1
         exec-once = copyq

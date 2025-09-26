@@ -49,7 +49,7 @@ in
       ripgrep
       tldr
       rofi-mpd
-      rofi-screenshot
+      hyprshot
       spotify-player
       wev
       rustup
@@ -81,6 +81,7 @@ in
       wf-recorder
       sbctl
       niv
+      gh
     ];
 
     sessionVariables = {

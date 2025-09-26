@@ -19,7 +19,7 @@
   environment.systemPackages = with pkgs; [
     kitty
     gnumake
-    greetd.tuigreet
+    tuigreet
   ];
 
   fonts = {
@@ -112,7 +112,7 @@
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
           user = "${username}";
         };
       };

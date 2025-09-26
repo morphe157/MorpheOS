@@ -37,6 +37,7 @@
   '';
   plugins = {
     lz-n.enable = true;
+    ccc.enable = true;
     avante = {
       enable = true;
       settings = {
@@ -175,9 +176,11 @@
     };
     lspsaga = {
       enable = true;
-      ui = {
-        title = true;
-        border = "rounded";
+      settings = {
+	ui = {
+	  title = true;
+	  border = "rounded";
+	};
       };
     };
     lspkind = {

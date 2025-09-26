@@ -10,6 +10,9 @@ in
   ];
   drivers.nvidia.enable = true;
 
+  virtualisation.docker = {
+    enable = true;
+  };
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.lanzaboote = {
     enable = true;
@@ -17,6 +20,21 @@ in
     settings = {
       sortKey = "windows";
     };
+  };
+
+  fileSystems."/home/morphe/rpi" = {
+    device = "morphe@192.168.0.221:/home/morphe";
+    fsType = "fuse.sshfs";
+    options = [
+      "IdentityFile=/home/morphe/.ssh/id_ed25519"
+      "allow_other"
+      "reconnect"
+      "ServerAliveInterval=15"
+      "ServerAliveCountMax=3"
+      "_netdev"
+      "x-systemd.automount"
+      "noauto"
+    ];
   };
 
   time.timeZone = "Europe/Warsaw";
@@ -43,6 +61,7 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     shell = pkgs.fish;
     ignoreShellProgramCheck = true;
@@ -65,8 +84,9 @@ in
     git
     kitty
     gnumake
-    greetd.tuigreet
+    tuigreet
     sbctl
+    sshfs
   ];
 
   networking.nameservers = [
@@ -108,7 +128,6 @@ in
   hardware = {
     graphics.enable = true;
     graphics.enable32Bit = true;
-    pulseaudio.support32Bit = true;
     bluetooth = {
       enable = true;
       powerOnBoot = true;
@@ -124,12 +143,13 @@ in
 
   qt.enable = true;
   services = {
+    pulseaudio.support32Bit = true;
     blueman.enable = true;
     greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
           user = "${username}";
         };
       };
