@@ -47,6 +47,8 @@ in
       gnumake
       nodejs
       (callPackage ../modules/kotlin_lsp.nix {})
+      fd
+      fzf
     ];
 
     sessionVariables = {
@@ -64,5 +66,5 @@ in
     userEmail = "morphe157@protonmail.com";
   };
 
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
 }

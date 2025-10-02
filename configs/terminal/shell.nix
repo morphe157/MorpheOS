@@ -11,6 +11,7 @@
     };
     shellInit = ''
       source ~/init.fish
+      bind -a ctrl-t _fzf_search_directory
     '';
   };
   programs.eza.enable = true;
