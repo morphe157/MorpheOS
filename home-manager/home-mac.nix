@@ -37,6 +37,7 @@ in
       cmake
       fselect
       codelldb
+      cursor-cli
     ];
 
     sessionPath = [
