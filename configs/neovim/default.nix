@@ -38,6 +38,7 @@
   plugins = {
     lz-n.enable = true;
     ccc.enable = true;
+    colorful-menu.enable = true;
     avante = {
       enable = true;
       settings = {
@@ -72,11 +73,13 @@
     rustaceanvim = {
       enable = true;
       lazyLoad.settings.ft = [ "rust" ];
-      settings.server.default_settings = {
+      settings.server.default_settings.rust-analyzer = {
         diagnostics.disabled = [ "inactive-code" ];
         check = {
           command = "clippy";
           features = "all";
+          allTargets = true;
+          workspace = true;
         };
       };
     };
@@ -177,10 +180,10 @@
     lspsaga = {
       enable = true;
       settings = {
-	ui = {
-	  title = true;
-	  border = "rounded";
-	};
+        ui = {
+          title = true;
+          border = "rounded";
+        };
       };
     };
     lspkind = {
