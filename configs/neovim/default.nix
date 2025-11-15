@@ -39,25 +39,6 @@
     lz-n.enable = true;
     ccc.enable = true;
     colorful-menu.enable = true;
-    avante = {
-      enable = true;
-      settings = {
-        behaviour = {
-          use_cwd_as_project_root = true;
-          enable_cursor_planning_mode = true;
-        };
-        windows = {
-          width = 50;
-          wrap = true;
-        };
-        provider = "copilot";
-        providers = {
-          copilot = {
-            model = "claude-sonnet-4";
-          };
-        };
-      };
-    };
     snacks = {
       enable = true;
       settings = {
