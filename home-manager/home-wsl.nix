@@ -49,6 +49,7 @@ in
       (callPackage ../modules/kotlin_lsp.nix {})
       fd
       fzf
+      gcc
     ];
 
     sessionVariables = {
