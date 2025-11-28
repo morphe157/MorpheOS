@@ -57,7 +57,7 @@
         }
         {
           "if" = {
-            app-id = "org.mozilla.firefox";
+            app-id = "com.brave.Browser";
           };
           run = [
             "move-node-to-workspace 2"
@@ -90,12 +90,12 @@
       ];
       mode.main.binding = {
         "alt-enter" = "exec-and-forget zsh -c alacritty";
-        "alt-p" = "exec-and-forget zsh -c 'open -n /Applications/Firefox.app'";
+        "alt-p" = "exec-and-forget zsh -c 'open -n /Applications/Brave\\ Browser.app'";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
         "alt-q" = "close --quit-if-last-window";
 
-	"alt-w" = "fullscreen off";
+        "alt-w" = "fullscreen off";
 
         "alt-j" = "focus --boundaries-action wrap-around-the-workspace down";
         "alt-k" = "focus --boundaries-action wrap-around-the-workspace up";

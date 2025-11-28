@@ -34,10 +34,10 @@ in
       openjdk17
       rbw
       python312
-      cmake
       fselect
       codelldb
       cursor-cli
+      rustup
     ];
 
     sessionPath = [

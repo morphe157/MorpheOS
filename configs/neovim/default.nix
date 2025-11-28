@@ -56,12 +56,53 @@
       lazyLoad.settings.ft = [ "rust" ];
       settings.server.default_settings.rust-analyzer = {
         diagnostics.disabled = [ "inactive-code" ];
+        # Performance optimizations
         check = {
           command = "clippy";
           features = "all";
-          allTargets = true;
-          workspace = true;
+          allTargets = false;  # Only check current package, not all workspace members
+          workspace = false;   # Don't check entire workspace on save
         };
+        # Exclude large directories from indexing
+        files.excludeDirs = [
+          "target"
+          "target/debug"
+          "target/release"
+          ".git"
+          ".cargo"
+          "node_modules"
+          "tests/fixtures"
+          "tests/snapshots"
+          "tests/output"
+          "color_contrast_debug"
+          "docs"
+          "docker"
+        ];
+        # Exclude file patterns
+        files.exclude = [
+          "**/*.json"
+          "**/*.snap"
+          "**/*.png"
+          "**/*.jpg"
+          "**/*.jpeg"
+          "**/*.svg"
+          "**/*.ttf"
+          "**/*.otf"
+          "**/*.woff"
+          "**/*.woff2"
+          "**/*.hbs"
+          "**/Cargo.lock"
+        ];
+        # Indexing optimizations
+        indexing.threads = 0;  # Use all available cores
+        # Limit workspace symbol search
+        workspace.symbol.search.scope = "workspace";
+        # Build script optimizations
+        cargo.buildScripts.enable = true;
+        cargo.buildScripts.useRustcWrapper = true;
+	cargo.targetDir = true;
+        # Disable experimental features that may slow things down
+        diagnostics.enableExperimental = false;
       };
     };
     typescript-tools = {

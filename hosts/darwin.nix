@@ -80,7 +80,7 @@ in
       dock = {
         autohide = true;
         persistent-apps = [
-          "/Applications/Firefox.app"
+          "/Applications/Brave Browser.app/"
         ];
         persistent-others = [
           "/Users/${username}/Workspace/"
