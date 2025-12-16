@@ -1,4 +1,5 @@
 {
+	lsp.inlayHints.enable = true;
   plugins.lsp = {
     enable = true;
     servers = {
@@ -9,6 +10,10 @@
       };
       nil_ls.enable = true;
       kotlin_language_server = {
+        cmd = [
+          "kotlin-lsp"
+          "--stdio"
+        ];
         enable = true;
         settings = {
           "kotlin.formatting.ktfmt.indent" = 2;

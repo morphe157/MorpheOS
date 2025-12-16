@@ -221,5 +221,6 @@
     swapfile = false;
     smartindent = true;
     breakindent = true;
+    tabstop = 2;
   };
 }

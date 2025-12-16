@@ -50,6 +50,7 @@ in
       fd
       fzf
       gcc
+      openjdk21
     ];
 
     sessionVariables = {
