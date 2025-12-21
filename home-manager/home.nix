@@ -68,7 +68,6 @@ in
       jre
       gradle
       prismlauncher
-      jetbrains.idea-community
       vesktop
       rbw
       rofi-rbw-wayland
@@ -77,11 +76,13 @@ in
       wtype
       wtype
       copyq
-      mpv 
+      mpv
       wf-recorder
       sbctl
       niv
       gh
+      openjdk21
+      (callPackage ../modules/kotlin_lsp.nix { })
     ];
 
     sessionVariables = {
@@ -97,8 +98,10 @@ in
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-    userName = "${gituser}";
-    userEmail = "${gitemail}";
+    settings.user = {
+      name = "${gituser}";
+      email = "${gitemail}";
+    };
   };
 
   # Nicely reload system units when changing configs

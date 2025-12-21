@@ -1,10 +1,12 @@
 {
   config,
-  username,
   pkgs,
   stylix,
   ...
 }:
+let
+  inherit (import ../config.nix) username;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -20,6 +22,8 @@
     kitty
     gnumake
     tuigreet
+		alsa-utils
+		easyeffects
   ];
 
   fonts = {
@@ -32,7 +36,7 @@
         emoji = [ "Commit Mono" ];
         serif = [ "Commit Mono" ];
         sansSerif = [ "Commit Mono" ];
-      }; 
+      };
     };
   };
 
@@ -44,10 +48,7 @@
   };
 
   hardware.asahi = {
-    withRust = true;
     setupAsahiSound = true;
-    useExperimentalGPUDriver = true;
-    experimentalGPUInstallMode = "replace";
     #peripheralFirmwareDirectory = /root/test/nixos/apple-silicon-support;
   };
 
@@ -119,9 +120,11 @@
     };
     pipewire = {
       enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
       pulse.enable = true;
+      alsa.enable = true;
+      jack.enable = false;
+
+			wireplumber.enable = true;
     };
   };
 
