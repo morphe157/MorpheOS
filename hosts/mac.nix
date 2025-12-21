@@ -22,8 +22,10 @@ in
     kitty
     gnumake
     tuigreet
-		alsa-utils
-		easyeffects
+    alsa-utils
+    easyeffects
+    hyprlock
+    swayidle
   ];
 
   fonts = {
@@ -124,9 +126,26 @@ in
       alsa.enable = true;
       jack.enable = false;
 
-			wireplumber.enable = true;
+      wireplumber.enable = true;
     };
   };
 
+  systemd.user.services.hyprlock = {
+    description = "Idle handler for Hyprland (hyprlock + suspend)";
+    after = [ "graphical.target" ];
+    serviceConfig = {
+      ExecStart = ''
+        ${pkgs.swayidle}/bin/swayidle \
+          timeout 300 '${pkgs.hyprlock}/bin/hyprlock' \
+          timeout 600 'systemctl suspend'
+      '';
+      Restart = "always";
+    };
+    wantedBy = [ "default.target" ];
+  };
+
+  services.logind = {
+    lidSwitch = "suspend";
+  };
   system.stateVersion = "24.11";
 }

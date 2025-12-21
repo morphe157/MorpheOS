@@ -164,11 +164,6 @@
       settings = {
         highlight.enable = true;
         indent.enable = true;
-        ensure_installed = [
-          "rust"
-          "bash"
-          "json"
-        ];
       };
     };
     mini = {
