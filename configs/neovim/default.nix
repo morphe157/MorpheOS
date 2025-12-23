@@ -159,13 +159,6 @@
     markdown-preview = {
       enable = true;
     };
-    treesitter = {
-      enable = true;
-      settings = {
-        highlight.enable = true;
-        indent.enable = true;
-      };
-    };
     mini = {
       enable = true;
       modules = {
@@ -207,7 +200,29 @@
       enable = true;
       cmp.enable = false;
     };
-  };
+		treesitter = {
+			enable = true;
+			settings = {
+					highlight.enable = true;
+					indent.enable = true;
+			};
+
+			grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+				bash
+				json
+				lua
+				make
+				markdown
+				nix
+				regex
+				toml
+				yaml
+				rust
+				kotlin
+				python
+			];
+		};
+	};
   opts = {
     autowriteall = true;
     number = true;
@@ -217,5 +232,6 @@
     smartindent = true;
     breakindent = true;
     tabstop = 2;
+		expandtab = true;
   };
 }

@@ -64,8 +64,6 @@ in
       openssh
       gcc
       pkg-config
-      jdk
-      jre
       gradle
       prismlauncher
       vesktop
@@ -82,6 +80,9 @@ in
       niv
       gh
       openjdk21
+			gradle
+			gemini-cli
+			ktlint
       (callPackage ../modules/kotlin_lsp.nix { })
     ];
 
@@ -91,6 +92,7 @@ in
       USERNAME = "${username}";
       GITUSER = "${gituser}";
       GITEMAIL = "${gitemail}";
+			JAVA_HOME = "${pkgs.openjdk21}/lib/openjdk";
     };
   };
 

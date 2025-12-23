@@ -31,7 +31,7 @@ in
       nodejs
       btop
       delta
-      openjdk17
+      openjdk21
       rbw
       python312
       fselect

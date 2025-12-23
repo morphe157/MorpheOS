@@ -11,10 +11,14 @@ stdenv.mkDerivation rec {
   buildInputs = [ ];
   buildPhase = '''';
   installPhase = ''
-        	mkdir -p $out/bin
-        	mkdir -p $out/src
-        	cp -r $src/* $out/src
-    			chmod -R +x $out/src
-        	ln -s $out/src/kotlin-lsp.sh $out/bin/kotlin-lsp
+    mkdir -p $out/bin
+    mkdir -p $out/src
+    cp -r $src/* $out/src
+    chmod -R +x $out/src
+    # replace "$JAVA_BIN" with "java" in kotlin-lsp.sh
+    sed -i 's|"$JAVA_BIN"|java|g' $out/src/kotlin-lsp.sh
+		# remove entire line containing "chmod" 
+		sed -i '/chmod/d' $out/src/kotlin-lsp.sh
+    ln -s $out/src/kotlin-lsp.sh $out/bin/kotlin-lsp
   '';
 }

@@ -174,7 +174,7 @@
       options.silent = true;
       options.desc = "[LSP] Format";
       options.noremap = true;
-      action = "<cmd>lua vim.lsp.buf.format()<CR>";
+      action = "<cmd>lua require('conform').format()<CR>";
     }
     {
       mode = "n";
