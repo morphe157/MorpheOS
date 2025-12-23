@@ -1,4 +1,4 @@
-{ home, pkgs, ... }:
+{ pkgs, ... }:
 let
   userscripts = pkgs.fetchgit {
     url = "https://github.com/qutebrowser/qutebrowser.git";

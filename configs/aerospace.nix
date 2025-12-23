@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   services.aerospace = {
     enable = true;

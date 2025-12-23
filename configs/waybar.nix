@@ -10,12 +10,12 @@
       {
         layer = "top";
         position = "top";
+        spacing = 10;
         modules-center = [ "hyprland/workspaces" ];
         modules-left = [
-          "custom/clipboard"
           "cpu"
-          "memory"
           "pulseaudio"
+          "custom/disk"
         ];
         modules-right = [
           "tray"
@@ -23,6 +23,14 @@
           "network"
           "clock"
         ];
+        "custom/disk" = {
+          format = "󰋊 {}";
+          interval = 30;
+          exec = pkgs.writeShellScript "disk_usage" ''
+            df -hP /home | awk 'NR==2 {print $3 "/" $2 " (" $5 ")"}'
+          '';
+          tooltip = true;
+        };
         "hyprland/workspaces" = {
           format = "{name}";
           format-icons = {
@@ -32,14 +40,6 @@
           };
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
-        };
-        "custom/clipboard" = {
-          format = "{}";
-          max-length = 40;
-          restart-interval = "5";
-          exec = pkgs.writeShellScript "interval" ''
-            echo "$(copyq clipboard)"
-          '';
         };
         "clock" = {
           format = '' {:L%H:%M}'';
@@ -51,6 +51,11 @@
           format = " {usage:2}%";
           tooltip = true;
         };
+        "pulseaudio" = {
+          format = "󰕾 {volume}%";
+          format-muted = "󰝟 {volume}%";
+          tooltip = true;
+        };
         "network" = {
           format-icons = [
             "󰤯"
@@ -59,8 +64,9 @@
             "󰤥"
             "󰤨"
           ];
-          format-ethernet = " {bandwidthDownOctets}";
-          format-wifi = "{icon} {signalStrength}%";
+          interval = 1;
+          format-ethernet = "↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}";
+          format-wifi = "{icon} {signalStrength}% ↓ {bandwidthDownBytes} ↑ {bandwidthUpBytes}";
           format-disconnected = "󰤮";
           tooltip = false;
         };

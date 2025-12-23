@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   plugins = {
     dap = {
@@ -42,12 +41,12 @@
     dap-ui = {
       enable = true;
       lazyLoad.settings = {
-	cmd = [
-	    "DapUiToggle"
-	    "DapUiOpen"
-	    "DapUiClose"
-	    "DapUiFloatElement"
-	];
+        cmd = [
+          "DapUiToggle"
+          "DapUiOpen"
+          "DapUiClose"
+          "DapUiFloatElement"
+        ];
       };
     };
   };

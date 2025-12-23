@@ -7,47 +7,10 @@ in
     "nix-command"
     "flakes"
   ];
-  system.primaryUser = "${username}";
-
-  nixpkgs.hostPlatform = "aarch64-darwin";
-  system.stateVersion = 5;
-  programs.fish.enable = true;
-  users.users."${username}" = {
-    shell = pkgs.fish;
-  };
-
-  homebrew = {
-    enable = true;
-    casks = [
-      "sol"
-    ];
-  };
-
-  imports = [
-    ../configs/aerospace.nix
-    ../configs/stylix.nix
-  ];
-
-  services.sketchybar = {
-    enable = true;
-    # load sketchybarrc from the home directory
-    config = builtins.readFile "/Users/${username}/.config/sketchybar/sketchybarrc";
-  };
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.commit-mono
-    cmake
-    libiconv
-    zlib
-    libpng
-    libjpeg
-    libtiff
-    giflib
-    gcc
-    pkg-config
-  ];
-
   system = {
+    primaryUser = "${username}";
+    stateVersion = 5;
+
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToControl = true;
@@ -93,5 +56,43 @@ in
         ShowPathbar = true;
       };
     };
+
   };
+
+  nixpkgs.hostPlatform = "aarch64-darwin";
+  programs.fish.enable = true;
+  users.users."${username}" = {
+    shell = pkgs.fish;
+  };
+
+  homebrew = {
+    enable = true;
+    casks = [
+      "sol"
+    ];
+  };
+
+  imports = [
+    ../configs/aerospace.nix
+    ../configs/stylix.nix
+  ];
+
+  services.sketchybar = {
+    enable = true;
+    # load sketchybarrc from the home directory
+    config = builtins.readFile "/Users/${username}/.config/sketchybar/sketchybarrc";
+  };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.commit-mono
+    cmake
+    libiconv
+    zlib
+    libpng
+    libjpeg
+    libtiff
+    giflib
+    gcc
+    pkg-config
+  ];
 }

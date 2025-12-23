@@ -1,5 +1,3 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   pkgs,
   lib,
@@ -46,7 +44,7 @@ in
       eslint
       gnumake
       nodejs
-      (callPackage ../modules/kotlin_lsp.nix {})
+      (callPackage ../modules/kotlin_lsp.nix { })
       fd
       fzf
       gcc
@@ -59,13 +57,14 @@ in
       USERNAME = "${username}";
     };
   };
-
-  programs.nixvim = import ../configs/neovim;
-  programs.home-manager.enable = true;
-  programs.git = {
-    enable = true;
-    userName = "${username}";
-    userEmail = "morphe157@protonmail.com";
+  programs = {
+    nixvim = import ../configs/neovim;
+    home-manager.enable = true;
+    git = {
+      enable = true;
+      userName = "${username}";
+      userEmail = "morphe157@protonmail.com";
+    };
   };
 
   home.stateVersion = "25.11";

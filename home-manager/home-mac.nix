@@ -55,7 +55,7 @@ in
     (final: prev: {
       codelldb = final.stdenv.mkDerivation {
         pname = "codelldb";
-        version = final.vscode-extensions.vadimcn.vscode-lldb.version;
+        inherit (final.vscode-extensions.vadimcn.vscode-lldb) version;
 
         src = pkgs.vscode-extensions.vadimcn.vscode-lldb;
 
@@ -71,7 +71,7 @@ in
 
   imports = [
     nixvim.homeManagerModules.nixvim
-    ../configs/terminal 
+    ../configs/terminal
     ../configs/tridactyl.nix
     ../configs/qutebrowser.nix
     ../configs/sketchybar.nix

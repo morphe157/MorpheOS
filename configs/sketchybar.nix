@@ -1,4 +1,3 @@
-{ ... }:
 let
   inherit (import ../config.nix) username;
   sketchybarrc = ''

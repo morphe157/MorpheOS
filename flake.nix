@@ -20,7 +20,7 @@
 
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
 
@@ -53,10 +53,12 @@
             ./hosts/darwin.nix
             home-manager.darwinModules.home-manager
             {
-              home-manager.useGlobalPkgs = false;
-              home-manager.useUserPackages = true;
-              home-manager.users."${username}" = import home-manager/home-mac.nix;
-              home-manager.backupFileExtension = "backup";
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                users."${username}" = import home-manager/home-mac.nix;
+                backupFileExtension = "backup";
+              };
             }
           ];
         };
@@ -74,9 +76,11 @@
             nixos-apple-silicon.nixosModules.default
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = false;
-              home-manager.useUserPackages = true;
-              home-manager.users."${username}" = import home-manager/home.nix;
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                users."${username}" = import home-manager/home.nix;
+              };
             }
           ];
         };
@@ -86,14 +90,16 @@
           };
           # > Our main nixos configuration file <
           modules = [
-	    lanzaboote.nixosModules.lanzaboote
+            lanzaboote.nixosModules.lanzaboote
             ./hosts/pc.nix
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = false;
-              home-manager.useUserPackages = true;
-              home-manager.users."${username}" = import home-manager/home.nix;
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                users."${username}" = import home-manager/home.nix;
+              };
             }
           ];
         };
@@ -107,9 +113,11 @@
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = false;
-              home-manager.useUserPackages = true;
-              home-manager.users."${username}" = import home-manager/home-wsl.nix;
+              home-manager = {
+                useGlobalPkgs = false;
+                useUserPackages = true;
+                users."${username}" = import home-manager/home-wsl.nix;
+              };
             }
           ];
         };

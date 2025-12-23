@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let 
+let
   base16 = ''
     scheme: "MorpheOS"
     author: "Ethan Schoonover (modified by aramisgithub, morphe157)"

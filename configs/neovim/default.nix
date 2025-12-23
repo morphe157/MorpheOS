@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   ...
 }:
@@ -60,8 +59,8 @@
         check = {
           command = "clippy";
           features = "all";
-          allTargets = false;  # Only check current package, not all workspace members
-          workspace = false;   # Don't check entire workspace on save
+          allTargets = false; # Only check current package, not all workspace members
+          workspace = false; # Don't check entire workspace on save
         };
         # Exclude large directories from indexing
         files.excludeDirs = [
@@ -94,13 +93,15 @@
           "**/Cargo.lock"
         ];
         # Indexing optimizations
-        indexing.threads = 0;  # Use all available cores
+        indexing.threads = 0; # Use all available cores
         # Limit workspace symbol search
         workspace.symbol.search.scope = "workspace";
-        # Build script optimizations
-        cargo.buildScripts.enable = true;
-        cargo.buildScripts.useRustcWrapper = true;
-	cargo.targetDir = true;
+        cargo = {
+          # Build script optimizations
+          buildScripts.enable = true;
+          buildScripts.useRustcWrapper = true;
+          targetDir = true;
+        };
         # Disable experimental features that may slow things down
         diagnostics.enableExperimental = false;
       };
@@ -200,29 +201,29 @@
       enable = true;
       cmp.enable = false;
     };
-		treesitter = {
-			enable = true;
-			settings = {
-					highlight.enable = true;
-					indent.enable = true;
-			};
+    treesitter = {
+      enable = true;
+      settings = {
+        highlight.enable = true;
+        indent.enable = true;
+      };
 
-			grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-				bash
-				json
-				lua
-				make
-				markdown
-				nix
-				regex
-				toml
-				yaml
-				rust
-				kotlin
-				python
-			];
-		};
-	};
+      grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        bash
+        json
+        lua
+        make
+        markdown
+        nix
+        regex
+        toml
+        yaml
+        rust
+        kotlin
+        python
+      ];
+    };
+  };
   opts = {
     autowriteall = true;
     number = true;
@@ -232,6 +233,6 @@
     smartindent = true;
     breakindent = true;
     tabstop = 2;
-		expandtab = true;
+    expandtab = true;
   };
 }

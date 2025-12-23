@@ -80,9 +80,10 @@ in
       niv
       gh
       openjdk21
-			gradle
-			gemini-cli
-			ktlint
+      gradle
+      gemini-cli
+      ktlint
+      nixpkgs-lint
       (callPackage ../modules/kotlin_lsp.nix { })
     ];
 
@@ -92,17 +93,18 @@ in
       USERNAME = "${username}";
       GITUSER = "${gituser}";
       GITEMAIL = "${gitemail}";
-			JAVA_HOME = "${pkgs.openjdk21}/lib/openjdk";
+      JAVA_HOME = "${pkgs.openjdk21}/lib/openjdk";
     };
   };
-
-  programs.nixvim = import ../configs/neovim;
-  programs.home-manager.enable = true;
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "${gituser}";
-      email = "${gitemail}";
+  programs = {
+    nixvim = import ../configs/neovim;
+    home-manager.enable = true;
+    git = {
+      enable = true;
+      settings.user = {
+        name = "${gituser}";
+        email = "${gitemail}";
+      };
     };
   };
 
