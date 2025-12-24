@@ -103,6 +103,7 @@ with lib;
         env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
         env = SDL_VIDEODRIVER, x11
         env = MOZ_ENABLE_WAYLAND, 1
+        gesture = 3, horizontal, workspace
         exec-once = [workspace 1 silent] alacritty
         exec-once = [workspace 2 silent] firefox
         monitor = DP-3, 1920x1080@240, 0x0, 1
