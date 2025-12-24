@@ -1,24 +1,27 @@
-{ stdenv, fetchzip }:
-stdenv.mkDerivation {
-  name = "kotlin-lsp";
-  version = "1.0";
+{
+  stdenvNoCC,
+  fetchzip,
+  makeWrapper,
+  jdk21,
+}:
+stdenvNoCC.mkDerivation (finalAttrs: {
+  pname = "kotlin-lsp";
+  version = "0.253.10629";
   src = fetchzip {
-    url = "https://download-cdn.jetbrains.com/kotlin-lsp/261.13587.0/kotlin-lsp-261.13587.0-linux-aarch64.zip";
-    hash = "sha256-MhHEYHBctaDH9JVkN/guDCG1if9Bip1aP3n+JkvHCvA=";
+    url = "https://download-cdn.jetbrains.com/kotlin-lsp/${finalAttrs.version}/kotlin-${finalAttrs.version}.zip";
+    sha256 = "sha256-LCLGo3Q8/4TYI7z50UdXAbtPNgzFYtmUY/kzo2JCln0=";
     stripRoot = false;
   };
-  nativeBuildInputs = [ ];
-  buildInputs = [ ];
-  buildPhase = '''';
+
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
   installPhase = ''
-        mkdir -p $out/bin
-        mkdir -p $out/src
-        cp -r $src/* $out/src
-        chmod -R +x $out/src
-        # replace "$JAVA_BIN" with "java" in kotlin-lsp.sh
-        sed -i 's|"$JAVA_BIN"|java|g' $out/src/kotlin-lsp.sh
-    		# remove entire line containing "chmod" 
-    		sed -i '/chmod/d' $out/src/kotlin-lsp.sh
-        ln -s $out/src/kotlin-lsp.sh $out/bin/kotlin-lsp
+    mkdir -p $out/bin
+    cp -r $src $out/share
+    chmod +x $out/share/kotlin-lsp.sh
+    makeWrapper $out/share/kotlin-lsp.sh $out/bin/kotlin-lsp \
+      --set JAVA_HOME ${jdk21}
   '';
-}
+})
