@@ -83,6 +83,8 @@ with lib;
           natural_scroll = true;
           disable_while_typing = true;
           scroll_factor = 0.5;
+          clickfinger_behavior = true;
+          tap-to-click = false;
         };
 
       };
