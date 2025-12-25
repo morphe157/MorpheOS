@@ -8,6 +8,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ../configs/phone.nix
   ];
 
   boot = {

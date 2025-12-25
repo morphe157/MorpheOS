@@ -106,6 +106,8 @@ with lib;
         gesture = 3, horizontal, workspace
         exec-once = [workspace 1 silent] alacritty
         exec-once = [workspace 2 silent] firefox
+        exec-once = [workspace 3 silent] easyeffects
+        exec-once = [workspace 4 silent] valent
         monitor = DP-3, 1920x1080@240, 0x0, 1
         monitor = HDMI-A-5, 1920x1080@144, 1920x0, 1
         exec-once = copyq
