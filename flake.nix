@@ -27,6 +27,7 @@
       # Optional but recommended to limit the size of your system closure.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # nixos-aarch64-widevine.url = "github:epetousis/nixos-aarch64-widevine";
   };
 
   outputs =
@@ -38,6 +39,7 @@
       stylix,
       nix-darwin,
       lanzaboote,
+      # nixos-aarch64-widevine,
       ...
     }@inputs:
     let
@@ -76,6 +78,7 @@
             nixos-apple-silicon.nixosModules.default
             home-manager.nixosModules.home-manager
             {
+              # nixpkgs.overlays = [ nixos-aarch64-widevine.overlays.default ];
               home-manager = {
                 useGlobalPkgs = false;
                 useUserPackages = true;

@@ -25,7 +25,47 @@ in
     easyeffects
     hyprlock
     swayidle
+    widevine-cdm
+    firefox-bin
+    openvpn
   ];
+  environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
+  services = {
+
+    # environment.sessionVariables = {
+    #   MOZ_GMP_PATH = [ "${pkgs.widevine-cdm-lacros}/gmp-widevinecdm/system-installed" ];
+
+    openvpn = {
+      servers = {
+        protonvpn = {
+          config = "config /home/morphe/pl.protonvpn.udp.ovpn";
+          authUserPass = "/home/morphe/openpass";
+        };
+      };
+    };
+
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
+          user = "${username}";
+        };
+      };
+    };
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa.enable = true;
+      jack.enable = false;
+
+      wireplumber.enable = true;
+    };
+
+    logind = {
+      lidSwitch = "suspend";
+    };
+  };
 
   fonts = {
     packages = with pkgs; [
@@ -109,26 +149,6 @@ in
     wlr.enable = true;
   };
 
-  services = {
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
-          user = "${username}";
-        };
-      };
-    };
-    pipewire = {
-      enable = true;
-      pulse.enable = true;
-      alsa.enable = true;
-      jack.enable = false;
-
-      wireplumber.enable = true;
-    };
-  };
-
   systemd.user.services.hyprlock = {
     description = "Idle handler for Hyprland (hyprlock + suspend)";
     after = [ "graphical.target" ];
@@ -141,10 +161,6 @@ in
       Restart = "always";
     };
     wantedBy = [ "default.target" ];
-  };
-
-  services.logind = {
-    lidSwitch = "suspend";
   };
   system.stateVersion = "24.11";
 }

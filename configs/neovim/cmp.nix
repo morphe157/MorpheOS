@@ -1,5 +1,4 @@
 {
-  plugins.blink-copilot.enable = true;
   plugins.blink-cmp = {
     enable = true;
     settings = {
@@ -41,31 +40,14 @@
       sources = {
         cmdline = [ ];
         providers = {
-          copilot = {
-            async = true;
-            module = "blink-copilot";
-            name = "copilot";
-            # Optional configurations
-            opts = {
-              max_completions = 3;
-              max_attempts = 4;
-              kind = "Copilot";
-              debounce = 750;
-              auto_refresh = {
-                backward = true;
-                forward = true;
-              };
-            };
-          };
           lsp = {
             fallbacks = [ ];
-	    score_offset = 1000;
+            score_offset = 1000;
           };
         };
         default = [
           "lsp"
           "path"
-          "copilot"
           "buffer"
         ];
       };

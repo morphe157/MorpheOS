@@ -251,16 +251,6 @@
       action = "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Condition: '))<CR>";
     }
     {
-      mode = "i";
-      key = "<C-]>";
-      options = {
-        silent = true;
-        desc = "[Copilot] Accept line";
-        noremap = true;
-      };
-      action = "<cmd>Copilot suggestion accept<CR>";
-    }
-    {
       mode = "n";
       key = "<Tab>";
       options = {

@@ -150,12 +150,6 @@
         "build/"
       ];
     };
-    copilot-lua = {
-      enable = true;
-      settings = {
-        suggestion.auto_trigger = false;
-      };
-    };
     lsp-status.enable = true;
     markdown-preview = {
       enable = true;

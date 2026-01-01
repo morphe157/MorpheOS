@@ -54,7 +54,6 @@ in
       spotify-player
       wev
       rustup
-      firefox
       fastfetch
       tgpt
       glow
@@ -80,11 +79,12 @@ in
       sbctl
       niv
       gh
-      openjdk21
+      jdk
       gradle
       gemini-cli
       ktlint
       nixpkgs-lint
+      jetbrains.idea-community
       (callPackage ../modules/kotlin_lsp.nix { })
     ];
 
@@ -94,7 +94,7 @@ in
       USERNAME = "${username}";
       GITUSER = "${gituser}";
       GITEMAIL = "${gitemail}";
-      JAVA_HOME = "${pkgs.openjdk21}/lib/openjdk";
+      JAVA_HOME = "${pkgs.jdk}";
     };
   };
   programs = {

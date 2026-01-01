@@ -15,7 +15,7 @@ wsl: check-user-provided make_config copy_hardware_config
 	USERNAME=$(USERNAME) sudo nixos-rebuild switch --flake .#wsl --impure
 
 mac: check-user-provided make_config copy_hardware_config
-	NIXPKGS_ALLOW_UNFREE=1 USERNAME=$(USERNAME) sudo nixos-rebuild switch --flake .#mac --impure
+	sudo NIXPKGS_ALLOW_UNFREE=1 USERNAME=$(USERNAME) nixos-rebuild switch --flake .#mac --impure
 
 make_config:
 	@echo "{" > config.nix
