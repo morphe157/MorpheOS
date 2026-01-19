@@ -1,7 +1,22 @@
+{ pkgs, ... }:
 {
   programs = {
     fish = {
       enable = true;
+      plugins = [
+        {
+          name = "grc";
+          inherit (pkgs.fishPlugins.grc) src;
+        }
+        {
+          name = "pure";
+          inherit (pkgs.fishPlugins.pure) src;
+        }
+        {
+          name = "fzf-fish";
+          inherit (pkgs.fishPlugins.fzf-fish) src;
+        }
+      ];
       shellAliases = {
         ll = "eza -l";
         lla = "eza -la";

@@ -182,13 +182,13 @@
     }
     {
       mode = "n";
-      key = "<Space>r";
+      key = "<Space>t";
       options = {
         silent = true;
-        desc = "[Lspsaga] Rename";
+        desc = "[Lspsaga] Finder";
         noremap = true;
       };
-      action = "<cmd>Lspsaga rename<CR>";
+      action = "<cmd>Lspsaga finder<CR>";
     }
     {
       mode = "n";

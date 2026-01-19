@@ -38,10 +38,14 @@ in
       codelldb
       cursor-cli
       rustup
+      fzf
+      grc
+      fd
     ];
 
     sessionPath = [
       "/opt/homebrew/bin/"
+      "/Users/${username}/.cargo/bin/"
     ];
     sessionVariables = {
       TERMINAL = "alacritty";

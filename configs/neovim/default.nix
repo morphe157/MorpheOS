@@ -59,7 +59,7 @@
         check = {
           command = "clippy";
           features = "all";
-          allTargets = false; # Only check current package, not all workspace members
+          allTargets = true; # Only check current package, not all workspace members
           workspace = false; # Don't check entire workspace on save
         };
         # Exclude large directories from indexing
