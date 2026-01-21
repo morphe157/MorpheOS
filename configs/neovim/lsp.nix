@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  lsp.inlayHints.enable = true;
+  lsp.inlayHints.enable = false;
   plugins = {
     none-ls = {
       enable = true;
@@ -39,9 +39,10 @@
         };
         nil_ls.enable = true;
         kotlin_lsp = {
-          enable = true;
+          enable = false;
           package = pkgs.callPackage ../../modules/kotlin_lsp.nix { };
         };
+        kotlin_language_server.enable = true;
         java_language_server.enable = true;
         html.enable = true;
         nixd = {
