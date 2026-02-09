@@ -38,6 +38,7 @@
     lz-n.enable = true;
     ccc.enable = true;
     colorful-menu.enable = true;
+    csvview.enable = true;
     snacks = {
       enable = true;
       settings = {

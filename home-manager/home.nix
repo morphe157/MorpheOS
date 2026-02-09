@@ -84,7 +84,6 @@ in
       gemini-cli
       ktlint
       nixpkgs-lint
-      jetbrains.idea-community
       (callPackage ../modules/kotlin_lsp.nix { })
     ];
 
