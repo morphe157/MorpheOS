@@ -47,6 +47,8 @@ in
       fd
       gdk
       go
+      mpv
+      uv
     ];
 
     sessionPath = [
