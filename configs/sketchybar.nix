@@ -43,7 +43,7 @@ let
 
     sketchybar --hotload on
     sketchybar --update
-    sketchybar --bar topmost=on height=30 blur_radius=10 color=0xff000000
+    sketchybar --bar topmost=off height=30 blur_radius=10 color=0xff000000
   '';
 
   battery = ''
