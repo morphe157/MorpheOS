@@ -29,5 +29,11 @@ in
     base16Scheme = "${file}";
     polarity = "dark";
     enableReleaseChecks = false;
+    fonts = {
+      monospace = {
+        package = pkgs.fira-code;
+        name = "FiraCode Nerd Font";
+      };
+    };
   };
 }

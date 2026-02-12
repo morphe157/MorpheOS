@@ -67,8 +67,14 @@ in
 
   homebrew = {
     enable = true;
+    taps = [
+      "narugit/tap"
+    ];
     casks = [
       "sol"
+    ];
+    brews = [
+      "narugit/tap/smctemp"
     ];
   };
 
@@ -85,14 +91,6 @@ in
 
   fonts.packages = with pkgs; [
     nerd-fonts.commit-mono
-    cmake
-    libiconv
-    zlib
-    libpng
-    libjpeg
-    libtiff
-    giflib
-    gcc
-    pkg-config
+    nerd-fonts.fira-code
   ];
 }

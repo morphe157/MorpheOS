@@ -38,6 +38,8 @@ in
       codelldb
       cursor-cli
       rustup
+      mpv
+      uv
     ];
 
     sessionPath = [

@@ -11,7 +11,7 @@
         outer = {
           left = 20;
           bottom = 10;
-          top = 10;
+          top = 32;
           right = 20;
         };
       };

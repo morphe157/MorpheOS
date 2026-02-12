@@ -4,7 +4,7 @@ $(info Using username: ${USERNAME})
 
 
 ifeq ($(UNAME_S),Darwin)
-build: check-user-provided make_config copy_hardware_config
+build: check-user-provided make_config
 	NIXPKGS_ALLOW_UNFREE=1 USERNAME=$(USERNAME) darwin-rebuild switch --flake .#$(USERNAME) --impure --show-trace
 else
 build: check-user-provided make_config copy_hardware_config
