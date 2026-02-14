@@ -21,13 +21,6 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-
-      # Optional but recommended to limit the size of your system closure.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # nixos-aarch64-widevine.url = "github:epetousis/nixos-aarch64-widevine";
   };
 
   outputs =
@@ -38,7 +31,6 @@
       nixos-apple-silicon,
       stylix,
       nix-darwin,
-      lanzaboote,
       # nixos-aarch64-widevine,
       ...
     }@inputs:
@@ -93,7 +85,6 @@
           };
           # > Our main nixos configuration file <
           modules = [
-            lanzaboote.nixosModules.lanzaboote
             ./hosts/pc.nix
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager

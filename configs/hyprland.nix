@@ -22,7 +22,7 @@ with lib;
         "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc,ssh'"
         "$mod,S, exec, hyprshot -m monitor output --clipboard-only"
         "$mod + SHIFT, S, exec, hyprshot -m region output --clipboard-only"
-        "$mod,P, exec, firefox"
+        "$mod,P, exec, ${pkgs.brave}/bin/brave"
         "$mod,O, exec, ${pkgs.caprine}/bin/caprine"
         "$mod,B, exec, pkill -SIGUSR1 waybar"
         "ALT,1, exec, copyq read 0 | copyq copy -"

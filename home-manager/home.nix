@@ -40,7 +40,6 @@ in
     };
   };
 
-
   home = {
     username = "${username}";
     homeDirectory = lib.mkForce "/home/${username}";

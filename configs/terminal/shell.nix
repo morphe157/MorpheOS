@@ -10,6 +10,7 @@
         cat = "bat";
       };
       shellInit = ''
+        [ -f "~/init.fish" ] || touch ~/init.fish
         source ~/init.fish
         bind -a ctrl-t _fzf_search_directory
       '';

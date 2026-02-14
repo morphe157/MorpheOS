@@ -13,20 +13,20 @@ in
   virtualisation.docker = {
     enable = true;
   };
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
+  boot.loader.limine = {
     enable = true;
-    pkiBundle = "/var/lib/sbctl";
-    settings = {
-      sortKey = "windows";
-    };
+    extraEntries = ''
+/Windows
+  protocol: efi
+  path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+    '';
   };
 
   fileSystems."/home/morphe/rpi" = {
     device = "morphe@192.168.0.221:/home/morphe";
     fsType = "fuse.sshfs";
     options = [
-      "IdentityFile=/home/morphe/.ssh/id_ed25519"
+      "IdentityFile=/home/morphe/.ssh/id_morphe"
       "allow_other"
       "reconnect"
       "ServerAliveInterval=15"
@@ -40,20 +40,6 @@ in
   time.timeZone = "Europe/Warsaw";
 
   i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
-  console.keyMap = "pl2";
 
   users.users."${username}" = {
     isNormalUser = true;
@@ -114,6 +100,7 @@ in
     enable = true;
     xwayland.enable = true;
   };
+  programs.steam.enable = true;
 
   xdg.portal = {
     enable = true;
@@ -149,7 +136,7 @@ in
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd Hyprland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd start-hyprland";
           user = "${username}";
         };
       };
