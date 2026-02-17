@@ -1,5 +1,12 @@
 { pkgs, ... }:
+let 
+  jq = "${pkgs.jq}/bin/jq";
+in
 {
+  imports = [
+    ./weather.nix
+  ];
+
   programs.waybar = {
     enable = true;
     package = pkgs.waybar;
@@ -10,7 +17,7 @@
       {
         layer = "top";
         position = "top";
-        spacing = 10;
+        spacing = 30;
         modules-center = [ "hyprland/workspaces" ];
         modules-left = [
           "cpu"
@@ -18,6 +25,7 @@
           "custom/disk"
         ];
         modules-right = [
+          "custom/weather"
           "tray"
           "battery"
           "network"
@@ -31,6 +39,19 @@
           '';
           tooltip = true;
         };
+        "custom/weather" = {
+          format = "{}";
+          interval = 60 * 30;
+          exec = pkgs.writeShellScript "weather" ''
+            forecast=$($HOME/.config/waybar/scripts/weather.sh)
+
+            temperature=$(echo "$forecast" | ${jq} -r '.temperature')
+            temperature_unit=$(echo "$forecast" | ${jq} -r '.unit_temperature')
+
+            echo "''${temperature}''${temperature_unit}"
+          '';
+          tooltip = false;
+        };
         "hyprland/workspaces" = {
           format = "{name}";
           format-icons = {
@@ -42,7 +63,7 @@
           on-scroll-down = "hyprctl dispatch workspace e-1";
         };
         "clock" = {
-          format = '' {:L%H:%M}'';
+          format = " {:L%H:%M}";
           tooltip = true;
           tooltip-format = "<big>{:%A, %d.%B %Y }</big>\n<tt><small>{calendar}</small></tt>";
         };

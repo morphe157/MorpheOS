@@ -20,7 +20,7 @@ in
     ../configs/hyprland.nix
     ../configs/hyprlock.nix
     ../configs/rofi.nix
-    ../configs/waybar.nix
+    ../configs/waybar/waybar.nix
     ../configs/terminal
 
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -39,7 +39,6 @@ in
       allowUnfreePredicate = _: true;
     };
   };
-
 
   home = {
     username = "${username}";
@@ -85,6 +84,7 @@ in
       ktlint
       nixpkgs-lint
       (callPackage ../modules/kotlin_lsp.nix { })
+      github-copilot-cli
     ];
 
     sessionVariables = {
