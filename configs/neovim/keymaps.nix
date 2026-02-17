@@ -370,5 +370,15 @@
       };
       action = "<cmd>BufferGoto 6<CR>";
     }
+    {
+      mode = "n";
+      key = "s";
+      options = {
+        silent = true;
+        noremap = false;
+        desc = "Leap";
+      };
+      action = "<Plug>(leap)";
+    }
   ];
 }

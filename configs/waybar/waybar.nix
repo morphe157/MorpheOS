@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let 
+let
   jq = "${pkgs.jq}/bin/jq";
 in
 {
@@ -21,6 +21,7 @@ in
         modules-center = [ "hyprland/workspaces" ];
         modules-left = [
           "cpu"
+          "custom/audio_output"
           "pulseaudio"
           "custom/disk"
         ];
@@ -76,6 +77,14 @@ in
           format = "󰕾 {volume}%";
           format-muted = "󰝟 {volume}%";
           tooltip = true;
+        };
+        "custom/audio_output" = {
+          format = "{}";
+          interval = 5;
+          exec = pkgs.writeShellScript "audio_output" ''
+            wpctl inspect @DEFAULT_SINK@ | grep "media.name" | awk -F'"' '{print $2}' | sed 's|input||'
+          '';
+          tooltip = false;
         };
         "network" = {
           format-icons = [
