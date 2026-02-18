@@ -39,6 +39,8 @@
     ccc.enable = true;
     colorful-menu.enable = true;
     csvview.enable = true;
+    leap.enable = true;
+    hardtime.enable = true;
     snacks = {
       enable = true;
       settings = {
@@ -163,7 +165,17 @@
         clue = { };
         colors = { };
         comment = { };
-        surround = { };
+        surround = {
+          mappings = {
+            add = "gsa";
+            delete = "gsd";
+            find = "gsf";
+            find_left = "gsF";
+            highlight = "gsh";
+            replace = "gsr";
+            update_n_lines = "gsn";
+          };
+        };
         diff = { };
         git = { };
         hipatterns = { };

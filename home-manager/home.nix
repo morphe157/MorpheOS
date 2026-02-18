@@ -84,7 +84,7 @@ in
       ktlint
       nixpkgs-lint
       (callPackage ../modules/kotlin_lsp.nix { })
-      github-copilot-cli
+      opencode
     ];
 
     sessionVariables = {
