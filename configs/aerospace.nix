@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   services.aerospace = {
     enable = true;
@@ -11,7 +12,7 @@
         outer = {
           left = 20;
           bottom = 10;
-          top = 32;
+          top = 12;
           right = 20;
         };
       };
@@ -30,6 +31,18 @@
       };
 
       on-window-detected = [
+        {
+          "if" = {
+            app-id = "com.apple.finder";
+          };
+          run = [ "layout floating" ];
+        }
+        {
+          "if" = {
+            app-id = "com.anthropic.claudefordesktop";
+          };
+          run = [ "layout floating" ];
+        }
         {
           "if" = {
             app-id = "com.tinyspeck.slackmacgap";
@@ -56,7 +69,7 @@
         }
         {
           "if" = {
-            app-id = "com.brave.Browser";
+            app-id = "com.mozilla.Firefox";
           };
           run = [
             "move-node-to-workspace 2"
@@ -89,7 +102,7 @@
       ];
       mode.main.binding = {
         "alt-enter" = "exec-and-forget zsh -c alacritty";
-        "alt-p" = "exec-and-forget zsh -c 'open -n /Applications/Brave\\ Browser.app'";
+        "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
         "alt-q" = "close --quit-if-last-window";

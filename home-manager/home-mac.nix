@@ -84,10 +84,9 @@ in
   imports = [
     nixvim.homeManagerModules.nixvim
     ../configs/terminal
-    ../configs/tridactyl.nix
-    ../configs/qutebrowser.nix
     ../configs/sketchybar.nix
     ../configs/vim.nix
+    ../configs/firefox.nix
   ];
 
   programs.nixvim = import ../configs/neovim;

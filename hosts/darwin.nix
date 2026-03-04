@@ -43,7 +43,7 @@ in
       dock = {
         autohide = true;
         persistent-apps = [
-          "/Applications/Brave Browser.app/"
+          "/Applications/Firefox.app/"
         ];
         persistent-others = [
           "/Users/${username}/Workspace/"
@@ -72,6 +72,7 @@ in
     ];
     casks = [
       "sol"
+      "firefox"
     ];
     brews = [
       "narugit/tap/smctemp"
