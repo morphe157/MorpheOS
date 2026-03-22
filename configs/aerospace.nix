@@ -148,6 +148,9 @@
         "alt-b" = "focus-monitor left";
         "alt-n" = "focus-monitor right";
 
+        # Toggle sketchybar show/hide with Control+B
+        "alt-o" = "exec-and-forget zsh -c 'STATE_FILE=/tmp/sketchybar_hidden; if [ -f \"$STATE_FILE\" ]; then rm \"$STATE_FILE\"; sketchybar --bar hidden=off; else touch \"$STATE_FILE\"; sketchybar --bar hidden=on; fi'";
+
         "alt-shift-b" = "move-node-to-monitor --focus-follows-window left";
         "alt-shift-n" = "move-node-to-monitor --focus-follows-window right";
 

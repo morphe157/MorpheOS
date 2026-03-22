@@ -1,6 +1,5 @@
 { pkgs, ... }:
 let
-  inherit (import ../config.nix) username;
   sketchybarrc = ''
     PLUGIN_DIR="$HOME/.config/sketchybar/scripts"
     RED=0xffff0000
@@ -53,7 +52,7 @@ let
 
     sketchybar --hotload on
     sketchybar --update
-    sketchybar --bar topmost=off height=30 blur_radius=10 color=0xff000000
+    sketchybar --bar topmost=on height=30 blur_radius=10 color=0xff000000
   '';
 
   battery = ''
@@ -115,18 +114,18 @@ let
     fi
 
     # update sketchybar shown
-    sketchybar --set $NAME temperature label="''${TEMPERATURE}󰔄"
+    sketchybar --set temperature label="''${TEMPERATURE}󰔄"
   '';
   date_time = ''
-    sketchybar -m --set $NAME date_time label="$(date '+%d.%m.%Y %H:%M:%S')"
+    sketchybar -m --set date_time label="$(date '+%d.%m.%Y %H:%M:%S')"
   '';
   bluetooth = ''
     DEVICE="$(${pkgs.switchaudio-osx}/bin/SwitchAudioSource -c)"
 
     if [[ "$DEVICE" == *"MacBook"* ]] || [ -z "$DEVICE" ]; then
-      sketchybar -m --set $NAME bluetooth drawing=off
+      sketchybar -m --set bluetooth drawing=off
     else
-      sketchybar -m --set $NAME bluetooth drawing=on
+      sketchybar -m --set bluetooth drawing=on
     fi
   '';
 in
