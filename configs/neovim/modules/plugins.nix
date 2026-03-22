@@ -1,5 +1,15 @@
 { pkgs, ... }:
 {
+  # Import per-plugin fragments for non-trivial plugin configs
+  imports = [
+    ./plugins/snacks.nix
+    ./plugins/rustaceanvim.nix
+    ./plugins/codesnap.nix
+    ./plugins/mini.nix
+    ./plugins/treesitter.nix
+  ];
+
+  # Keep small, trivial plugin toggles here
   plugins = {
     lz-n.enable = true;
     ccc.enable = true;
@@ -7,8 +17,7 @@
     csvview.enable = true;
     leap.enable = true;
     hardtime.enable = true;
-    # delegated to plugins/snacks.nix
-    # delegated to plugins/rustaceanvim.nix
+
     typescript-tools = {
       enable = true;
       lazyLoad.settings.ft = [
@@ -17,7 +26,7 @@
         "typescript.tsx"
       ];
     };
-    # delegated to plugins/codesnap.nix
+
     gitsigns.enable = true;
     web-devicons.enable = true;
     telescope = {
@@ -39,11 +48,10 @@
         "build/"
       ];
     };
+
     lsp-status.enable = true;
-    markdown-preview = {
-      enable = true;
-    };
-    # delegated to plugins/mini.nix
+    markdown-preview = { enable = true; };
+
     oil = {
       enable = true;
       settings = {
@@ -56,6 +64,7 @@
         };
       };
     };
+
     lspsaga = {
       enable = true;
       settings = {
@@ -65,10 +74,10 @@
         };
       };
     };
+
     lspkind = {
       enable = true;
       cmp.enable = false;
     };
-    # delegated to plugins/treesitter.nix
   };
 }
