@@ -16,6 +16,7 @@ in
       remapCapsLockToControl = true;
     };
     defaults = {
+      spaces.spans-displays = true;
       LaunchServices.LSQuarantine = false;
       NSGlobalDomain = {
         AppleInterfaceStyle = "Dark";
@@ -49,6 +50,7 @@ in
           "/Users/${username}/Workspace/"
           "/Users/${username}/Downloads/"
         ];
+        expose-group-apps = true;
       };
       finder = {
         AppleShowAllExtensions = true;

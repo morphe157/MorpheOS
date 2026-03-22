@@ -3,6 +3,7 @@
   services.aerospace = {
     enable = true;
     settings = {
+      automatically-unhide-macos-hidden-apps = true;
       gaps = {
         inner = {
           horizontal = 20;
