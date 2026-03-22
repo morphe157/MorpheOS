@@ -82,7 +82,7 @@ in
   ];
 
   imports = [
-    nixvim.homeManagerModules.nixvim
+    nixvim.homeModules.nixvim
     ../configs/terminal
     ../configs/sketchybar.nix
     ../configs/vim.nix

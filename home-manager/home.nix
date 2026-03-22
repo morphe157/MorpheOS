@@ -16,7 +16,7 @@ in
 {
   # You can import other home-manager modules here
   imports = [
-    nixvim.homeManagerModules.nixvim
+    nixvim.homeModules.nixvim
     ../configs/hyprland.nix
     ../configs/hyprlock.nix
     ../configs/rofi.nix
