@@ -9,10 +9,13 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
-  gdk = pkgs.google-cloud-sdk.withExtraComponents( with pkgs.google-cloud-sdk.components; [
-    gke-gcloud-auth-plugin
-    pubsub-emulator
-  ]);
+  gdk = pkgs.google-cloud-sdk.withExtraComponents (
+    with pkgs.google-cloud-sdk.components;
+    [
+      gke-gcloud-auth-plugin
+      pubsub-emulator
+    ]
+  );
   inherit (import ../config.nix) username;
 in
 {
@@ -59,7 +62,7 @@ in
       TERMINAL = "alacritty";
       EDITOR = "nvim";
       USERNAME = "${username}";
-      LIBRARY_PATH = ''${lib.makeLibraryPath [ pkgs.libiconv ]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
+      LIBRARY_PATH = "${lib.makeLibraryPath [ pkgs.libiconv ]}\${LIBRARY_PATH:+:$LIBRARY_PATH}";
     };
   };
 

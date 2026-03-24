@@ -1,10 +1,10 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }:
 
-with lib;
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -68,7 +68,6 @@ with lib;
       ];
       bindl = [
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        # Requires playerctl
         ",XF86AudioPlay, exec, playerctl play-pause"
         ",XF86AudioPrev, exec, playerctl previous"
         ",XF86AudioNext, exec, playerctl next"
@@ -89,14 +88,14 @@ with lib;
 
       };
     };
-    extraConfig = concatStrings [
+    extraConfig = lib.concatStrings [
       ''
         env = NIXOS_OZONE_WL, 1
         env = NIXPKGS_ALLOW_UNFREE, 1
         env = XDG_CURRENT_DESKTOP, Hyprland
         env = XDG_SESSION_TYPE, wayland
         env = XDG_SESSION_DESKTOP, Hyprland
-        env = GDK_BACKEND, wayland, x11
+        env = GDK_BACKEND, wayland,x11
         env = CLUTTER_BACKEND, wayland
         env = QT_QPA_PLATFORM=wayland;xcb
         env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
@@ -108,8 +107,9 @@ with lib;
         exec-once = [workspace 2 silent] firefox
         exec-once = [workspace 3 silent] easyeffects
         exec-once = [workspace 4 silent] valent
-        monitor = DP-3, 1920x1080@240, 0x0, 1
-        monitor = HDMI-A-5, 1920x1080@144, 1920x0, 1
+      ''
+      (lib.optionalString (config.morphe.hyprlandMonitors or "" != "") config.morphe.hyprlandMonitors)
+      ''
         exec-once = copyq
       ''
     ];

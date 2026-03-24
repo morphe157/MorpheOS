@@ -30,6 +30,12 @@ copy_hardware_config:
 clean:
 	sudo nix-collect-garbage -d
 
+check:
+	nix build .#nixosConfigurations.pc.config.system.build.toplevel --dry-run --impure
+
+fmt:
+	nix fmt -- --impure
+
 check-user-provided:
 ifndef USERNAME
 	$(error "Please provide USERNAME env variable, e.g. ./make USERNAME=myuser")

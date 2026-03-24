@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 
@@ -9,6 +10,7 @@ in
 {
   imports = [
     <nixos-wsl/modules>
+    ../modules/sshfs.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -17,19 +19,12 @@ in
     sshfs
   ];
 
-  fileSystems."/home/morphe/rpi" = {
-    device = "morphe@192.168.0.221:/home/morphe";
-    fsType = "fuse.sshfs";
-    options = [
-      "IdentityFile=/home/morphe/.ssh/id_ed25519"
-      "allow_other"
-      "reconnect"
-      "ServerAliveInterval=15"
-      "ServerAliveCountMax=3"
-      "_netdev"
-      "x-systemd.automount"
-      "noauto"
-    ];
+  morphe.sshfs = {
+    enable = true;
+    host = "morphe@192.168.0.221";
+    remotePath = "/home/morphe";
+    mountPoint = "/home/${username}/rpi";
+    identityFile = "/home/${username}/.ssh/id_ed25519";
   };
 
   nix.settings.experimental-features = [

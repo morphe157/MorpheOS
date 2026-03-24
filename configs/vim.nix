@@ -70,15 +70,15 @@ in
           autocmd filetype netrw call NetrwMapping()
       augroup END
     '';
-      plugins = with pkgs.vimPlugins; [
-        vim-sensible
-        rust-vim
-        ale
-        copilot-vim
-        leaderf
-        auto-pairs
-        vim-surround
-        vim-vinegar
-      ];
+    plugins = with pkgs.vimPlugins; [
+      vim-sensible
+      rust-vim
+      ale
+      copilot-vim
+      leaderf
+      auto-pairs
+      vim-surround
+      vim-vinegar
+    ];
   };
 }

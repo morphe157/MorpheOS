@@ -371,7 +371,10 @@
       action = "<cmd>BufferGoto 6<CR>";
     }
     {
-      mode = ["n" "v"];
+      mode = [
+        "n"
+        "v"
+      ];
       key = "s";
       options = {
         silent = true;

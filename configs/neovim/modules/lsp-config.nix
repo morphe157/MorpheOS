@@ -35,7 +35,9 @@
       servers = {
         ruff.enable = true;
         pyright.enable = true;
-        lua_ls = { enable = true; };
+        lua_ls = {
+          enable = true;
+        };
         nil_ls.enable = true;
         kotlin_lsp = {
           enable = false;
@@ -44,7 +46,10 @@
         kotlin_language_server.enable = true;
         java_language_server.enable = true;
         html.enable = true;
-        nixd = { enable = true; settings = { }; };
+        nixd = {
+          enable = true;
+          settings = { };
+        };
       };
     };
   };

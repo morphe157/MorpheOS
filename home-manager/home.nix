@@ -3,31 +3,21 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }:
 let
-  nixvim = import (
-    builtins.fetchGit {
-      url = "https://github.com/nix-community/nixvim";
-    }
-  );
   inherit (import ../config.nix) username gituser gitemail;
 in
 {
   # You can import other home-manager modules here
   imports = [
-    nixvim.homeModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ../configs/hyprland.nix
     ../configs/hyprlock.nix
     ../configs/rofi.nix
     ../configs/waybar/waybar.nix
     ../configs/terminal
-
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
   ];
 
   nixpkgs = {
@@ -71,7 +61,6 @@ in
       bitwarden-cli
       pinentry-all
       wtype
-      wtype
       copyq
       mpv
       wf-recorder
@@ -79,7 +68,6 @@ in
       niv
       gh
       jdk
-      gradle
       gemini-cli
       ktlint
       nixpkgs-lint

@@ -19,8 +19,6 @@
       configs = true;
       plugins = true;
     };
-    #combinePlugins.enable = true;
-
   };
   colorschemes.oxocarbon.enable = true;
 
@@ -38,7 +36,4 @@
   extraConfigLua = ''
     require('popviewer').setup()
   '';
-
-# Plugins moved to ./modules/plugins.nix
-  # opts moved to ./modules/opts.nix
 }
