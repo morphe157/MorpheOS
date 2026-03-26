@@ -24,6 +24,13 @@
         gpt = "tgpt -q -w | glow";
         cat = "bat";
       };
+      functions.tmux = ''
+        if test (count $argv) -eq 0
+          command tmux attach 2>/dev/null; or command tmux new-session
+        else
+          command tmux $argv
+        end
+      '';
       shellInit = ''
         [ -f "~/init.fish" ] || touch ~/init.fish
         source ~/init.fish

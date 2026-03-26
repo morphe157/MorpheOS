@@ -8,7 +8,10 @@
       general.import = [
         "${pkgs.alacritty-theme}/blood_moon.toml"
       ];
-      terminal.shell = "${pkgs.tmux}/bin/tmux";
+      terminal.shell = {
+        program = "${pkgs.fish}/bin/fish";
+        args = [ "-c" "tmux" ];
+      };
       scrolling.history = 10000;
       window = {
         startup_mode = "Maximized";

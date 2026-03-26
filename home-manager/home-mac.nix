@@ -49,6 +49,7 @@ in
       go
       mpv
       uv
+      claude-code
     ];
 
     sessionPath = [
