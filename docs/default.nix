@@ -4,5 +4,4 @@ let
   keymaps = import ../configs/neovim/keymaps.nix;
   path = builtins.getEnv "PWD";
 in
-  builtins.toFile "hello.md" "HI"
-
+builtins.toFile "hello.md" "HI"

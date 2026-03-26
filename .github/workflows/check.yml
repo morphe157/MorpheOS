@@ -1,0 +1,44 @@
+name: Check
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v26
+        with:
+          extra_nix_config: |
+            substituters = https://cache.nixos.org https://nix-community.cachix.org
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrA3kbzuHflYiP2HC1DlB9F0= nix-community.cachix.org-1:mB9FSh9qf2dCJMDS2vmSRRvwsyo5NUtPfUt9GBHg2Hs=
+
+      - name: Check formatting
+        run: nix fmt -- --check .
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v26
+        with:
+          extra_nix_config: |
+            substituters = https://cache.nixos.org https://nix-community.cachix.org
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrA3kbzuHflYiP2HC1DlB9F0= nix-community.cachix.org-1:mB9FSh9qf2dCJMDS2vmSRRvwsyo5NUtPfUt9GBHg2Hs=
+
+      - name: Build PC
+        run: nix build .#nixosConfigurations.pc.config.system.build.toplevel
+
+      - name: Build WSL
+        run: nix build .#nixosConfigurations.wsl.config.system.build.toplevel
+
+      - name: Build Mac
+        run: nix build .#nixosConfigurations.mac.config.system.build.toplevel
+        env:
+          NIXPKGS_ALLOW_UNFREE: 1

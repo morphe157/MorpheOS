@@ -49,6 +49,7 @@ in
       fzf
       gcc
       openjdk21
+      opencode
     ];
 
     sessionVariables = {

@@ -50,7 +50,9 @@
     };
 
     lsp-status.enable = true;
-    markdown-preview = { enable = true; };
+    markdown-preview = {
+      enable = true;
+    };
 
     oil = {
       enable = true;
