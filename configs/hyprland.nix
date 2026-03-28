@@ -6,6 +6,12 @@
 }:
 
 {
+  home.packages = with pkgs; [
+    brightnessctl
+    playerctl
+    hyprshot
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;

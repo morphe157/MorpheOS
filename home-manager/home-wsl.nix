@@ -15,6 +15,7 @@ in
   # You can import other home-manager modules here
   imports = [
     nixvim.homeModules.nixvim
+    ./common.nix
     ../configs/terminal
   ];
 
@@ -31,25 +32,10 @@ in
     username = "${username}";
     homeDirectory = lib.mkForce "/home/${username}";
     packages = with pkgs; [
-      ripgrep
-      tldr
-      rustup
-      fastfetch
-      tgpt
-      glow
-      btop
-      bat
-      rbw
-      bitwarden-cli
-      eslint
       gnumake
-      nodejs
-      (callPackage ../modules/kotlin_lsp.nix { })
-      fd
-      fzf
       gcc
       openjdk21
-      opencode
+      nodejs
     ];
 
     sessionVariables = {

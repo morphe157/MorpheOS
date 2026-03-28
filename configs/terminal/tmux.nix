@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    tmux
+  ];
+
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";

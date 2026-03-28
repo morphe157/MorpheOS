@@ -25,34 +25,19 @@ in
     stateVersion = "24.11";
     packages = with pkgs; [
       nerd-fonts.commit-mono
-      fastfetch
-      eza
-      zoxide
-      tmux
-      bat
-      ripgrep
-      tgpt
-      glow
-      tldr
       git-lfs
-      nodejs
       btop
       delta
-      openjdk21
-      rbw
       python312
       fselect
-      codelldb
       cursor-cli
-      rustup
-      fzf
-      grc
-      fd
       gdk
       go
-      mpv
       uv
       claude-code
+      openjdk21
+      nodejs
+      mpv
     ];
 
     sessionPath = [
@@ -87,6 +72,7 @@ in
 
   imports = [
     nixvim.homeModules.nixvim
+    ./common.nix
     ../configs/terminal
     ../configs/sketchybar.nix
     ../configs/vim.nix

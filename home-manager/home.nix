@@ -13,6 +13,7 @@ in
   # You can import other home-manager modules here
   imports = [
     inputs.nixvim.homeModules.nixvim
+    ./common.nix
     ../configs/hyprland.nix
     ../configs/hyprlock.nix
     ../configs/rofi.nix
@@ -34,21 +35,10 @@ in
     username = "${username}";
     homeDirectory = lib.mkForce "/home/${username}";
     packages = with pkgs; [
-      brightnessctl
-      playerctl
-      ripgrep
-      tldr
       rofi-mpd
-      hyprshot
       spotify-player
       wev
-      rustup
-      fastfetch
-      tgpt
-      glow
       manix
-      btop
-      bat
       pavucontrol
       openssh
       gcc
@@ -56,9 +46,7 @@ in
       gradle
       prismlauncher
       vesktop
-      rbw
       rofi-rbw-wayland
-      bitwarden-cli
       pinentry-all
       wtype
       copyq
@@ -71,8 +59,6 @@ in
       gemini-cli
       ktlint
       nixpkgs-lint
-      (callPackage ../modules/kotlin_lsp.nix { })
-      opencode
     ];
 
     sessionVariables = {
