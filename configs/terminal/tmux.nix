@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    tmux
+  ];
   home.file.".claude/statusline.sh" = {
     executable = true;
     text = ''

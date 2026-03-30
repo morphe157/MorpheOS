@@ -1,5 +1,16 @@
 { pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    grc
+    eza
+    zoxide
+    bat
+    ripgrep
+    tldr
+    fzf
+    fd
+    btop
+  ];
   programs = {
     fish = {
       enable = true;
