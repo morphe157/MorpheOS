@@ -22,7 +22,7 @@
       EMPTY=$(( BAR_WIDTH - FILLED ))
       BAR=$(printf '%0.s█' $(seq 1 $FILLED 2>/dev/null))
       BAR="''${BAR}$(printf '%0.s░' $(seq 1 $EMPTY 2>/dev/null))"
-      RATE_FMT="''${BAR} ''${RATE_INT}%%"
+      RATE_FMT="''${BAR} ''${RATE_INT}%"
 
       STATUS="$MODEL | $COST_FMT | 5h:$RATE_FMT"
 
