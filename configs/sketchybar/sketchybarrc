@@ -1,0 +1,52 @@
+PLUGIN_DIR="$HOME/.config/sketchybar/scripts"
+RED=0xffff0000
+BLUE=0xff0000ff
+WHITE=0xffffffff
+
+sketchybar --default \
+  icon.font="CommitMono Nerd Font Mono:Regular:28.0" \
+  label.font="CommitMono Nerd Font Mono:Regular:17.0" \
+  icon.color=$WHITE \
+  label.color=$WHITE
+
+
+# battery
+sketchybar --add item battery right                                 \
+           --set      battery icon=""                               \
+                              icon.color=$RED                   \
+                              icon.padding_right=5               \
+                              label="--%"                           \
+                              script="$PLUGIN_DIR/battery.sh"         \
+                              update_freq=20
+
+# date time
+sketchybar --add item date_time center \
+           --set      date_time \
+                          label="" \
+                          script="$PLUGIN_DIR/date_time.sh" \
+                          update_freq=1
+
+# cpu temperature
+sketchybar --add item temperature left \
+           --set temperature \
+           script="$PLUGIN_DIR/temperature.sh" \
+           icon="󱤋" \
+           icon.color=$BLUE \
+           icon.padding_right=5 \
+           padding_right=0 \
+           padding_left=0 \
+           label.padding_right=5 \
+           update_freq=5
+
+sketchybar -m --add       event              bluetooth_change "com.apple.bluetooth.status"                       \
+                                                                                                                 \
+              --add       item bluetooth    right                                                               \
+              --set       bluetooth         icon=""                                                    \
+                                            script="$PLUGIN_DIR/bluetooth.sh"                \
+                                            padding_right=10  \
+                                            drawing=off \
+              --subscribe bluetooth         bluetooth_change
+
+sketchybar --hotload on
+sketchybar --update
+sketchybar --bar topmost=on height=30 blur_radius=10 color=0xff000000

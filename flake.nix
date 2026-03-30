@@ -66,7 +66,7 @@
         pkgs.writeShellApplication {
           name = "nixfmt";
           runtimeInputs = [
-            pkgs.nixfmt-rfc-style
+            pkgs.nixfmt
             pkgs.fd
           ];
           text = ''

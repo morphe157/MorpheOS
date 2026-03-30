@@ -15,7 +15,6 @@
     ./cmp.nix
     ./ai.nix
     ./lsp.nix
-    ./modules/lsp-config.nix
     ./modules/plugins.nix
     ./modules/opts.nix
   ];

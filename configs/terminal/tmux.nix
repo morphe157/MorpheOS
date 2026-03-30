@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
     tmux
@@ -43,6 +43,18 @@
       fi
     '';
   };
+
+  home.activation.claudeStatusCommand = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    settings="$HOME/.claude/settings.json"
+    if [ -f "$settings" ]; then
+      current=$(${pkgs.jq}/bin/jq -r '.statusCommand // empty' "$settings")
+      if [ -z "$current" ]; then
+        $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg cmd "$HOME/.claude/statusline.sh" \
+          '.statusCommand = $cmd' "$settings" > /tmp/_claude_settings_tmp \
+          && $DRY_RUN_CMD mv /tmp/_claude_settings_tmp "$settings"
+      fi
+    fi
+  '';
 
   programs.tmux = {
     enable = true;

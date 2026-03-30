@@ -9,7 +9,7 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
-  inherit (import ../config.nix) username;
+  inherit (import ../config.nix) username gitemail gituser;
 in
 {
   # You can import other home-manager modules here
@@ -49,8 +49,8 @@ in
     home-manager.enable = true;
     git = {
       enable = true;
-      userName = "${username}";
-      userEmail = "morphe157@protonmail.com";
+      userName = "${gituser}";
+      userEmail = "${gitemail}";
     };
   };
 
