@@ -87,7 +87,7 @@ in
   ];
 
   services.sketchybar = {
-    enable = true;
+    enable = false;
     # load sketchybarrc from the home directory
     config = builtins.readFile "/Users/${username}/.config/sketchybar/sketchybarrc";
   };
