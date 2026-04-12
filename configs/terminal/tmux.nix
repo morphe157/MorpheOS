@@ -8,31 +8,67 @@
     executable = true;
     text = ''
       #!/bin/bash
+      STATE="$HOME/.claude/statusline-state"
       input=$(cat)
 
       MODEL=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.model.display_name // "?"')
       COST=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.cost.total_cost_usd // 0')
+      SESSION=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.session_id // ""')
       FIVE_H=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.five_hour.used_percentage // 0')
+      FIVE_H_RESET=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.five_hour.resets_at // 0')
       SEVEN_D=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.seven_day.used_percentage // 0')
+      SEVEN_D_RESET=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.seven_day.resets_at // 0')
 
-      COST_FMT=$(printf '$%.2f' "$COST")
-
-      if [ "$(printf '%.0f' "$FIVE_H")" -gt 0 ]; then
-        RATE=$FIVE_H; LABEL="5h"
-      elif [ "$(printf '%.0f' "$SEVEN_D")" -gt 0 ]; then
-        RATE=$SEVEN_D; LABEL="7d"
+      THIS_MONTH=$(date +%Y-%m)
+      if [ -f "$STATE" ]; then
+        read -r LAST_SESSION LAST_COST GLOBAL_TOTAL LAST_MONTH < "$STATE"
       else
-        RATE=0; LABEL="--"
+        LAST_SESSION=""; LAST_COST=0; GLOBAL_TOTAL=0; LAST_MONTH=""
       fi
 
-      BAR_WIDTH=10
+      if [ "$THIS_MONTH" != "$LAST_MONTH" ]; then
+        GLOBAL_TOTAL=$COST
+      elif [ "$SESSION" = "$LAST_SESSION" ]; then
+        DELTA=$(echo "$COST $LAST_COST" | awk '{printf "%.10f", $1 - $2}')
+        GLOBAL_TOTAL=$(echo "$GLOBAL_TOTAL $DELTA" | awk '{printf "%.10f", $1 + $2}')
+      else
+        GLOBAL_TOTAL=$(echo "$GLOBAL_TOTAL $COST" | awk '{printf "%.10f", $1 + $2}')
+      fi
+      echo "$SESSION $COST $GLOBAL_TOTAL $THIS_MONTH" > "$STATE"
+
+      COST_FMT=$(printf '%.2f' "$GLOBAL_TOTAL")
+
+      if [ "$(printf '%.0f' "$FIVE_H")" -gt 0 ]; then
+        RATE=$FIVE_H; LABEL="5h"; RESET_AT=$FIVE_H_RESET
+      elif [ "$(printf '%.0f' "$SEVEN_D")" -gt 0 ]; then
+        RATE=$SEVEN_D; LABEL="7d"; RESET_AT=$SEVEN_D_RESET
+      else
+        RATE=0; LABEL="--"; RESET_AT=0
+      fi
+
+      BAR_WIDTH=8
       RATE_INT=$(printf '%.0f' "$RATE")
       FILLED=$(( RATE_INT * BAR_WIDTH / 100 ))
       EMPTY=$(( BAR_WIDTH - FILLED ))
-      BAR=$(printf '%0.s█' $(seq 1 $FILLED 2>/dev/null))
-      BAR="''${BAR}$(printf '%0.s░' $(seq 1 $EMPTY 2>/dev/null))"
+      BAR=$(printf '%0.s▰' $(seq 1 $FILLED 2>/dev/null))
+      BAR="''${BAR}$(printf '%0.s▱' $(seq 1 $EMPTY 2>/dev/null))"
 
-      STATUS="$MODEL | $COST_FMT | $LABEL:''${BAR} ''${RATE_INT}%"
+      RESET_STR=""
+      if [ "$RESET_AT" -gt 0 ] 2>/dev/null; then
+        NOW=$(date +%s)
+        SECS=$(( RESET_AT - NOW ))
+        if [ "$SECS" -gt 0 ]; then
+          HRS=$(( SECS / 3600 ))
+          MINS=$(( (SECS % 3600) / 60 ))
+          if [ "$HRS" -gt 0 ]; then
+            RESET_STR="  ·  󱑂 ''${HRS}h ''${MINS}m"
+          else
+            RESET_STR="  ·  󱑂 ''${MINS}m"
+          fi
+        fi
+      fi
+
+      STATUS="󰚩 ''${MODEL}  ·  \$''${COST_FMT}  ·  ''${LABEL} ''${BAR} ''${RATE_INT}%''${RESET_STR}"
 
       echo "$STATUS" > /tmp/claude-code-status
       echo ""
