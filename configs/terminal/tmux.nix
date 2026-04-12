@@ -2,7 +2,6 @@
 {
   home.packages = with pkgs; [
     tmux
-    jq
   ];
   home.file.".claude/statusline.sh" = {
     executable = true;
