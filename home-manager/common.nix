@@ -8,6 +8,6 @@
     bitwarden-cli
     rustup
     (callPackage ../modules/kotlin_lsp.nix { })
-    opencode
+    claude-code
   ];
 }

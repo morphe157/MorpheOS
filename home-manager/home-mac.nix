@@ -34,7 +34,6 @@ in
       gdk
       go
       uv
-      claude-code
       openjdk21
       nodejs
       mpv
