@@ -34,6 +34,7 @@
         ns = "nix search nixpkgs";
         gpt = "tgpt -q -w | glow";
         cat = "bat";
+        de = "echo 'use nix' > .envrc && direnv allow";
       };
       functions.tmux = ''
         if test (count $argv) -eq 0
