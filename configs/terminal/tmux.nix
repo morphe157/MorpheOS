@@ -7,8 +7,9 @@
     executable = true;
     text = ''
       #!/bin/bash
-      STATE="$HOME/.claude/statusline-state"
       input=$(cat)
+
+      MONTHLY_BUDGET=400
 
       MODEL=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.model.display_name // "?"')
       COST=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.cost.total_cost_usd // 0')
@@ -17,7 +18,10 @@
       FIVE_H_RESET=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.five_hour.resets_at // 0')
       SEVEN_D=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.seven_day.used_percentage // 0')
       SEVEN_D_RESET=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.seven_day.resets_at // 0')
+      DAILY=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.daily.used_percentage // 0')
+      DAILY_RESET=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.rate_limits.daily.resets_at // 0')
 
+      STATE="$HOME/.claude/statusline-state"
       THIS_MONTH=$(date +%Y-%m)
       if [ -f "$STATE" ]; then
         read -r LAST_SESSION LAST_COST GLOBAL_TOTAL LAST_MONTH < "$STATE"
@@ -35,24 +39,29 @@
       fi
       echo "$SESSION $COST $GLOBAL_TOTAL $THIS_MONTH" > "$STATE"
 
-      COST_FMT=$(printf '%.2f' "$GLOBAL_TOTAL")
+      TOTAL_COST=$(printf '%.2f' "$GLOBAL_TOTAL")
+      COST_FMT=$TOTAL_COST
 
+      RESET_STR=""
       if [ "$(printf '%.0f' "$FIVE_H")" -gt 0 ]; then
         RATE=$FIVE_H; LABEL="5h"; RESET_AT=$FIVE_H_RESET
+      elif [ "$(printf '%.0f' "$DAILY")" -gt 0 ]; then
+        RATE=$DAILY; LABEL="1d"; RESET_AT=$DAILY_RESET
       elif [ "$(printf '%.0f' "$SEVEN_D")" -gt 0 ]; then
         RATE=$SEVEN_D; LABEL="7d"; RESET_AT=$SEVEN_D_RESET
       else
-        RATE=0; LABEL="--"; RESET_AT=0
+        RATE=$(echo "$GLOBAL_TOTAL $MONTHLY_BUDGET" | awk '{printf "%.1f", ($1 / $2) * 100}')
+        LABEL="mo"; RESET_AT=0
       fi
 
       BAR_WIDTH=8
       RATE_INT=$(printf '%.0f' "$RATE")
       FILLED=$(( RATE_INT * BAR_WIDTH / 100 ))
+      [ "$FILLED" -gt "$BAR_WIDTH" ] && FILLED=$BAR_WIDTH
       EMPTY=$(( BAR_WIDTH - FILLED ))
       BAR=$(printf '%0.s▰' $(seq 1 $FILLED 2>/dev/null))
       BAR="''${BAR}$(printf '%0.s▱' $(seq 1 $EMPTY 2>/dev/null))"
 
-      RESET_STR=""
       if [ "$RESET_AT" -gt 0 ] 2>/dev/null; then
         NOW=$(date +%s)
         SECS=$(( RESET_AT - NOW ))
