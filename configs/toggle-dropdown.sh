@@ -14,7 +14,7 @@ is_alive() {
 # Passthrough guard: if a non-dropdown Alacritty is focused, re-inject ctrl-t and exit.
 # Uses PID comparison — tmux changes the window title immediately so title checks are unreliable.
 focused_app=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true' 2>/dev/null)
-if [ "$focused_app" = "Alacritty" ]; then
+if [ "$focused_app" = "alacritty" ]; then
     dropdown_pid=""
     [ -f "$PID_FILE" ] && dropdown_pid=$(cat "$PID_FILE" 2>/dev/null)
     focused_pid=$(osascript -e 'tell application "System Events" to get unix id of first application process whose frontmost is true' 2>/dev/null)
@@ -61,7 +61,7 @@ float_and_position() {
 spawn_dropdown() {
     # Snapshot PIDs before spawning so we can identify the new process
     local pids_before
-    pids_before=$(pgrep -x Alacritty 2>/dev/null || echo "")
+    pids_before=$(pgrep -x alacritty 2>/dev/null || echo "")
 
     open -n -a Alacritty --args --title "$TMUX_SESSION" -e fish -c "tmux new-session -As $TMUX_SESSION"
 
@@ -70,7 +70,7 @@ spawn_dropdown() {
     while [ $attempts -lt 15 ]; do
         sleep 0.2
         local pids_after
-        pids_after=$(pgrep -x Alacritty 2>/dev/null || echo "")
+        pids_after=$(pgrep -x alacritty 2>/dev/null || echo "")
         pid=$(comm -13 <(echo "$pids_before" | tr ' ' '\n' | sort -u) \
                        <(echo "$pids_after"  | tr ' ' '\n' | sort -u) | tail -1)
         [ -n "$pid" ] && break
