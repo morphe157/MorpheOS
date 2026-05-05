@@ -45,14 +45,21 @@ EOF
 
 spawn_dropdown() {
     alacritty --title "$TMUX_SESSION" -e fish -c "tmux new-session -As $TMUX_SESSION" &
-    local pid=$!
+    # Retry up to 2s for the real GUI process to appear (wrapper script exits immediately)
+    local pid attempts=0
+    while [ $attempts -lt 10 ]; do
+        sleep 0.2
+        pid=$(pgrep -n -f "alacritty" 2>/dev/null)
+        [ -n "$pid" ] && break
+        attempts=$(( attempts + 1 ))
+    done
     echo "$pid" > "$PID_FILE"
-    sleep 0.8
     position_window "$pid"
 }
 
 show_dropdown() {
     local pid=$1
+    position_window "$pid"
     osascript <<EOF
 tell application "System Events"
     set p to first process whose unix id is $pid
@@ -87,9 +94,16 @@ toggle() {
         return
     fi
 
-    local is_visible is_frontmost
-    is_visible=$(osascript -e "tell application \"System Events\" to get visible of first process whose unix id is $pid")
-    is_frontmost=$(osascript -e "tell application \"System Events\" to get frontmost of first process whose unix id is $pid")
+    local is_visible is_frontmost state
+    state=$(osascript <<EOF2
+tell application "System Events"
+    set p to first process whose unix id is $pid
+    return (visible of p as string) & "," & (frontmost of p as string)
+end tell
+EOF2
+)
+    is_visible=$(echo "$state" | cut -d',' -f1 | tr -d ' ')
+    is_frontmost=$(echo "$state" | cut -d',' -f2 | tr -d ' ')
 
     if [ "$is_visible" = "true" ] && [ "$is_frontmost" = "true" ]; then
         hide_dropdown "$pid"
