@@ -9,7 +9,7 @@
       #!/bin/bash
       input=$(cat)
 
-      MONTHLY_BUDGET=400
+      MONTHLY_BUDGET=1200
 
       MODEL=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.model.display_name // "?"')
       COST=$(echo "$input" | ${pkgs.jq}/bin/jq -r '.cost.total_cost_usd // 0')
@@ -54,13 +54,26 @@
         LABEL="mo"; RESET_AT=0
       fi
 
-      BAR_WIDTH=8
+      BAR_WIDTH=16
       RATE_INT=$(printf '%.0f' "$RATE")
-      FILLED=$(( RATE_INT * BAR_WIDTH / 100 ))
-      [ "$FILLED" -gt "$BAR_WIDTH" ] && FILLED=$BAR_WIDTH
-      EMPTY=$(( BAR_WIDTH - FILLED ))
-      BAR=$(printf '%0.s▰' $(seq 1 $FILLED 2>/dev/null))
-      BAR="''${BAR}$(printf '%0.s▱' $(seq 1 $EMPTY 2>/dev/null))"
+      [ "$RATE_INT" -gt 100 ] && RATE_INT=100
+      [ "$RATE_INT" -lt 0 ] && RATE_INT=0
+      TOTAL_STEPS=$(( BAR_WIDTH * 8 ))
+      FILLED_STEPS=$(( RATE_INT * TOTAL_STEPS / 100 ))
+      FULL=$(( FILLED_STEPS / 8 ))
+      PARTIAL_IDX=$(( FILLED_STEPS % 8 ))
+      PARTIALS=("" "▏" "▎" "▍" "▌" "▋" "▊" "▉")
+      if [ "$PARTIAL_IDX" -gt 0 ]; then
+        EMPTY=$(( BAR_WIDTH - FULL - 1 ))
+      else
+        EMPTY=$(( BAR_WIDTH - FULL ))
+      fi
+      BAR_FULL=""
+      [ "$FULL" -gt 0 ] && BAR_FULL=$(printf '%0.s█' $(seq 1 $FULL))
+      BAR_PARTIAL="''${PARTIALS[$PARTIAL_IDX]}"
+      BAR_EMPTY=""
+      [ "$EMPTY" -gt 0 ] && BAR_EMPTY=$(printf '%0.s ' $(seq 1 $EMPTY))
+      BAR="''${BAR_FULL}''${BAR_PARTIAL}''${BAR_EMPTY}"
 
       if [ "$RESET_AT" -gt 0 ] 2>/dev/null; then
         NOW=$(date +%s)
@@ -69,14 +82,25 @@
           HRS=$(( SECS / 3600 ))
           MINS=$(( (SECS % 3600) / 60 ))
           if [ "$HRS" -gt 0 ]; then
-            RESET_STR="  ·  󱑂 ''${HRS}h ''${MINS}m"
+            RESET_STR="  ·  #[fg=brightblack]󱑂 ''${HRS}h ''${MINS}m#[default]"
           else
-            RESET_STR="  ·  󱑂 ''${MINS}m"
+            RESET_STR="  ·  #[fg=brightblack]󱑂 ''${MINS}m#[default]"
           fi
         fi
       fi
 
-      STATUS="󰚩 ''${MODEL}  ·  \$''${COST_FMT}  ·  ''${LABEL} ''${BAR} ''${RATE_INT}%''${RESET_STR}"
+      if [ "$RATE_INT" -ge 85 ]; then
+        BAR_COLOR="red"
+        PCT_COLOR="red,bold"
+      elif [ "$RATE_INT" -ge 60 ]; then
+        BAR_COLOR="yellow"
+        PCT_COLOR="yellow"
+      else
+        BAR_COLOR="green"
+        PCT_COLOR="green"
+      fi
+
+      STATUS="#[fg=cyan,bold]󰚩 ''${MODEL}#[default]  ·  #[fg=white]\$''${COST_FMT}#[default]  ·  #[fg=brightblack]''${LABEL}#[default] #[fg=''${BAR_COLOR}][''${BAR}]#[default] #[fg=''${PCT_COLOR}]''${RATE_INT}%#[default]''${RESET_STR}"
 
       echo "$STATUS" > /tmp/claude-code-status
       echo ""
@@ -122,8 +146,10 @@
       set-option -g renumber-windows on
       bind z kill-window -a
       bind r source-file ~/.config/tmux/tmux.conf
-      set-option -g status-right '#[fg=blue]#(~/.claude/tmux-claude-status.sh)#[default] %H:%M'
-      set-option -g status-right-length 60
+      set-option -g status-left '#[fg=cyan]%H:%M #[default]'
+      set-option -g status-left-length 20
+      set-option -g status-right '#(~/.claude/tmux-claude-status.sh)'
+      set-option -g status-right-length 200
       set-option -g status-interval 5
       set-window-option -g window-status-current-format '#[fg=white,bold]** #{window_index} #[fg=green]#{pane_current_command} #[fg=blue]#(echo "#{pane_current_path}" | rev | cut -d'/' -f-1 | rev) #[fg=white]**|'
       set-window-option -g window-status-format '#[fg=white,bold]#{window_index} #[fg=green]#{pane_current_command} #[fg=blue]#(echo "#{pane_current_path}" | rev | cut -d'/' -f-1 | rev) #[fg=white]|'

@@ -1,4 +1,17 @@
 { pkgs, ... }:
+let
+  nixinit_script = ''
+    let
+      nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-unstable";
+      pkgs = import nixpkgs { config = {}; overlays = []; };
+    in
+
+    pkgs.mkShellNoCC {
+      packages = with pkgs; [
+      ];
+    }
+  '';
+in
 {
   home.packages = with pkgs; [
     grc
@@ -42,6 +55,11 @@
         else
           command tmux $argv
         end
+      '';
+      functions.nixinit = ''
+        echo '${nixinit_script}' > shell.nix
+        echo "use nix" > .envrc
+        direnv allow
       '';
       shellInit = ''
         [ -f "~/init.fish" ] || touch ~/init.fish

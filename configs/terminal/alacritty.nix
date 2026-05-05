@@ -6,7 +6,7 @@
 
     settings = {
       general.import = [
-        "${pkgs.alacritty-theme}/blood_moon.toml"
+        "${pkgs.alacritty-theme}/bluish.toml"
       ];
       terminal.shell = {
         program = "${pkgs.fish}/bin/fish";
