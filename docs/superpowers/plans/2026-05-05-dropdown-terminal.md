@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a Guake-style floating terminal (Alacritty + tmux) toggled by `alt-t` in AeroSpace, shown/hidden via `osascript` targeting the dropdown's PID directly.
+**Goal:** Add a Guake-style floating terminal (Alacritty + tmux) toggled by `ctrl-t` in AeroSpace, shown/hidden via `osascript` targeting the dropdown's PID directly. When any Alacritty window is already focused, the keystroke is passed back to the app so neovim's `ctrl-t` binding still works.
 
-**Architecture:** A shell script manages one dedicated Alacritty process (tmux session `dropdown`), tracking its PID in `/tmp/dropdown_pid`. AeroSpace binds `alt-t` to run the script and has a `on-window-detected` rule to float any Alacritty window titled `dropdown`. Show/hide uses `osascript` targeting `System Events` by unix id so only the dropdown process is affected, not any other tiled Alacritty windows.
+**Architecture:** A shell script manages one dedicated Alacritty process (tmux session `dropdown`), tracking its PID in `/tmp/dropdown_pid`. AeroSpace binds `ctrl-t` to run the script and has a `on-window-detected` rule to float any Alacritty window titled `dropdown`. Show/hide uses `osascript` targeting `System Events` by unix id so only the dropdown process is affected, not any other tiled Alacritty windows. When Alacritty is the frontmost app, the script re-injects `ctrl-t` via `osascript key code` so neovim receives it.
 
 **Tech Stack:** Bash, osascript/AppleScript, AeroSpace CLI, Nix/home-manager
 
@@ -15,7 +15,7 @@
 | Path | Action | Purpose |
 |------|--------|---------|
 | `configs/toggle-dropdown.sh` | Create | Toggle script — PID tracking, spawn, show, hide, position |
-| `configs/aerospace.nix` | Modify | Add `alt-t` binding; add dropdown float rule; remove alacritty→WS1 auto-move |
+| `configs/aerospace.nix` | Modify | Add `ctrl-t` binding; add dropdown float rule; remove alacritty→WS1 auto-move |
 | `home-manager/home-mac.nix` | Modify | Wire script into `home.file` so it lands at `~/.local/bin/toggle-dropdown` |
 
 ---
@@ -36,6 +36,14 @@ TMUX_SESSION="dropdown"
 
 # Ensure Nix binaries are reachable when called from AeroSpace (non-login shell)
 export PATH="$HOME/.nix-profile/bin:/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+# If any Alacritty window is currently focused, pass ctrl-t through to it
+# (preserves neovim's ctrl-t binding). key code 17 = T, control down = ctrl.
+focused_app=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true' 2>/dev/null)
+if [ "$focused_app" = "Alacritty" ]; then
+    osascript -e 'tell application "System Events" to key code 17 using {control down}'
+    exit 0
+fi
 
 is_alive() {
     kill -0 "$1" 2>/dev/null
@@ -148,7 +156,7 @@ git commit -m "feat: add dropdown terminal toggle script"
 Current state of `on-window-detected` has a rule that moves all `org.alacritty` windows to workspace 1. We:
 1. Add a new rule before it: if title contains `dropdown` → `layout floating` (no workspace move)
 2. Remove the existing alacritty→workspace-1 rule (regular Alacritty now opens on whatever workspace is active)
-3. Add `alt-t` keybinding
+3. Add `ctrl-t` keybinding
 
 - [ ] **Step 1: Add dropdown float rule and remove the auto-move rule**
 
@@ -177,12 +185,12 @@ With just the dropdown float rule (no workspace move for any alacritty):
         }
 ```
 
-- [ ] **Step 2: Add the alt-t keybinding**
+- [ ] **Step 2: Add the ctrl-t keybinding**
 
 In `configs/aerospace.nix`, inside `mode.main.binding`, add after `"alt-enter"`:
 
 ```nix
-        "alt-t" = "exec-and-forget bash ~/.local/bin/toggle-dropdown";
+        "ctrl-t" = "exec-and-forget bash ~/.local/bin/toggle-dropdown";
 ```
 
 - [ ] **Step 3: Verify Nix syntax**
@@ -197,7 +205,7 @@ Expected: outputs the parsed Nix expression (no errors).
 
 ```bash
 git add configs/aerospace.nix
-git commit -m "feat: add alt-t dropdown binding and float rule in AeroSpace"
+git commit -m "feat: add ctrl-t dropdown binding and float rule in AeroSpace"
 ```
 
 ---
@@ -290,7 +298,7 @@ Expected: build completes with no errors. AeroSpace restarts automatically.
 
 - [ ] **Step 2: Manual smoke test — first toggle**
 
-Press `alt-t`. Expected:
+Press `ctrl-t`. Expected:
 - A floating Alacritty window appears at the top of the screen (~40% height, full width)
 - It opens into a tmux session named `dropdown`
 - The window floats above other windows (not tiled into the AeroSpace layout)
@@ -303,17 +311,23 @@ With the dropdown focused, press `alt-t` again. Expected:
 
 - [ ] **Step 4: Manual smoke test — show from different workspace**
 
-Switch to workspace 2 (`alt-2`). Press `alt-t`. Expected:
+Switch to workspace 2 (`alt-2`). Press `ctrl-t`. Expected:
 - Dropdown appears on workspace 2 (current space), not workspace 1
 - It is floating and positioned at the top
 
-- [ ] **Step 5: Manual smoke test — regular Alacritty still works**
+- [ ] **Step 5: Manual smoke test — ctrl-t passthrough in neovim**
+
+With any Alacritty window focused (e.g., neovim running inside), press `ctrl-t`. Expected:
+- The dropdown does NOT appear
+- Neovim receives `ctrl-t` and executes its bound action
+
+- [ ] **Step 6: Manual smoke test — regular Alacritty still works**
 
 Press `alt-enter`. Expected:
 - A new Alacritty opens on the current workspace (tiled, not floating)
 - It does NOT get moved to workspace 1 (rule was removed)
 
-- [ ] **Step 6: Commit any fixups needed**
+- [ ] **Step 7: Commit any fixups needed**
 
 If tweaks were made during testing:
 
