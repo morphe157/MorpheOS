@@ -7,10 +7,11 @@ TMUX_SESSION="dropdown"
 # Ensure Nix binaries are reachable when called from AeroSpace (non-login shell)
 export PATH="$HOME/.nix-profile/bin:/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 
-# If any Alacritty window is currently focused, pass ctrl-t through to it
+# If any Alacritty window is currently focused (except dropdown), pass ctrl-t through to it
 # (preserves neovim's ctrl-t binding). key code 17 = T, control down = ctrl.
 focused_app=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true' 2>/dev/null)
-if [ "$focused_app" = "Alacritty" ]; then
+focused_title=$(osascript -e 'tell application "System Events" to get title of window 1 of first application process whose frontmost is true' 2>/dev/null)
+if [ "$focused_app" = "Alacritty" ] && [ "$focused_title" != "$TMUX_SESSION" ]; then
     osascript -e 'tell application "System Events" to key code 17 using {control down}'
     exit 0
 fi
@@ -45,19 +46,20 @@ EOF
 
 spawn_dropdown() {
     alacritty --title "$TMUX_SESSION" -e fish -c "tmux new-session -As $TMUX_SESSION" &
-    # Retry up to 2s for the real GUI process to appear (wrapper script exits immediately)
-    local pid attempts=0
-    while [ $attempts -lt 10 ]; do
+    local pid=$!
+    # Poll until process is confirmed alive (exec'd binary ready)
+    local attempts=0
+    while [ $attempts -lt 10 ] && ! is_alive "$pid"; do
         sleep 0.2
-        pid=$(pgrep -n -f "alacritty" 2>/dev/null)
-        [ -n "$pid" ] && break
         attempts=$(( attempts + 1 ))
     done
-    if [ -z "$pid" ]; then
-        echo "toggle-dropdown: failed to find Alacritty process" >&2
+    if ! is_alive "$pid"; then
+        echo "toggle-dropdown: Alacritty process $pid died unexpectedly" >&2
+        rm -f "$PID_FILE"
         exit 1
     fi
     ( umask 077; echo "$pid" > "$PID_FILE" )
+    sleep 0.4
     position_window "$pid"
 }
 
