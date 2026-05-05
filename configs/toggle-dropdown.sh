@@ -53,7 +53,11 @@ spawn_dropdown() {
         [ -n "$pid" ] && break
         attempts=$(( attempts + 1 ))
     done
-    echo "$pid" > "$PID_FILE"
+    if [ -z "$pid" ]; then
+        echo "toggle-dropdown: failed to find Alacritty process" >&2
+        exit 1
+    fi
+    ( umask 077; echo "$pid" > "$PID_FILE" )
     position_window "$pid"
 }
 
