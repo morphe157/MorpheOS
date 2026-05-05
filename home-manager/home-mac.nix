@@ -49,6 +49,11 @@ in
       USERNAME = "${username}";
       LIBRARY_PATH = "${lib.makeLibraryPath [ pkgs.libiconv ]}\${LIBRARY_PATH:+:$LIBRARY_PATH}";
     };
+
+    file.".local/bin/toggle-dropdown" = {
+      source = ../configs/toggle-dropdown.sh;
+      executable = true;
+    };
   };
 
   nixpkgs.overlays = [ (import ../overlays/codelldb.nix) ];
