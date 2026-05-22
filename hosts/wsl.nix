@@ -35,5 +35,7 @@ in
   wsl.enable = true;
   wsl.defaultUser = "${username}";
 
+  networking.resolvconf.enable = false;
+
   system.stateVersion = "25.11";
 }

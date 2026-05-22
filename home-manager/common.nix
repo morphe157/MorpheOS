@@ -10,5 +10,6 @@
     (callPackage ../modules/kotlin_lsp.nix { })
     claude-code
     jq
+    opencode
   ];
 }
