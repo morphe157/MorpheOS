@@ -10,7 +10,10 @@
       ];
       terminal.shell = {
         program = "${pkgs.fish}/bin/fish";
-        args = [ "-c" "tmux" ];
+        args = [
+          "-c"
+          "tmux"
+        ];
       };
       scrolling.history = 10000;
       window = {

@@ -102,18 +102,7 @@
 
       STATUS="#[fg=cyan,bold]󰚩 ''${MODEL}#[default]  ·  #[fg=white]\$''${COST_FMT}#[default]  ·  #[fg=brightblack]''${LABEL}#[default] #[fg=''${BAR_COLOR}][''${BAR}]#[default] #[fg=''${PCT_COLOR}]''${RATE_INT}%#[default]''${RESET_STR}"
 
-      echo "$STATUS" > /tmp/claude-code-status
-      echo ""
-    '';
-  };
-
-  home.file.".claude/tmux-claude-status.sh" = {
-    executable = true;
-    text = ''
-      #!/bin/bash
-      if [ -f /tmp/claude-code-status ]; then
-        cat /tmp/claude-code-status
-      fi
+      echo "$STATUS"
     '';
   };
 
@@ -136,7 +125,6 @@
     keyMode = "vi";
     clock24 = true;
     baseIndex = 1;
-    plugins = [ pkgs.tmuxPlugins.dotbar ];
     escapeTime = 0;
     extraConfig = ''
       bind-key -T copy-mode-vi v send-keys -X begin-selection
@@ -146,13 +134,17 @@
       set-option -g renumber-windows on
       bind z kill-window -a
       bind r source-file ~/.config/tmux/tmux.conf
-      set-option -g status-left '#[fg=cyan]%H:%M #[default]'
-      set-option -g status-left-length 20
-      set-option -g status-right '#(~/.claude/tmux-claude-status.sh)'
-      set-option -g status-right-length 200
+
+      set-option -g status on
       set-option -g status-interval 5
-      set-window-option -g window-status-current-format '#[fg=white,bold]** #{window_index} #[fg=green]#{pane_current_command} #[fg=blue]#(echo "#{pane_current_path}" | rev | cut -d'/' -f-1 | rev) #[fg=white]**|'
-      set-window-option -g window-status-format '#[fg=white,bold]#{window_index} #[fg=green]#{pane_current_command} #[fg=blue]#(echo "#{pane_current_path}" | rev | cut -d'/' -f-1 | rev) #[fg=white]|'
+      set-option -g status-style 'bg=default,fg=colour250'
+      set-option -g status-left-length 200
+      set-option -g status-right-length 200
+      set-window-option -g window-status-style 'fg=colour244'
+      set-window-option -g window-status-current-style 'fg=cyan,bold,underscore'
+
+      # Three regions: window list (left)  ·  session name (centre)  ·  clock (right)
+      set-option -g status-format[0] "#[align=left] #{W:#[fg=colour244] #I #{s/^\.claude-wrapped$/Claude/:pane_current_command} #{b:pane_current_path}  ,#[fg=cyan#,bold#,underscore] #I #{s/^\.claude-wrapped$/Claude/:pane_current_command} #{b:pane_current_path}#[nounderscore]  }#[align=centre]#[fg=colour244]❖ #[fg=blue,bold]#S#[default]#[align=right]#[fg=colour244]%a %d %b  #[fg=cyan,bold]%H:%M #[default]"
     '';
   };
 }
