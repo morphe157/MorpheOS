@@ -11,5 +11,6 @@
     claude-code
     jq
     opencode
+    codex
   ];
 }

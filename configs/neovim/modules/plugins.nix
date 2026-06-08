@@ -7,6 +7,7 @@
     ./plugins/codesnap.nix
     ./plugins/mini.nix
     ./plugins/treesitter.nix
+    ./plugins/octo.nix
   ];
 
   # Keep small, trivial plugin toggles here
