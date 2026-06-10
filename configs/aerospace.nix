@@ -109,10 +109,10 @@
 
         "alt-w" = "fullscreen off";
 
-        "alt-j" = "focus --boundaries-action wrap-around-the-workspace down";
-        "alt-k" = "focus --boundaries-action wrap-around-the-workspace up";
-        "alt-h" = "focus --boundaries-action wrap-around-the-workspace left";
-        "alt-l" = "focus --boundaries-action wrap-around-the-workspace right";
+        "alt-j" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame down";
+        "alt-k" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame up";
+        "alt-h" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame left";
+        "alt-l" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame right";
 
         "alt-1" = "workspace 1";
         "alt-2" = "workspace 2";
@@ -136,10 +136,10 @@
         "alt-shift-9" = "move-node-to-workspace --focus-follows-window 9";
         "alt-shift-0" = "move-node-to-workspace --focus-follows-window 10";
 
-        "alt-shift-h" = "move left";
-        "alt-shift-j" = "move down";
-        "alt-shift-k" = "move up";
-        "alt-shift-l" = "move right";
+        "alt-shift-h" = "move --boundaries all-monitors-outer-frame left";
+        "alt-shift-j" = "move --boundaries all-monitors-outer-frame down";
+        "alt-shift-k" = "move --boundaries all-monitors-outer-frame up";
+        "alt-shift-l" = "move --boundaries all-monitors-outer-frame right";
 
         "alt-tab" = "workspace-back-and-forth";
         "alt-shift-tab" = "move-workspace-to-monitor --wrap-around next";
