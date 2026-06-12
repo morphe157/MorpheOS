@@ -109,10 +109,14 @@
 
         "alt-w" = "fullscreen off";
 
-        "alt-j" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame down";
-        "alt-k" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame up";
-        "alt-h" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame left";
-        "alt-l" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame right";
+        "alt-j" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame down";
+        "alt-k" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame up";
+        "alt-h" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame left";
+        "alt-l" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame right";
 
         "alt-1" = "workspace 1";
         "alt-2" = "workspace 2";

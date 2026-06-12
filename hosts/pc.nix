@@ -31,8 +31,10 @@ in
   boot.loader.limine = {
     enable = true;
     extraEntries = ''
+      default_entry: /Windows
+
       /Windows
-        protocol: efi
+        protocol: efi_chainload
         path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
     '';
   };
