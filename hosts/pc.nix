@@ -28,13 +28,16 @@ in
   virtualisation.docker = {
     enable = true;
   };
+
   boot.loader.limine = {
     enable = true;
+    extraConfig = ''
+      default_entry: Windows
+      remember_last_entry: no
+    '';
     extraEntries = ''
-      default_entry: /Windows
-
       /Windows
-        protocol: efi_chainload
+        protocol: efi
         path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
     '';
   };

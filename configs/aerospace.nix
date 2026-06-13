@@ -79,7 +79,7 @@
         {
           "if" = {
             app-id = "org.alacritty";
-            window-title-regex-substring = "dropdown";
+            window-title-regex-substring = "Dropdown";
           };
           run = [ "layout floating" ];
         }
