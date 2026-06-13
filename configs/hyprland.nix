@@ -22,7 +22,7 @@
         "ALT, mouse:272, movewindow"
       ];
       bind = [
-        "$mod,RETURN, exec, alacritty"
+        "$mod,RETURN, exec, ghostty"
         "$mod,Q, killactive,"
         "$mod,M, fullscreen,"
         "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc,ssh'"
@@ -109,7 +109,7 @@
         env = SDL_VIDEODRIVER, x11
         env = MOZ_ENABLE_WAYLAND, 1
         gesture = 3, horizontal, workspace
-        exec-once = [workspace 1 silent] alacritty
+        exec-once = [workspace 1 silent] ghostty
         exec-once = [workspace 2 silent] firefox
         exec-once = [workspace 3 silent] easyeffects
         exec-once = [workspace 4 silent] valent

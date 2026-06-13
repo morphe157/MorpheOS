@@ -78,7 +78,7 @@
         }
         {
           "if" = {
-            app-id = "org.alacritty";
+            app-id = "com.mitchellh.ghostty";
             window-title-regex-substring = "Dropdown";
           };
           run = [ "layout floating" ];
@@ -101,7 +101,7 @@
         }
       ];
       mode.main.binding = {
-        "alt-enter" = "exec-and-forget zsh -c alacritty";
+        "alt-enter" = "exec-and-forget zsh -c ghostty";
         "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 

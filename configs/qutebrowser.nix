@@ -14,7 +14,7 @@ let
   config = ''
     config.load_autoconfig()
     c.url.start_pages = ["https://github.com"]
-    c.editor.command = ["alacritty", "-e", "nvim", "-f", "{file}", "-c", "normal{line}G{column0}l"]
+    c.editor.command = ["ghostty", "-e", "nvim", "-f", "{file}", "-c", "normal{line}G{column0}l"]
     config.source("theme.py")
   '';
 in

@@ -130,7 +130,7 @@
       bind-key -T copy-mode-vi v send-keys -X begin-selection
       bind-key -T copy-mode-vi y send-keys -X copy-selection
       set-option -g default-terminal "tmux-256color"
-      set-option -a terminal-features 'alacritty:RGB'
+      set-option -a terminal-features 'xterm-ghostty:RGB'
       set-option -g renumber-windows on
       bind z kill-window -a
       bind r source-file ~/.config/tmux/tmux.conf

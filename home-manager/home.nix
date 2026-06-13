@@ -62,7 +62,7 @@ in
     ];
 
     sessionVariables = {
-      TERMINAL = "alacritty";
+      TERMINAL = "ghostty";
       EDITOR = "nvim";
       USERNAME = "${username}";
       GITUSER = "${gituser}";
