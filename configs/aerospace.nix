@@ -79,7 +79,7 @@
         {
           "if" = {
             app-id = "org.alacritty";
-            window-title-regex-substring = "dropdown";
+            window-title-regex-substring = "Dropdown";
           };
           run = [ "layout floating" ];
         }
@@ -102,7 +102,6 @@
       ];
       mode.main.binding = {
         "alt-enter" = "exec-and-forget zsh -c alacritty";
-        "ctrl-t" = "exec-and-forget bash ~/.local/bin/toggle-dropdown";
         "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
