@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nix flake:*)",
+      "Bash(/Users/morphe/.claude/statusline.sh)",
+      "Bash(echo \"exit: $?\")"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  }
+}

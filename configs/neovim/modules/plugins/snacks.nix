@@ -4,6 +4,8 @@
     snacks = {
       enable = true;
       settings = {
+        # Allow snacks to use Telescope's picker now that we load Telescope
+        # eagerly in the plugin set.
         picker.enabled = true;
         terminal.enabled = true;
         input = {

@@ -31,14 +31,9 @@
     gitsigns.enable = true;
     web-devicons.enable = true;
     telescope = {
+      # Load Telescope eagerly so other plugins (eg. snacks' picker)
+      # can safely interact with it during startup.
       enable = true;
-      lazyLoad.settings.cmd = [
-        "Telescope"
-        "TelescopeLiveGrep"
-        "TelescopeGrepString"
-        "TelescopeFindFiles"
-        "TelescopeBuffers"
-      ];
       settings.defaults.file_ignore_patterns = [
         "%.jar"
         "%.dat"

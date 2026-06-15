@@ -81,8 +81,8 @@
         }
         {
           "if" = {
-            app-id = "org.alacritty";
-            window-title-regex-substring = "dropdown";
+            app-id = "com.mitchellh.ghostty";
+            window-title-regex-substring = "Dropdown";
           };
           run = [ "layout floating" ];
         }
@@ -104,7 +104,7 @@
         }
       ];
       mode.main.binding = {
-        "alt-enter" = "exec-and-forget zsh -c alacritty";
+        "alt-enter" = "exec-and-forget zsh -c ghostty";
         "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
@@ -112,10 +112,14 @@
 
         "alt-w" = "fullscreen off";
 
-        "alt-j" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame down";
-        "alt-k" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame up";
-        "alt-h" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame left";
-        "alt-l" = "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame right";
+        "alt-j" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame down";
+        "alt-k" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame up";
+        "alt-h" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame left";
+        "alt-l" =
+          "focus --boundaries-action wrap-around-all-monitors --boundaries all-monitors-outer-frame right";
 
         "alt-1" = "workspace 1";
         "alt-2" = "workspace 2";

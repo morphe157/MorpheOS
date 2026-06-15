@@ -17,7 +17,7 @@ in
       efi.canTouchEfiVariables = false;
     };
   };
-  environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; [
     kitty
     gnumake
     tuigreet
@@ -27,22 +27,11 @@ in
     swayidle
     widevine-cdm
     firefox-bin
-    openvpn
   ];
-  environment.etc.openvpn.source = "${pkgs.update-resolv-conf}/libexec/openvpn";
   services = {
 
     # environment.sessionVariables = {
     #   MOZ_GMP_PATH = [ "${pkgs.widevine-cdm-lacros}/gmp-widevinecdm/system-installed" ];
-
-    openvpn = {
-      servers = {
-        protonvpn = {
-          config = "config /home/morphe/pl.protonvpn.udp.ovpn";
-          authUserPass = "/home/morphe/openpass";
-        };
-      };
-    };
 
     greetd = {
       enable = true;

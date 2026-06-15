@@ -44,11 +44,13 @@ in
       "/Users/${username}/.cargo/bin/"
     ];
     sessionVariables = {
-      TERMINAL = "alacritty";
+      TERMINAL = "ghostty";
       EDITOR = "nvim";
       USERNAME = "${username}";
       LIBRARY_PATH = "${lib.makeLibraryPath [ pkgs.libiconv ]}\${LIBRARY_PATH:+:$LIBRARY_PATH}";
     };
+
+    file.".hammerspoon/init.lua".source = ../configs/hammerspoon/init.lua;
   };
 
   nixpkgs.overlays = [ (import ../overlays/codelldb.nix) ];
