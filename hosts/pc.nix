@@ -8,6 +8,7 @@ in
     ../modules/nvidia-drivers.nix
     ../modules/sshfs.nix
     ../modules/hyprland.nix
+    ../configs/ollama.nix
     ../configs/stylix.nix
   ];
   drivers.nvidia.enable = true;
@@ -97,6 +98,7 @@ in
 
   networking.nameservers = [
     "8.8.8.8"
+    "8.8.4.4"
     "0.0.0.0"
   ];
 

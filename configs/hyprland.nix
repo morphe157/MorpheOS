@@ -22,12 +22,27 @@
         "ALT, mouse:272, movewindow"
       ];
       bind = [
-        "$mod,RETURN, exec, ghostty"
+        # Open a new Ghostty instance (not the quick terminal surface).
+        # Using `-e` forces a new instance (gtk-single-instance=false) and
+        # ensures the CLI args are respected. Pass tmux and its arguments as
+        # separate CLI args so Ghostty does not try to exec a single combined
+        # string as an executable.
+        "$mod,RETURN, exec, ghostty -e tmux new-session -A -D"
+        # Toggle Ghostty quick terminal using Ctrl+W
+        "CTRL,W, exec, ghostty +toggle_quick_terminal"
         "$mod,Q, killactive,"
         "$mod,M, fullscreen,"
         "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc,ssh'"
-        "$mod,S, exec, hyprshot -m monitor output --clipboard-only"
-        "$mod + SHIFT, S, exec, hyprshot -m region output --clipboard-only"
+        # Run hyprshot, which writes a temporary file and prints its path.
+        # Capture that path and copy it as text into the clipboard so terminals
+        # and other apps that paste text get the file path.
+        # Run hyprshot, then try to locate the most-recent image file it created
+        # (searching XDG_RUNTIME_DIR and /tmp) and copy that path as text via copyq.
+        # Use hyprshot to put image into clipboard, then export the newest copyq image
+        # to a timestamped file in ~/Pictures and copy that path as text so terminals
+        # can paste it with Ctrl+V / Ctrl+Shift+V.
+        "$mod,S, exec, sh -c 'hyprshot -m monitor output --clipboard-only; sleep 0.1; f=\"$HOME/Pictures/screenshot-$(date +%s).png\"; mkdir -p \"$HOME/Pictures\"; copyq read 0 > \"$f\" && echo \"$f\" | copyq copy - || true'"
+        "$mod + SHIFT, S, exec, sh -c 'hyprshot -m region output --clipboard-only; sleep 0.1; f=\"$HOME/Pictures/screenshot-$(date +%s).png\"; mkdir -p \"$HOME/Pictures\"; copyq read 0 > \"$f\" && echo \"$f\" | copyq copy - || true'"
         "$mod,P, exec, ${pkgs.firefox}/bin/firefox"
         "$mod,O, exec, ${pkgs.caprine}/bin/caprine"
         "$mod,B, exec, pkill -SIGUSR1 waybar"
