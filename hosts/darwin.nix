@@ -71,6 +71,7 @@ in
     enable = true;
     taps = [
       "narugit/tap"
+      "felixkratz/formulae"
     ];
     casks = [
       "sol"
@@ -78,6 +79,7 @@ in
     ];
     brews = [
       "narugit/tap/smctemp"
+      "borders"
     ];
   };
 

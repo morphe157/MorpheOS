@@ -3,6 +3,9 @@
   services.aerospace = {
     enable = true;
     settings = {
+      after-startup-command = [
+        "exec-and-forget borders active_color=0xff3d6bbf inactive_color=0xff494d64 width=5.0"
+      ];
       automatically-unhide-macos-hidden-apps = true;
       gaps = {
         inner = {
