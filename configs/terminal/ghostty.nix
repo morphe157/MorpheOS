@@ -2,7 +2,7 @@
 {
   programs.ghostty = {
     enable = true;
-    package = pkgs.ghostty;
+    package = pkgs.ghostty-bin;
 
     settings = {
       font-family = "CommitMono Nerd Font Mono";

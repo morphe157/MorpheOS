@@ -1,4 +1,9 @@
 {
+  plugins.claude-code = {
+    enable = true;
+    callSetup = true;
+    settings.keymaps.window_navigation = false;
+  };
   plugins.opencode = {
     enable = true;
     settings = {
@@ -6,6 +11,29 @@
   };
 
   keymaps = [
+    {
+      mode = [
+        "n"
+        "t"
+      ];
+      key = "<C-k>";
+      options = {
+        silent = true;
+        desc = "[AI] Toggle ClaudeCode";
+        noremap = true;
+      };
+      action = "<cmd>ClaudeCode<CR>";
+    }
+    {
+      mode = "t";
+      key = "<C-w>";
+      options = {
+        silent = true;
+        desc = "[AI] Exit terminal mode + window prefix";
+        noremap = true;
+      };
+      action = "<C-\\><C-n><C-w>";
+    }
     {
       mode = [
         "n"

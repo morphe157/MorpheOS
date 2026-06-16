@@ -53,8 +53,6 @@ in
     file.".hammerspoon/init.lua".source = ../configs/hammerspoon/init.lua;
   };
 
-  nixpkgs.overlays = [ (import ../overlays/codelldb.nix) ];
-
   imports = [
     nixvim.homeModules.nixvim
     ./common.nix
@@ -64,7 +62,13 @@ in
     ../configs/firefox.nix
   ];
 
-  programs.nixvim = import ../configs/neovim;
+  # Reuse home-manager's pkgs instead of letting nixvim re-elaborate the
+  # platform, which fails on nixpkgs >= 26.11 (linux-kernel removed from
+  # lib.systems.elaborate). https://github.com/nix-community/nixvim/issues/4426
+  programs.nixvim = lib.mkMerge [
+    (import ../configs/neovim)
+    { nixpkgs.pkgs = pkgs; }
+  ];
   programs.home-manager.enable = true;
 
   fonts.fontconfig.enable = true;

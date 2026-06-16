@@ -3,7 +3,8 @@
     "allow": [
       "Bash(nix flake:*)",
       "Bash(/Users/morphe/.claude/statusline.sh)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(timeout 580 make build USERNAME=morphe)"
     ]
   },
   "sandbox": {

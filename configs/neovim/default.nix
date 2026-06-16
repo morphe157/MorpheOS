@@ -3,11 +3,6 @@
   ...
 }:
 {
-  home.packages = with pkgs; [
-    codelldb
-    eslint
-  ];
-
   enable = true;
   imports = [
     ./keymaps.nix
