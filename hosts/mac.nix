@@ -17,7 +17,7 @@ in
       efi.canTouchEfiVariables = false;
     };
   };
-    environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     kitty
     gnumake
     tuigreet

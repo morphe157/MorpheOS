@@ -43,6 +43,15 @@ in
       bind z kill-window -a
       bind r source-file ~/.config/tmux/tmux.conf
 
+      # Vim pane navigation (prefix + hjkl, repeatable)
+      bind -r h select-pane -L
+      bind -r j select-pane -D
+      bind -r k select-pane -U
+      bind -r l select-pane -R
+
+      # Mouse: click to select pane, drag borders, wheel scroll
+      set-option -g mouse on
+
       # Fancy session/window picker (prefix + w / W)
       set-option -g mode-style "bg=green,fg=colour233,bold"
       bind W choose-tree -Zw -F "#{?pane_format,#[fg=colour244]   #[fg=cyan]#{pane_current_command}#[fg=colour240] #{pane_title},#{?window_format,#[fg=colour244] #[fg=blue#,bold]#{window_index}#[fg=magenta]#{window_flags} #[fg=colour250]#{window_name} #[fg=colour240](#{window_panes})#{?window_active_clients, #[fg=green]●,},#[fg=colour244]#[fg=magenta#,bold]❖ #{session_name} #[fg=colour240]#{session_windows}w#{?session_attached, #[fg=green]●,}}}"

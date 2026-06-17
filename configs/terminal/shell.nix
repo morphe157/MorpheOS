@@ -33,10 +33,6 @@ in
           inherit (pkgs.fishPlugins.grc) src;
         }
         {
-          name = "pure";
-          inherit (pkgs.fishPlugins.pure) src;
-        }
-        {
           name = "fzf-fish";
           inherit (pkgs.fishPlugins.fzf-fish) src;
         }
@@ -74,16 +70,7 @@ in
     };
     starship = {
       enable = true;
-      settings = {
-        add_newline = true;
-        command_timeout = 1300;
-        scan_timeout = 50;
-        format = "$git_branch$git_status $username$hostname$directory";
-        character = {
-          success_symbol = "[](bold green) ";
-          error_symbol = "[✗](bold red) ";
-        };
-      };
+      settings = builtins.fromTOML (builtins.readFile ./jetpack.toml);
     };
   };
 }
