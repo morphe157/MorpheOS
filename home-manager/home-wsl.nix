@@ -49,10 +49,12 @@ in
     home-manager.enable = true;
     git = {
       enable = true;
-      userName = "${gituser}";
-      userEmail = "${gitemail}";
+      settings.user = {
+        name = "${gituser}";
+        email = "${gitemail}";
+      };
     };
   };
 
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.11";
 }

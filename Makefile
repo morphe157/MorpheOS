@@ -2,8 +2,13 @@
 
 # Default to the current user; override with `make USERNAME=foo` if needed.
 USERNAME ?= $(shell whoami)
+GIT_USER ?= $(shell git config user.name)
+GIT_EMAIL ?= $(shell git config user.email)
 
 $(info Using username: $(USERNAME))
+$(info Using git user: $(GIT_USER))
+$(info Using git email: $(GIT_EMAIL))
+
 
 # Single entry point: `make` works on every platform.
 # Auto-detects Darwin / WSL / Apple-Silicon NixOS / Linux desktop and
@@ -30,8 +35,8 @@ build: make_config
 make_config:
 	@echo "{" > config.nix
 	@echo "  username = \"$(USERNAME)\";" >> config.nix
-	@echo "  gituser = \"$(GITUSER)\";" >> config.nix
-	@echo "  gitemail = \"$(GITEMAIL)\";" >> config.nix
+	@echo "  gituser = \"$(GIT_USER)\";" >> config.nix
+	@echo "  gitemail = \"$(GIT_EMAIL)\";" >> config.nix
 	@echo "}" >> config.nix
 
 clean:

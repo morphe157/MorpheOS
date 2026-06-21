@@ -30,6 +30,10 @@
     nixfmt = {
       url = "github:NixOS/nixfmt";
     };
+    nixos-wsl = {
+	    url = "github:nix-community/NixOS-WSL";
+	    inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -108,6 +112,7 @@
           };
           modules = [
             ./hosts/wsl.nix
+            inputs.nixos-wsl.nixosModules.default
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             (lib.mkHomeManagerModule ./home-manager/home-wsl.nix)

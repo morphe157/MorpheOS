@@ -1,5 +1,5 @@
 {
   username = "morphe";
-  gituser = "";
-  gitemail = "";
+  gituser = "morphe157";
+  gitemail = "morphe157@protonmail.com";
 }
