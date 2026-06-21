@@ -4,7 +4,11 @@
   config,
   ...
 }:
-
+let
+  ghostty = "${pkgs.ghostty}/bin/ghostty";
+  firefox = "${pkgs.firefox}/bin/firefox";
+  caprine = "${pkgs.caprine}/bin/caprine";
+in
 {
   home.packages = with pkgs; [
     brightnessctl
@@ -27,9 +31,9 @@
         # ensures the CLI args are respected. Pass tmux and its arguments as
         # separate CLI args so Ghostty does not try to exec a single combined
         # string as an executable.
-        "$mod,RETURN, exec, ghostty -e tmux new-session -A -D"
+        "$mod,RETURN, exec, ${ghostty} -e tmux new-session -A -D"
         # Toggle Ghostty quick terminal using Ctrl+W
-        "CTRL,W, exec, ghostty +toggle_quick_terminal"
+        "CTRL,W, exec, ${ghostty} +toggle_quick_terminal"
         "$mod,Q, killactive,"
         "$mod,M, fullscreen,"
         "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc,ssh'"
@@ -43,8 +47,8 @@
         # can paste it with Ctrl+V / Ctrl+Shift+V.
         "$mod,S, exec, sh -c 'hyprshot -m monitor output --clipboard-only; sleep 0.1; f=\"$HOME/Pictures/screenshot-$(date +%s).png\"; mkdir -p \"$HOME/Pictures\"; copyq read 0 > \"$f\" && echo \"$f\" | copyq copy - || true'"
         "$mod + SHIFT, S, exec, sh -c 'hyprshot -m region output --clipboard-only; sleep 0.1; f=\"$HOME/Pictures/screenshot-$(date +%s).png\"; mkdir -p \"$HOME/Pictures\"; copyq read 0 > \"$f\" && echo \"$f\" | copyq copy - || true'"
-        "$mod,P, exec, ${pkgs.firefox}/bin/firefox"
-        "$mod,O, exec, ${pkgs.caprine}/bin/caprine"
+        "$mod,P, exec, ${firefox}"
+        "$mod,O, exec, ${caprine}"
         "$mod,B, exec, pkill -SIGUSR1 waybar"
         "ALT,1, exec, copyq read 0 | copyq copy -"
         "ALT,2, exec, copyq read 1 | copyq copy -"

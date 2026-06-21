@@ -37,7 +37,7 @@ in
     (n "<Space>t" "<cmd>Lspsaga finder<CR>" "[Lspsaga] Finder")
     (n "<C-]>" "<cmd>Lspsaga goto_definition<CR>" "[Lspsaga] Go to definition")
     (n "K" "<cmd>Lspsaga hover_doc<CR>" "[Lspsaga] Hover")
-    (n "<Space>f" "<cmd>lua require('conform').format()<CR>" "[LSP] Format")
+    (n "<Space>f" "<cmd>lua vim.lsp.buf.format{ async = true }<CR>" "[LSP] Format")
     (n "<Space>dc" "<cmd>DapContinue<CR>" "[DAP] Continue")
     (n "<Space>db" "<cmd>DapToggleBreakpoint<CR>" "[DAP] Toggle breakpoint")
     (n "<Space>dB" "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Condition: '))<CR>"

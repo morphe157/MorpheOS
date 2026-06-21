@@ -1,8 +1,13 @@
 { lib, pkgs, ... }:
 {
   programs.ghostty = {
+    # Only enable on Darwin hosts where ghostty is supported.
     enable = true;
-    package = pkgs.ghostty-bin;
+    package =
+      if (pkgs.stdenv.isDarwin) && builtins.hasAttr "ghostty-bin" pkgs then
+        pkgs.ghostty-bin
+      else
+        pkgs.ghostty;
 
     settings = {
       font-family = "CommitMono Nerd Font Mono";

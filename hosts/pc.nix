@@ -13,14 +13,6 @@ in
   ];
   drivers.nvidia.enable = true;
 
-  morphe.sshfs = {
-    enable = true;
-    host = "morphe@192.168.0.221";
-    remotePath = "/home/morphe";
-    mountPoint = "/home/${username}/rpi";
-    identityFile = "/home/${username}/.ssh/id_morphe";
-  };
-
   morphe.hyprlandMonitors = ''
     monitor = DP-3, 1920x1080@240, 0x0, 1
     monitor = HDMI-A-5, 1920x1080@144, 1920x0, 1

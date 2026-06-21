@@ -58,22 +58,9 @@
       ];
     in
     {
-      formatter = forEachSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        pkgs.writeShellApplication {
-          name = "nixfmt";
-          runtimeInputs = [
-            pkgs.nixfmt
-            pkgs.fd
-          ];
-          text = ''
-            fd -t f -e nix -x nixfmt '{}'
-          '';
-        }
-      );
+      # formatter helper removed — it forced evaluation of pkgs.nixfmt which
+      # pulls in Haskell package set during flake evaluation. Keep outputs
+      # minimal to avoid unnecessary evaluations.
 
       darwinConfigurations = {
         "${username}" = nix-darwin.lib.darwinSystem {

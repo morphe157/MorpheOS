@@ -1,5 +1,7 @@
 {
-  plugins.copilot-lua.enable = true;
+  # Disable copilot-lua for now: its source fixed-output hash changed upstream
+  # which causes build failures. Re-enable after updating the pinned hash.
+  plugins.copilot-lua.enable = false;
   plugins.blink-copilot.enable = true;
   plugins.blink-cmp = {
     enable = true;

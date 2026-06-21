@@ -10,25 +10,7 @@
         formatting.ktlint.enable = true;
       };
     };
-    conform-nvim = {
-      enable = true;
-      autoInstall.enable = true;
-      settings = {
-        default_format_opts.lsp_format = "fallback";
-        formatters = { };
-        formatters_by_ft = {
-          kotlin = [ "ktlint" ];
-          nix = [ "nixfmt" ];
-          formatters = {
-            ktlint.command = "ktlint";
-            nixfmt.command = "nixfmt";
-          };
-        };
-        log_level = "error";
-        notify_no_formatters = true;
-        notify_on_error = true;
-      };
-    };
+    # conform-nvim removed — use built-in LSP formatting instead
     lsp = {
       enable = true;
       servers = {
