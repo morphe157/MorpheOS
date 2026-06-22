@@ -9,6 +9,11 @@ in
       name = "${gituser}";
       email = "${gitemail}";
     };
+    ignores = [
+      ".omo/"
+      ".DS_Store"
+      "*.swp"
+    ];
   };
 
   home.packages = with pkgs; [
