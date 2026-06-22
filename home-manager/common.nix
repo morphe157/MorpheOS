@@ -25,5 +25,6 @@ in
     opencode
     codex
     nix-output-monitor
+    just
   ];
 }

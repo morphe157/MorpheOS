@@ -10,30 +10,36 @@ MorpheOS is a declarative system configuration managed with Nix Flakes. It targe
 
 ```bash
 # Apply configuration (auto-detects Darwin vs Linux)
-make build USERNAME=morphe
+just
 
 # macOS (nix-darwin)
-make mac USERNAME=morphe
+just mac USERNAME=morphe
 
 # WSL
-make wsl USERNAME=morphe
+just wsl USERNAME=morphe
 
 # Format all Nix files
-make fmt
+just fmt
 
 # Dry-run check (no build)
-make check
+just check
 
 # Full verify (format + all hosts dry-run)
-make verify
+just verify
 
 # Garbage collect
-make clean
+just clean
+
+# List all available recipes
+just --list
+
+# Bootstrap flakes on a fresh system
+just enable-flakes
 ```
 
 CI runs `nix fmt -- --check .` and builds all three NixOS configurations on every push.
 
-After changes, run `make verify` to check formatting + all host evals.
+After changes, run `just verify` to check formatting + all host evals.
 
 ## Architecture
 
