@@ -30,7 +30,7 @@ build: _write_config
       echo -e "\n{{_bold}}{{_blue}}━━━  Platform: macOS (nix-darwin)  ━━━{{_reset}}"
       NIXPKGS_ALLOW_UNFREE=1 nix build \
         ".#darwinConfigurations.{{username}}.system" \
-        --impure --show-trace --log-format internal-json -v \
+        --no-link --impure --show-trace --log-format internal-json -v \
         2>&1 | {{nom}} --json
       sudo NIXPKGS_ALLOW_UNFREE=1 USERNAME="{{username}}" \
         darwin-rebuild activate --flake .#"{{username}}" --impure
@@ -60,7 +60,7 @@ mac: _write_config
   echo -e "\n{{_bold}}{{_blue}}━━━  nix-darwin build  ━━━{{_reset}}"
   NIXPKGS_ALLOW_UNFREE=1 nix build \
     ".#darwinConfigurations.{{username}}.system" \
-    --impure --show-trace --log-format internal-json -v \
+    --no-link --impure --show-trace --log-format internal-json -v \
     2>&1 | {{nom}} --json
   sudo NIXPKGS_ALLOW_UNFREE=1 USERNAME="{{username}}" \
     darwin-rebuild activate --flake .#"{{username}}" --impure
