@@ -25,16 +25,6 @@ in
     btop
   ];
   programs = {
-    atuin = {
-      enable = true;
-      flags = [ "--disable-ctrl-r" ];
-      settings = {
-        show_tabs = true;
-        style = "compact";
-        filter_mode = "fuzzy";
-      };
-    };
-
     fish = {
       enable = true;
       plugins = [
