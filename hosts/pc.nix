@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 let
-  inherit (import ../config.nix) username;
+  username = builtins.getEnv "USERNAME";
 in
 {
   imports = [

@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
-  inherit (import ../config.nix) gituser gitemail;
+  gituser = builtins.getEnv "GIT_USER";
+  gitemail = builtins.getEnv "GIT_EMAIL";
 in
 {
   programs.git = {

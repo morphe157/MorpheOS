@@ -16,7 +16,7 @@ let
       pubsub-emulator
     ]
   );
-  inherit (import ../config.nix) username;
+  username = builtins.getEnv "USERNAME";
 in
 {
   home = {

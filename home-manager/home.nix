@@ -7,7 +7,9 @@
   ...
 }:
 let
-  inherit (import ../config.nix) username gituser gitemail;
+  username = builtins.getEnv "USERNAME";
+  gituser = builtins.getEnv "GIT_USER";
+  gitemail = builtins.getEnv "GIT_EMAIL";
 in
 {
   # You can import other home-manager modules here

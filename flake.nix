@@ -45,7 +45,7 @@
       ...
     }@inputs:
     let
-      username = (import ./config.nix).username;
+      username = builtins.getEnv "USERNAME";
       lib = import ./lib/morphe.nix {
         inherit inputs username;
         lib = nixpkgs.lib;

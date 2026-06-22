@@ -9,7 +9,7 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
-  inherit (import ../config.nix) username;
+  username = builtins.getEnv "USERNAME";
 in
 {
   # You can import other home-manager modules here

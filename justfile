@@ -17,14 +17,11 @@ git_user := env_var_or_default('GIT_USER', shell('git config user.name'))
 git_email := env_var_or_default('GIT_EMAIL', shell('git config user.email'))
 nom := if shell('command -v nom 2>/dev/null') == '' { 'cat' } else { 'nom' }
 
-# Write config.nix from runtime values
-_write_config:
-  @printf '{\n  username = "%s";\n  gituser = "%s";\n  gitemail = "%s";\n}\n' '{{username}}' '{{git_user}}' '{{git_email}}' > config.nix
-
 # Apply configuration (auto-detects Darwin vs Linux vs WSL)
-build: _write_config
+build:
   #!/usr/bin/env bash
   set -euo pipefail
+  export USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}"
   case "$(uname -s)" in
     Darwin)
       echo -e "\n{{_bold}}{{_blue}}━━━  Platform: macOS (nix-darwin)  ━━━{{_reset}}"
@@ -56,20 +53,23 @@ build: _write_config
   esac
 
 # macOS (nix-darwin) shortcut
-mac: _write_config
+mac:
   echo -e "\n{{_bold}}{{_blue}}━━━  nix-darwin build  ━━━{{_reset}}"
-  NIXPKGS_ALLOW_UNFREE=1 nix build \
+  USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
+    NIXPKGS_ALLOW_UNFREE=1 nix build \
     ".#darwinConfigurations.{{username}}.system" \
     --no-link --impure --show-trace --log-format internal-json -v \
     2>&1 | {{nom}} --json
-  sudo NIXPKGS_ALLOW_UNFREE=1 USERNAME="{{username}}" \
+  sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
+    NIXPKGS_ALLOW_UNFREE=1 \
     darwin-rebuild activate --flake .#"{{username}}" --impure
   echo -e "{{_green}}✓ Done{{_reset}}\n"
 
 # WSL shortcut
-wsl: _write_config
+wsl:
   echo -e "\n{{_bold}}{{_cyan}}━━━  WSL rebuild  ━━━{{_reset}}"
-  sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nom}}
+  sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
+    NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nom}}
   echo -e "{{_green}}✓ Done{{_reset}}\n"
 
 # Bootstrap Nix flakes on a fresh system (idempotent)
@@ -102,7 +102,8 @@ fmt:
 # Dry-run check (no build)
 check:
   @echo -e '{{_bold}}{{_yellow}}━━━  Dry-run check  ━━━{{_reset}}'
-  nix build .#nixosConfigurations.pc.config.system.build.toplevel --dry-run --impure
+  USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
+    nix build .#nixosConfigurations.pc.config.system.build.toplevel --dry-run --impure
 
 # Garbage collect
 clean:
@@ -113,6 +114,7 @@ clean:
 verify:
   #!/usr/bin/env bash
   set -euo pipefail
+  export USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}"
   echo -e "\n{{_bold}}{{_cyan}}═══  Verify: Format check  ═══{{_reset}}"
   nix fmt -- --ci .
   echo -e "{{_green}}✓ Format OK{{_reset}}"
