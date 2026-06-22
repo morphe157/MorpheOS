@@ -9,7 +9,7 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
-  inherit (import ../config.nix) username gitemail gituser;
+  inherit (import ../config.nix) username;
 in
 {
   # You can import other home-manager modules here
@@ -47,14 +47,7 @@ in
   programs = {
     nixvim = import ../configs/neovim;
     home-manager.enable = true;
-    git = {
-      enable = true;
-      settings.user = {
-        name = "${gituser}";
-        email = "${gitemail}";
-      };
-    };
   };
 
-  home.stateVersion = "26.11";
+  home.stateVersion = "24.11";
 }

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "nix": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Group flake lock updates",
+      "matchPackagePatterns": ["*"],
+      "groupName": "flake inputs"
+    }
+  ],
+  "schedule": ["before 9am on monday"],
+  "labels": ["dependencies"]
+}

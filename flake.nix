@@ -7,10 +7,6 @@
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,8 +27,8 @@
       url = "github:NixOS/nixfmt";
     };
     nixos-wsl = {
-	    url = "github:nix-community/NixOS-WSL";
-	    inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -62,9 +58,7 @@
       ];
     in
     {
-      # formatter helper removed — it forced evaluation of pkgs.nixfmt which
-      # pulls in Haskell package set during flake evaluation. Keep outputs
-      # minimal to avoid unnecessary evaluations.
+      formatter = forEachSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       darwinConfigurations = {
         "${username}" = nix-darwin.lib.darwinSystem {
@@ -78,6 +72,22 @@
         };
       };
 
+      devShells = forEachSystems (system: {
+        default = nixpkgs.legacyPackages.${system}.mkShellNoCC {
+          packages = with nixpkgs.legacyPackages.${system}; [
+            nixfmt
+            statix
+            nix-output-monitor
+          ];
+        };
+        rust = nixpkgs.legacyPackages.${system}.mkShellNoCC {
+          packages = with nixpkgs.legacyPackages.${system}; [
+            rustup
+            cargo-sweep
+          ];
+        };
+      });
+
       nixosConfigurations = {
         mac = nixpkgs.lib.nixosSystem {
           specialArgs = {
@@ -87,6 +97,7 @@
           modules = [
             ./hosts/mac.nix
             nixos-apple-silicon.nixosModules.default
+            stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             (lib.mkHomeManagerModule ./home-manager/home.nix)
           ];

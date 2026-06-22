@@ -24,11 +24,16 @@ make fmt
 # Dry-run check (no build)
 make check
 
+# Full verify (format + all hosts dry-run)
+make verify
+
 # Garbage collect
 make clean
 ```
 
 CI runs `nix fmt -- --check .` and builds all three NixOS configurations on every push.
+
+After changes, run `make verify` to check formatting + all host evals.
 
 ## Architecture
 

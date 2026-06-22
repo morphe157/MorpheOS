@@ -1,5 +1,16 @@
 { pkgs, ... }:
+let
+  inherit (import ../config.nix) gituser gitemail;
+in
 {
+  programs.git = {
+    enable = true;
+    settings.user = {
+      name = "${gituser}";
+      email = "${gitemail}";
+    };
+  };
+
   home.packages = with pkgs; [
     fastfetch
     tgpt
@@ -13,5 +24,6 @@
     jq
     opencode
     codex
+    nix-output-monitor
   ];
 }

@@ -3,10 +3,16 @@ let
   inherit (import ../config.nix) username;
 in
 {
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    auto-optimise-store = true;
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
+
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 30d";
   system = {
     primaryUser = "${username}";
     stateVersion = 5;

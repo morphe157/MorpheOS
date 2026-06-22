@@ -18,8 +18,8 @@ jobs:
             substituters = https://cache.nixos.org https://nix-community.cachix.org
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrA3kbzuHflYiP2HC1DlB9F0= nix-community.cachix.org-1:mB9FSh9qf2dCJMDS2vmSRRvwsyo5NUtPfUt9GBHg2Hs=
 
-      - name: Check formatting
-        run: nix fmt -- --check .
+          - name: Check formatting
+            run: nix fmt -- --ci .
 
   build:
     runs-on: ubuntu-latest

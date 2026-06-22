@@ -67,6 +67,7 @@ in
     packages = with pkgs; [
       vulkan-tools
       lutris
+      mangohud
     ];
   };
 
@@ -114,6 +115,7 @@ in
     enable = true;
     xwayland.enable = true;
   };
+  programs.gamemode.enable = true;
   programs.steam.enable = true;
 
   xdg.portal = {
@@ -142,6 +144,8 @@ in
     };
   };
 
+  programs.nix-index.enable = true;
+
   qt.enable = true;
   services = {
     pulseaudio.support32Bit = true;
@@ -163,10 +167,16 @@ in
     };
   };
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    auto-optimise-store = true;
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
+
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 30d";
 
   system.stateVersion = "24.11";
 

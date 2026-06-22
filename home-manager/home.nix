@@ -71,15 +71,11 @@ in
     };
   };
   programs = {
-    nixvim = import ../configs/neovim;
+    nixvim = lib.mkMerge [
+      (import ../configs/neovim)
+      { nixpkgs.source = inputs.nixpkgs; }
+    ];
     home-manager.enable = true;
-    git = {
-      enable = true;
-      settings.user = {
-        name = "${gituser}";
-        email = "${gitemail}";
-      };
-    };
   };
 
   # Nicely reload system units when changing configs
@@ -95,5 +91,5 @@ in
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.05";
+  home.stateVersion = "24.11";
 }

@@ -21,7 +21,7 @@ local function position(win)
 end
 
 local function findDropdownWindow()
-  for _, win in ipairs(hs.window.filter.new("Alacritty"):getWindows()) do
+  for _, win in ipairs(hs.window.filter.new("Ghostty"):getWindows()) do
     if win:title():lower():find(dropdown.title, 1, true) then
       return win
     end
@@ -36,7 +36,7 @@ local function spawnDropdown()
     end, {
       "-n",
       "-a",
-      "Alacritty",
+      "Ghostty",
       "--args",
       "--title",
       dropdown.title,
@@ -68,7 +68,7 @@ function toggleDropdown()
   end
 
   local focused = hs.window.frontmostWindow()
-  if focused and focused:application():name() == "Alacritty" and (not win or focused:id() ~= win:id()) then
+  if focused and focused:application():name() == "Ghostty" and (not win or focused:id() ~= win:id()) then
     hs.eventtap.keyStroke({ "ctrl" }, "t", 0)
     return
   end

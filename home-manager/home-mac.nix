@@ -22,7 +22,7 @@ in
   home = {
     inherit username;
     homeDirectory = lib.mkForce "/Users/${username}";
-    stateVersion = "24.11";
+    stateVersion = "24.11"; # keep in sync with other hosts
     packages = with pkgs; [
       nerd-fonts.commit-mono
       git-lfs
