@@ -81,13 +81,6 @@
         }
         {
           "if" = {
-            app-id = "com.mitchellh.ghostty";
-            window-title-regex-substring = "Dropdown";
-          };
-          run = [ "layout floating" ];
-        }
-        {
-          "if" = {
             app-id = "com.google.android.studio";
           };
           run = [
@@ -104,7 +97,7 @@
         }
       ];
       mode.main.binding = {
-        "alt-enter" = "exec-and-forget zsh -c ghostty";
+        "alt-enter" = "exec-and-forget open -na wezterm";
         "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 

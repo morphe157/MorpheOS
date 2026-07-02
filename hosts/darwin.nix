@@ -82,7 +82,7 @@ in
     casks = [
       "sol"
       "firefox"
-      "hammerspoon"
+      "wezterm"
     ];
     brews = [
       "narugit/tap/smctemp"

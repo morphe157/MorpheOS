@@ -39,7 +39,7 @@ in
     ];
 
     sessionVariables = {
-      TERMINAL = "ghostty";
+      TERMINAL = "wezterm";
       EDITOR = "nvim";
       USERNAME = "${username}";
     };

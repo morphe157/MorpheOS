@@ -32,5 +32,6 @@ in
     codex
     nix-output-monitor
     just
+    tre-command
   ];
 }

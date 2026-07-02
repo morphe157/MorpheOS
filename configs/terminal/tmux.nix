@@ -38,6 +38,8 @@ in
       bind-key -T copy-mode-vi y send-keys -X copy-selection
       set-option -g default-terminal "tmux-256color"
       set-option -a terminal-features 'xterm-ghostty:RGB:extkeys'
+      set-option -a terminal-features 'xterm-256color:RGB:extkeys:sixel'
+      set-option -g allow-passthrough on
       set-option -s extended-keys on
       set-option -g renumber-windows on
       bind z kill-window -a

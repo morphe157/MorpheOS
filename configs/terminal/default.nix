@@ -1,7 +1,7 @@
 {
   imports = [
     ./shell.nix
-    ./ghostty.nix
+    ./wezterm.nix
     ./tmux.nix
   ];
 }

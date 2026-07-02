@@ -44,13 +44,11 @@ in
       "/Users/${username}/.cargo/bin/"
     ];
     sessionVariables = {
-      TERMINAL = "ghostty";
+      TERMINAL = "wezterm";
       EDITOR = "nvim";
       USERNAME = "${username}";
       LIBRARY_PATH = "${lib.makeLibraryPath [ pkgs.libiconv ]}\${LIBRARY_PATH:+:$LIBRARY_PATH}";
     };
-
-    file.".hammerspoon/init.lua".source = ../configs/hammerspoon/init.lua;
   };
 
   imports = [
