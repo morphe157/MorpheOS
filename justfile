@@ -36,7 +36,8 @@ build:
     *)
       if grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null; then
         echo -e "\n{{_bold}}{{_cyan}}━━━  Platform: WSL  ━━━{{_reset}}"
-        sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nom}}
+        sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
+          NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nom}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       elif [ "$(uname -m)" = "aarch64" ]; then
         echo -e "\n{{_bold}}{{_magenta}}━━━  Platform: macOS (Apple Silicon)  ━━━{{_reset}}"
