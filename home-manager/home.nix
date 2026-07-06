@@ -64,7 +64,7 @@ in
     ];
 
     sessionVariables = {
-      TERMINAL = "wezterm";
+      TERMINAL = "kitty";
       EDITOR = "nvim";
       USERNAME = "${username}";
       GITUSER = "${gituser}";

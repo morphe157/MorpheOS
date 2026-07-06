@@ -15,7 +15,7 @@ Nix flake managing 4 system targets (NixOS PC/WSL/Mac + nix-darwin) plus home-ma
 ├── configs/           # Per-app Nix module configs (39 files, 8 subdirs)
 │   ├── neovim/        # nixvim: lsp/cmp/dap/keymaps + per-plugin modules
 │   ├── sketchybar/    # Shell scripts + rc for macOS menu bar
-│   ├── terminal/      # ghostty/tmux/shell/jetpack configs
+│   ├── terminal/      # kitty/tmux/shell configs
 │   └── waybar/        # Waybar bar + weather widget
 ├── hosts/             # Host-specific configs (darwin/mac/pc/wsl)
 ├── home-manager/      # User envs: Linux, macOS, WSL + shared common.nix

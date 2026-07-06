@@ -68,6 +68,11 @@ in
   };
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+
+  # nix-darwin (a1fa429) passes --toc-depth to nixos-render-docs, removed in current
+  # nixpkgs; skip the manual build until nix-darwin catches up.
+  documentation.enable = false;
+
   programs.fish.enable = true;
   users.users."${username}" = {
     shell = pkgs.fish;
@@ -82,7 +87,7 @@ in
     casks = [
       "sol"
       "firefox"
-      "wezterm"
+      "kitty"
     ];
     brews = [
       "narugit/tap/smctemp"

@@ -30,7 +30,7 @@ build:
         --no-link --impure --show-trace --log-format internal-json -v \
         2>&1 | {{nom}} --json
       sudo NIXPKGS_ALLOW_UNFREE=1 USERNAME="{{username}}" \
-        darwin-rebuild activate --flake .#"{{username}}" --impure
+        darwin-rebuild switch --flake .#"{{username}}" --impure
       echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       ;;
     *)
@@ -62,7 +62,7 @@ mac:
     2>&1 | {{nom}} --json
   sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
     NIXPKGS_ALLOW_UNFREE=1 \
-    darwin-rebuild activate --flake .#"{{username}}" --impure
+    darwin-rebuild switch --flake .#"{{username}}" --impure
   echo -e "{{_green}}✓ Done{{_reset}}\n"
 
 # WSL shortcut

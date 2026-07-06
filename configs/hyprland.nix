@@ -5,7 +5,7 @@
   ...
 }:
 let
-  ghostty = "${pkgs.ghostty}/bin/ghostty";
+  kitty = "${pkgs.kitty}/bin/kitty";
   firefox = "${pkgs.firefox}/bin/firefox";
   caprine = "${pkgs.caprine}/bin/caprine";
 in
@@ -27,14 +27,10 @@ in
         "ALT, mouse:272, movewindow"
       ];
       bind = [
-        # Open a new Ghostty instance (not the quick terminal surface).
-        # Using `-e` forces a new instance (gtk-single-instance=false) and
-        # ensures the CLI args are respected. Pass tmux and its arguments as
-        # separate CLI args so Ghostty does not try to exec a single combined
-        # string as an executable.
-        "$mod,RETURN, exec, ${ghostty} -e tmux new-session -A -D"
-        # Toggle Ghostty quick terminal using Ctrl+W
-        "CTRL,W, exec, ${ghostty} +toggle_quick_terminal"
+        # Open a new kitty instance running tmux.
+        "$mod,RETURN, exec, ${kitty} -e tmux new-session -A -D"
+        # Toggle the kitty quick terminal (special workspace scratchpad).
+        "CTRL,W, togglespecialworkspace, scratch"
         "$mod,Q, killactive,"
         "$mod,M, fullscreen,"
         "$mod,D, exec, rofi -show combi -modes combi -combi-modes 'window,drun,run,calc,ssh'"
@@ -129,7 +125,8 @@ in
         env = SDL_VIDEODRIVER, x11
         env = MOZ_ENABLE_WAYLAND, 1
         gesture = 3, horizontal, workspace
-        exec-once = [workspace 1 silent] ghostty
+        exec-once = [workspace 1 silent] kitty
+        exec-once = [workspace special:scratch silent] kitty --class kitty-scratch
         exec-once = [workspace 2 silent] firefox
         exec-once = [workspace 3 silent] easyeffects
         exec-once = [workspace 4 silent] valent

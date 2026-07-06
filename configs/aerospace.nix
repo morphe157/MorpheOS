@@ -97,7 +97,7 @@
         }
       ];
       mode.main.binding = {
-        "alt-enter" = "exec-and-forget open -na wezterm";
+        "alt-enter" = "exec-and-forget open -na kitty";
         "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
         "alt-d" = "exec-and-forget open /Applications/Sol.app/";
 
