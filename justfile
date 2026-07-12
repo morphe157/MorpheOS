@@ -15,7 +15,7 @@ default:
 username := env_var_or_default('USERNAME', shell('whoami'))
 git_user := env_var_or_default('GIT_USER', shell('git config user.name'))
 git_email := env_var_or_default('GIT_EMAIL', shell('git config user.email'))
-nom := if shell('command -v nom 2>/dev/null') == '' { 'cat' } else { 'nom' }
+nix-output-monitor := shell('if command -v nix-output-monitor >/dev/null 2>&1; then printf nix-output-monitor; else printf cat; fi')
 
 # Apply configuration (auto-detects Darwin vs Linux vs WSL)
 build:
@@ -28,7 +28,7 @@ build:
       NIXPKGS_ALLOW_UNFREE=1 nix build \
         ".#darwinConfigurations.{{username}}.system" \
         --no-link --impure --show-trace --log-format internal-json -v \
-        2>&1 | {{nom}} --json
+        2>&1 | {{nix-output-monitor}} --json
       sudo NIXPKGS_ALLOW_UNFREE=1 USERNAME="{{username}}" \
         darwin-rebuild switch --flake .#"{{username}}" --impure
       echo -e "{{_green}}✓ Build complete{{_reset}}\n"
@@ -37,17 +37,17 @@ build:
       if grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null; then
         echo -e "\n{{_bold}}{{_cyan}}━━━  Platform: WSL  ━━━{{_reset}}"
         sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
-          NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nom}}
+          NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       elif [ "$(uname -m)" = "aarch64" ]; then
         echo -e "\n{{_bold}}{{_magenta}}━━━  Platform: macOS (Apple Silicon)  ━━━{{_reset}}"
         sudo cp /etc/nixos/hardware-configuration.nix ./hosts/hardware-configuration.nix
-        sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#mac --impure --show-trace 2>&1 | {{nom}}
+        sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#mac --impure --show-trace 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       else
         echo -e "\n{{_bold}}{{_yellow}}━━━  Platform: PC (NixOS)  ━━━{{_reset}}"
         sudo cp /etc/nixos/hardware-configuration.nix ./hosts/hardware-configuration.nix
-        sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#pc --impure 2>&1 | {{nom}}
+        sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#pc --impure 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       fi
       ;;
@@ -60,7 +60,7 @@ mac:
     NIXPKGS_ALLOW_UNFREE=1 nix build \
     ".#darwinConfigurations.{{username}}.system" \
     --no-link --impure --show-trace --log-format internal-json -v \
-    2>&1 | {{nom}} --json
+    2>&1 | {{nix-output-monitor}} --json
   sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
     NIXPKGS_ALLOW_UNFREE=1 \
     darwin-rebuild switch --flake .#"{{username}}" --impure
@@ -70,7 +70,7 @@ mac:
 wsl:
   echo -e "\n{{_bold}}{{_cyan}}━━━  WSL rebuild  ━━━{{_reset}}"
   sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
-    NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nom}}
+    NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nix-output-monitor}}
   echo -e "{{_green}}✓ Done{{_reset}}\n"
 
 # Bootstrap Nix flakes on a fresh system (idempotent)
