@@ -33,5 +33,7 @@ in
     nix-output-monitor
     just
     tre-command
+    python314
+    uv
   ];
 }
