@@ -62,10 +62,9 @@ in
           ) cfg.subdomains
         )}
         ${
-          lib.optionalString (cfg.sshHostname != null) ''
-            - hostname: ${cfg.sshHostname}
-              service: ssh://${cfg.sshTarget}
-          ''
+          lib.optionalString (
+            cfg.sshHostname != null
+          ) "  - hostname: ${cfg.sshHostname}\n    service: ssh://${cfg.sshTarget}\n"
         }  - service: http_status:404
       '';
       mode = "0644";
