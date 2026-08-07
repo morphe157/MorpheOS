@@ -1,14 +1,23 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 let
-  username = builtins.getEnv "USERNAME";
+  inherit (user) username;
 in
 {
   nix.settings = {
-    auto-optimise-store = true;
     experimental-features = [
       "nix-command"
       "flakes"
     ];
+  };
+  # auto-optimise-store corrupts the store on macOS (NixOS/nix#7273);
+  # scheduled optimisation is safe.
+  nix.optimise.automatic = true;
+
+  nixpkgs.config.allowUnfree = true;
+
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
   };
 
   nix.gc.automatic = true;
@@ -80,6 +89,12 @@ in
 
   homebrew = {
     enable = true;
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      # removes formulae/casks not listed below (keeps their dependencies)
+      cleanup = "uninstall";
+    };
     taps = [
       "narugit/tap"
       "felixkratz/formulae"
@@ -88,10 +103,16 @@ in
       "sol"
       "firefox"
       "kitty"
+      "docker-desktop"
+      "hammerspoon"
+      "spotify"
+      "visual-studio-code"
     ];
     brews = [
       "narugit/tap/smctemp"
       "borders"
+      "appium"
+      "circleci"
     ];
   };
 
@@ -99,12 +120,6 @@ in
     ../configs/aerospace.nix
     ../configs/stylix.nix
   ];
-
-  services.sketchybar = {
-    enable = false;
-    # load sketchybarrc from the home directory
-    config = builtins.readFile "/Users/${username}/.config/sketchybar/sketchybarrc";
-  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.commit-mono

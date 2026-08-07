@@ -12,42 +12,37 @@ _magenta := "\\033[35m"
 default:
   @just build
 
-username := env_var_or_default('USERNAME', shell('whoami'))
-git_user := env_var_or_default('GIT_USER', shell('git config user.name'))
-git_email := env_var_or_default('GIT_EMAIL', shell('git config user.email'))
-nix-output-monitor := shell('if command -v nix-output-monitor >/dev/null 2>&1; then printf nix-output-monitor; else printf cat; fi')
+# Darwin profile: work machine has username mburdyna, everything else is personal
+profile := if shell('whoami') == "mburdyna" { "work" } else { "personal" }
+nix-output-monitor := shell('if command -v nom >/dev/null 2>&1; then printf nom; else printf cat; fi')
 
 # Apply configuration (auto-detects Darwin vs Linux vs WSL)
 build:
   #!/usr/bin/env bash
   set -euo pipefail
-  export USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}"
   case "$(uname -s)" in
     Darwin)
-      echo -e "\n{{_bold}}{{_blue}}━━━  Platform: macOS (nix-darwin)  ━━━{{_reset}}"
-      NIXPKGS_ALLOW_UNFREE=1 nix build \
-        ".#darwinConfigurations.{{username}}.system" \
-        --no-link --impure --show-trace --log-format internal-json -v \
+      echo -e "\n{{_bold}}{{_blue}}━━━  Platform: macOS (nix-darwin, {{profile}})  ━━━{{_reset}}"
+      nix build ".#darwinConfigurations.{{profile}}.system" \
+        --no-link --show-trace --log-format internal-json -v \
         2>&1 | {{nix-output-monitor}} --json
-      sudo NIXPKGS_ALLOW_UNFREE=1 USERNAME="{{username}}" \
-        darwin-rebuild switch --flake .#"{{username}}" --impure
+      sudo darwin-rebuild switch --flake .#{{profile}}
       echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       ;;
     *)
       if grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null; then
         echo -e "\n{{_bold}}{{_cyan}}━━━  Platform: WSL  ━━━{{_reset}}"
-        sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
-          NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nix-output-monitor}}
+        sudo nixos-rebuild switch --flake .#wsl 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       elif [ "$(uname -m)" = "aarch64" ]; then
         echo -e "\n{{_bold}}{{_magenta}}━━━  Platform: macOS (Apple Silicon)  ━━━{{_reset}}"
         sudo cp /etc/nixos/hardware-configuration.nix ./hosts/hardware-configuration.nix
-        sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#mac --impure --show-trace 2>&1 | {{nix-output-monitor}}
+        sudo nixos-rebuild switch --flake .#mac --show-trace 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       else
         echo -e "\n{{_bold}}{{_yellow}}━━━  Platform: PC (NixOS)  ━━━{{_reset}}"
         sudo cp /etc/nixos/hardware-configuration.nix ./hosts/hardware-configuration.nix
-        sudo NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#pc --impure 2>&1 | {{nix-output-monitor}}
+        sudo nixos-rebuild switch --flake .#pc 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       fi
       ;;
@@ -55,22 +50,17 @@ build:
 
 # macOS (nix-darwin) shortcut
 mac:
-  echo -e "\n{{_bold}}{{_blue}}━━━  nix-darwin build  ━━━{{_reset}}"
-  USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
-    NIXPKGS_ALLOW_UNFREE=1 nix build \
-    ".#darwinConfigurations.{{username}}.system" \
-    --no-link --impure --show-trace --log-format internal-json -v \
+  echo -e "\n{{_bold}}{{_blue}}━━━  nix-darwin build ({{profile}})  ━━━{{_reset}}"
+  nix build ".#darwinConfigurations.{{profile}}.system" \
+    --no-link --show-trace --log-format internal-json -v \
     2>&1 | {{nix-output-monitor}} --json
-  sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
-    NIXPKGS_ALLOW_UNFREE=1 \
-    darwin-rebuild switch --flake .#"{{username}}" --impure
+  sudo darwin-rebuild switch --flake .#{{profile}}
   echo -e "{{_green}}✓ Done{{_reset}}\n"
 
 # WSL shortcut
 wsl:
   echo -e "\n{{_bold}}{{_cyan}}━━━  WSL rebuild  ━━━{{_reset}}"
-  sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
-    NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nix-output-monitor}}
+  sudo nixos-rebuild switch --flake .#wsl 2>&1 | {{nix-output-monitor}}
   echo -e "{{_green}}✓ Done{{_reset}}\n"
 
 # Bootstrap Nix flakes on a fresh system (idempotent)
@@ -103,8 +93,7 @@ fmt:
 # Dry-run check (no build)
 check:
   @echo -e '{{_bold}}{{_yellow}}━━━  Dry-run check  ━━━{{_reset}}'
-  USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
-    nix build .#nixosConfigurations.pc.config.system.build.toplevel --dry-run --impure
+  nix build .#nixosConfigurations.pc.config.system.build.toplevel --dry-run
 
 # Garbage collect
 clean:
@@ -115,22 +104,26 @@ clean:
 verify:
   #!/usr/bin/env bash
   set -euo pipefail
-  export USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}"
   echo -e "\n{{_bold}}{{_cyan}}═══  Verify: Format check  ═══{{_reset}}"
   nix fmt -- --ci .
   echo -e "{{_green}}✓ Format OK{{_reset}}"
-  echo -e "\n{{_bold}}{{_cyan}}═══  Verify: PC  ═══{{_reset}}"
-  NIXPKGS_ALLOW_UNFREE=1 nix build .#nixosConfigurations.pc.config.system.build.toplevel --dry-run --impure
-  echo -e "{{_green}}✓ PC OK{{_reset}}"
-  echo -e "\n{{_bold}}{{_cyan}}═══  Verify: WSL  ═══{{_reset}}"
-  NIXPKGS_ALLOW_UNFREE=1 nix build .#nixosConfigurations.wsl.config.system.build.toplevel --dry-run --impure
-  echo -e "{{_green}}✓ WSL OK{{_reset}}"
-  if [ "$(uname -m)" = "aarch64" ]; then
+  echo -e "\n{{_bold}}{{_cyan}}═══  Verify: Darwin (work + personal)  ═══{{_reset}}"
+  nix eval --raw .#darwinConfigurations.work.system.drvPath > /dev/null
+  nix eval --raw .#darwinConfigurations.personal.system.drvPath > /dev/null
+  echo -e "{{_green}}✓ Darwin OK{{_reset}}"
+  # PC eval needs a Linux builder (stylix IFD); Linux hosts are verified on Linux/CI
+  if [ "$(uname -s)" != "Darwin" ]; then
+    echo -e "\n{{_bold}}{{_cyan}}═══  Verify: PC  ═══{{_reset}}"
+    nix build .#nixosConfigurations.pc.config.system.build.toplevel --dry-run
+    echo -e "{{_green}}✓ PC OK{{_reset}}"
+    echo -e "\n{{_bold}}{{_cyan}}═══  Verify: WSL  ═══{{_reset}}"
+    nix build .#nixosConfigurations.wsl.config.system.build.toplevel --dry-run
+    echo -e "{{_green}}✓ WSL OK{{_reset}}"
     echo -e "\n{{_bold}}{{_cyan}}═══  Verify: Mac  ═══{{_reset}}"
-    NIXPKGS_ALLOW_UNFREE=1 nix build .#nixosConfigurations.mac.config.system.build.toplevel --dry-run --impure
+    nix eval --raw .#nixosConfigurations.mac.config.system.build.toplevel.drvPath > /dev/null
     echo -e "{{_green}}✓ Mac OK{{_reset}}"
   else
-    echo -e "{{_yellow}}⚠ Skipping Mac — requires aarch64 host{{_reset}}"
+    echo -e "{{_yellow}}⚠ Skipping Linux hosts — verified in CI{{_reset}}"
   fi
   echo -e "\n{{_green}}{{_bold}}✓ All checks passed{{_reset}}"
 

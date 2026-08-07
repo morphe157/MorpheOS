@@ -64,7 +64,11 @@ in
       '';
     };
     eza.enable = true;
-    direnv.enable = true;
+    direnv = {
+      enable = true;
+      # caches `use nix` evals and keeps GC roots, otherwise every cd re-evaluates shell.nix
+      nix-direnv.enable = true;
+    };
     zoxide = {
       enable = true;
     };

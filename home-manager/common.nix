@@ -1,14 +1,10 @@
-{ pkgs, ... }:
-let
-  gituser = builtins.getEnv "GIT_USER";
-  gitemail = builtins.getEnv "GIT_EMAIL";
-in
+{ pkgs, user, ... }:
 {
   programs.git = {
     enable = true;
     settings.user = {
-      name = "${gituser}";
-      email = "${gitemail}";
+      name = user.gitUser;
+      email = user.gitEmail;
     };
     ignores = [
       ".omo/"

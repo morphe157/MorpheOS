@@ -45,9 +45,20 @@
       ...
     }@inputs:
     let
-      username = builtins.getEnv "USERNAME";
+      users = {
+        personal = {
+          username = "morphe";
+          gitUser = "morphe157";
+          gitEmail = "morphe157@protonmail.com";
+        };
+        work = {
+          username = "mburdyna";
+          gitUser = "morphe157";
+          gitEmail = "mateusz.burdyna@evinced.com";
+        };
+      };
       lib = import ./lib/morphe.nix {
-        inherit inputs username;
+        inherit inputs;
         lib = nixpkgs.lib;
       };
       forEachSystems = nixpkgs.lib.genAttrs [
@@ -56,20 +67,24 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
+      mkDarwin =
+        user:
+        nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit inputs user; };
+          modules = [
+            stylix.darwinModules.stylix
+            ./hosts/darwin.nix
+            home-manager.darwinModules.home-manager
+            (lib.mkHomeManagerDarwinModule user ./home-manager/home-mac.nix)
+          ];
+        };
     in
     {
       formatter = forEachSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       darwinConfigurations = {
-        "${username}" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs; };
-          modules = [
-            stylix.darwinModules.stylix
-            ./hosts/darwin.nix
-            home-manager.darwinModules.home-manager
-            (lib.mkHomeManagerDarwinModule ./home-manager/home-mac.nix)
-          ];
-        };
+        work = mkDarwin users.work;
+        personal = mkDarwin users.personal;
       };
 
       devShells = forEachSystems (system: {
@@ -92,6 +107,7 @@
         mac = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
+            user = users.personal;
             lib = nixpkgs.lib;
           };
           modules = [
@@ -99,26 +115,28 @@
             nixos-apple-silicon.nixosModules.default
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
-            (lib.mkHomeManagerModule ./home-manager/home.nix)
+            (lib.mkHomeManagerModule users.personal ./home-manager/home.nix)
           ];
         };
 
         pc = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
+            user = users.personal;
             lib = nixpkgs.lib;
           };
           modules = [
             ./hosts/pc.nix
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
-            (lib.mkHomeManagerModule ./home-manager/home.nix)
+            (lib.mkHomeManagerModule users.personal ./home-manager/home.nix)
           ];
         };
 
         wsl = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs;
+            user = users.personal;
             lib = nixpkgs.lib;
           };
           modules = [
@@ -126,7 +144,7 @@
             inputs.nixos-wsl.nixosModules.default
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
-            (lib.mkHomeManagerModule ./home-manager/home-wsl.nix)
+            (lib.mkHomeManagerModule users.personal ./home-manager/home-wsl.nix)
           ];
         };
       };

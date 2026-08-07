@@ -1,31 +1,30 @@
 {
   lib,
   inputs,
-  username,
 }:
 let
   inherit (inputs) home-manager stylix;
 in
 {
-  mkHomeManagerModule = homeFile: {
+  mkHomeManagerModule = user: homeFile: {
     home-manager = {
       useGlobalPkgs = false;
       useUserPackages = true;
-      users."${username}" = import homeFile;
+      users."${user.username}" = import homeFile;
       extraSpecialArgs = {
-        inherit inputs;
+        inherit inputs user;
       };
     };
   };
 
-  mkHomeManagerDarwinModule = homeFile: {
+  mkHomeManagerDarwinModule = user: homeFile: {
     home-manager = {
       useGlobalPkgs = false;
       useUserPackages = true;
-      users."${username}" = import homeFile;
+      users."${user.username}" = import homeFile;
       backupFileExtension = "backup";
       extraSpecialArgs = {
-        inherit inputs;
+        inherit inputs user;
       };
     };
   };
