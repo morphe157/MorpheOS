@@ -1,8 +1,4 @@
-{ pkgs, ... }:
-let
-  gituser = builtins.getEnv "GIT_USER";
-  gitemail = builtins.getEnv "GIT_EMAIL";
-in
+{ pkgs, user, ... }:
 {
   nixpkgs.config.permittedInsecurePackages = [
     "pnpm-10.29.2"
@@ -11,8 +7,8 @@ in
   programs.git = {
     enable = true;
     settings.user = {
-      name = "${gituser}";
-      email = "${gitemail}";
+      name = user.gitUser;
+      email = user.gitEmail;
     };
     ignores = [
       ".omo/"

@@ -1,20 +1,17 @@
 {
   pkgs,
   lib,
+  inputs,
+  user,
   ...
 }:
 let
-  nixvim = import (
-    builtins.fetchGit {
-      url = "https://github.com/nix-community/nixvim";
-    }
-  );
-  username = builtins.getEnv "USERNAME";
+  inherit (user) username;
 in
 {
   # You can import other home-manager modules here
   imports = [
-    nixvim.homeModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./common.nix
     ../configs/terminal
   ];
@@ -41,11 +38,17 @@ in
     sessionVariables = {
       TERMINAL = "kitty";
       EDITOR = "nvim";
-      USERNAME = "${username}";
     };
   };
   programs = {
-    nixvim = import ../configs/neovim;
+    nixvim = lib.mkMerge [
+      (import ../configs/neovim)
+      {
+        nixpkgs.source = inputs.nixpkgs;
+        # nixvim elaborates its own nixpkgs; unfree (claude-code) needs re-allowing
+        nixpkgs.config.allowUnfree = true;
+      }
+    ];
     home-manager.enable = true;
   };
 

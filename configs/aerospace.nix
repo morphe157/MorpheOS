@@ -1,4 +1,53 @@
-{ pkgs, ... }:
+# AeroSpace window manager: workspace assignments, keybindings,
+# and alt-shift-r shortcut sweeping all windows to their workspaces.
+{ pkgs, lib, ... }:
+let
+  appWorkspaces = {
+    "net.kovidgoyal.kitty" = 1;
+    "org.mozilla.firefox" = 2;
+    "com.google.android.studio" = 4;
+    "com.github.Electron" = 4;
+    "us.zoom.xos" = 7;
+    "com.apple.iCal" = 8;
+    "com.tinyspeck.slackmacgap" = 9;
+    "com.spotify.client" = 10;
+  };
+
+  # Apps with NULL bundle id, matched by app name instead
+  appNameWorkspaces = {
+    "qemu-system-aarch64" = 4;
+  };
+
+  floatingApps = [
+    "com.apple.finder"
+    "com.anthropic.claudefordesktop"
+  ];
+
+  caseArms =
+    attrs:
+    lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (key: workspace: ''"${key}") target=${toString workspace} ;;'') attrs
+    );
+
+  reorganizeScript = pkgs.writeShellScript "aerospace-reorganize" ''
+    ${pkgs.aerospace}/bin/aerospace list-windows --all \
+      --format '%{window-id}|%{app-bundle-id}|%{app-name}|%{workspace}' |
+      while IFS='|' read -r window_id bundle_id app_name workspace; do
+        target=""
+        case "$bundle_id" in
+          ${caseArms appWorkspaces}
+        esac
+        if [ -z "$target" ]; then
+          case "$app_name" in
+            ${caseArms appNameWorkspaces}
+          esac
+        fi
+        if [ -n "$target" ] && [ "$target" != "$workspace" ]; then
+          ${pkgs.aerospace}/bin/aerospace move-node-to-workspace --window-id "$window_id" "$target"
+        fi
+      done
+  '';
+in
 {
   services.aerospace = {
     enable = true;
@@ -22,80 +71,32 @@
       };
 
       workspace-to-monitor-force-assignment = {
-        "1" = "1";
-        "2" = "2";
-        "3" = "1";
+        "1" = "3";
+        "2" = "3";
+        "3" = "3";
         "4" = "2";
         "5" = "2";
         "6" = "2";
-        "7" = "built-in";
-        "8" = "built-in";
-        "9" = "built-in";
-        "10" = "built-in";
+        "7" = "1";
+        "8" = "1";
+        "9" = "1";
+        "10" = "1";
       };
 
-      on-window-detected = [
-        {
-          "if" = {
-            app-id = "com.apple.finder";
-          };
+      on-window-detected =
+        (map (appId: {
+          "if".app-id = appId;
           run = [ "layout floating" ];
-        }
-        {
-          "if" = {
-            app-id = "com.anthropic.claudefordesktop";
-          };
-          run = [ "layout floating" ];
-        }
-        {
-          "if" = {
-            app-id = "com.tinyspeck.slackmacgap";
-          };
-          run = [
-            "move-node-to-workspace 9"
-          ];
-        }
-        {
-          "if" = {
-            app-id = "com.spotify.client";
-          };
-          run = [
-            "move-node-to-workspace 10"
-          ];
-        }
-        {
-          "if" = {
-            app-id = "com.apple.iCal";
-          };
-          run = [
-            "move-node-to-workspace 8"
-          ];
-        }
-        {
-          "if" = {
-            app-id = "com.mozilla.Firefox";
-          };
-          run = [
-            "move-node-to-workspace 2"
-          ];
-        }
-        {
-          "if" = {
-            app-id = "com.google.android.studio";
-          };
-          run = [
-            "move-node-to-workspace 4"
-          ];
-        }
-        {
-          "if" = {
-            app-id = "us.zoom.xos";
-          };
-          run = [
-            "move-node-to-workspace 7"
-          ];
-        }
-      ];
+        }) floatingApps)
+        ++ (lib.mapAttrsToList (appId: workspace: {
+          "if".app-id = appId;
+          run = [ "move-node-to-workspace ${toString workspace}" ];
+        }) appWorkspaces)
+        ++ (lib.mapAttrsToList (appName: workspace: {
+          "if".app-name-regex-substring = appName;
+          run = [ "move-node-to-workspace ${toString workspace}" ];
+        }) appNameWorkspaces);
+
       mode.main.binding = {
         "alt-enter" = "exec-and-forget open -na kitty";
         "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
@@ -156,7 +157,15 @@
 
         "alt-shift-q" = "close-all-windows-but-current --quit-if-last-window";
 
+        "alt-shift-r" = "exec-and-forget ${reorganizeScript}";
+
         "alt-m" = "fullscreen";
+
+        "alt-slash" = "layout tiles horizontal vertical";
+        "alt-comma" = "layout accordion horizontal vertical";
+
+        "alt-minus" = "resize smart -50";
+        "alt-equal" = "resize smart +50";
       };
     };
   };

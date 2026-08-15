@@ -1,9 +1,10 @@
 {
   pkgs,
+  user,
   ...
 }:
 let
-  username = builtins.getEnv "USERNAME";
+  inherit (user) username;
 in
 {
   imports = [
@@ -51,9 +52,7 @@ in
       wireplumber.enable = true;
     };
 
-    logind = {
-      lidSwitch = "suspend";
-    };
+    logind.settings.Login.HandleLidSwitch = "suspend";
   };
 
   fonts = {
@@ -78,7 +77,9 @@ in
   };
 
   hardware.asahi = {
+    enable = true;
     setupAsahiSound = false;
+    extractPeripheralFirmware = false;
     peripheralFirmwareDirectory = null;
   };
 
@@ -92,6 +93,12 @@ in
   };
 
   programs.nix-index.enable = true;
+
+  nixpkgs.config.allowUnfree = true;
+  # hardware-configuration.nix in the repo may come from the x86 PC (justfile
+  # copies the local one before rebuild); pin the real platform.
+  nixpkgs.hostPlatform = "aarch64-linux";
+  hardware.cpu.intel.updateMicrocode = false;
 
   qt.enable = true;
 

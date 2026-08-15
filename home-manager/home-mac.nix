@@ -1,14 +1,11 @@
 {
   pkgs,
   lib,
+  inputs,
+  user,
   ...
 }:
 let
-  nixvim = import (
-    builtins.fetchGit {
-      url = "https://github.com/nix-community/nixvim";
-    }
-  );
   gdk = pkgs.google-cloud-sdk.withExtraComponents (
     with pkgs.google-cloud-sdk.components;
     [
@@ -16,15 +13,19 @@ let
       pubsub-emulator
     ]
   );
-  username = builtins.getEnv "USERNAME";
+  inherit (user) username;
 in
 {
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
+
   home = {
     inherit username;
     homeDirectory = lib.mkForce "/Users/${username}";
     stateVersion = "24.11"; # keep in sync with other hosts
     packages = with pkgs; [
-      nerd-fonts.commit-mono
       git-lfs
       btop
       delta
@@ -46,13 +47,12 @@ in
     sessionVariables = {
       TERMINAL = "kitty";
       EDITOR = "nvim";
-      USERNAME = "${username}";
       LIBRARY_PATH = "${lib.makeLibraryPath [ pkgs.libiconv ]}\${LIBRARY_PATH:+:$LIBRARY_PATH}";
     };
   };
 
   imports = [
-    nixvim.homeModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./common.nix
     ../configs/terminal
     ../configs/sketchybar.nix

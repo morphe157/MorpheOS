@@ -4,12 +4,11 @@
   pkgs,
   lib,
   inputs,
+  user,
   ...
 }:
 let
-  username = builtins.getEnv "USERNAME";
-  gituser = builtins.getEnv "GIT_USER";
-  gitemail = builtins.getEnv "GIT_EMAIL";
+  inherit (user) username;
 in
 {
   # You can import other home-manager modules here
@@ -66,16 +65,17 @@ in
     sessionVariables = {
       TERMINAL = "kitty";
       EDITOR = "nvim";
-      USERNAME = "${username}";
-      GITUSER = "${gituser}";
-      GITEMAIL = "${gitemail}";
       JAVA_HOME = "${pkgs.jdk}";
     };
   };
   programs = {
     nixvim = lib.mkMerge [
       (import ../configs/neovim)
-      { nixpkgs.source = inputs.nixpkgs; }
+      {
+        nixpkgs.source = inputs.nixpkgs;
+        # nixvim elaborates its own nixpkgs; unfree (claude-code) needs re-allowing
+        nixpkgs.config.allowUnfree = true;
+      }
     ];
     home-manager.enable = true;
   };

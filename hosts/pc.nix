@@ -1,6 +1,11 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  user,
+  ...
+}:
 let
-  username = builtins.getEnv "USERNAME";
+  inherit (user) username;
 in
 {
   imports = [
