@@ -39,6 +39,11 @@ build:
         sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
           NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
+      elif [ -r /proc/device-tree/model ] && grep -qi 'raspberry pi' /proc/device-tree/model; then
+        echo -e "\n{{_bold}}{{_magenta}}━━━  Platform: Raspberry Pi (NixOS)  ━━━{{_reset}}"
+        sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
+          NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake 'path:.#raspberrypi' --impure 2>&1 | {{nix-output-monitor}}
+        echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       elif [ "$(uname -m)" = "aarch64" ]; then
         echo -e "\n{{_bold}}{{_magenta}}━━━  Platform: macOS (Apple Silicon)  ━━━{{_reset}}"
         sudo cp /etc/nixos/hardware-configuration.nix ./hosts/hardware-configuration.nix
@@ -71,6 +76,13 @@ wsl:
   echo -e "\n{{_bold}}{{_cyan}}━━━  WSL rebuild  ━━━{{_reset}}"
   sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
     NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake .#wsl --impure 2>&1 | {{nix-output-monitor}}
+  echo -e "{{_green}}✓ Done{{_reset}}\n"
+
+# Raspberry Pi rebuild
+raspberrypi:
+  echo -e "\n{{_bold}}{{_magenta}}━━━  Raspberry Pi rebuild  ━━━{{_reset}}"
+  sudo USERNAME="{{username}}" GIT_USER="{{git_user}}" GIT_EMAIL="{{git_email}}" \
+    NIXPKGS_ALLOW_UNFREE=1 nixos-rebuild switch --flake 'path:.#raspberrypi' --impure 2>&1 | {{nix-output-monitor}}
   echo -e "{{_green}}✓ Done{{_reset}}\n"
 
 # Bootstrap Nix flakes on a fresh system (idempotent)
@@ -125,6 +137,9 @@ verify:
   echo -e "\n{{_bold}}{{_cyan}}═══  Verify: WSL  ═══{{_reset}}"
   NIXPKGS_ALLOW_UNFREE=1 nix build .#nixosConfigurations.wsl.config.system.build.toplevel --dry-run --impure
   echo -e "{{_green}}✓ WSL OK{{_reset}}"
+  echo -e "\n{{_bold}}{{_cyan}}═══  Verify: Raspberry Pi  ═══{{_reset}}"
+  NIXPKGS_ALLOW_UNFREE=1 nix build 'path:.#nixosConfigurations.raspberrypi.config.system.build.toplevel' --dry-run --impure
+  echo -e "{{_green}}✓ Raspberry Pi OK{{_reset}}"
   if [ "$(uname -m)" = "aarch64" ]; then
     echo -e "\n{{_bold}}{{_cyan}}═══  Verify: Mac  ═══{{_reset}}"
     NIXPKGS_ALLOW_UNFREE=1 nix build .#nixosConfigurations.mac.config.system.build.toplevel --dry-run --impure
@@ -133,5 +148,3 @@ verify:
     echo -e "{{_yellow}}⚠ Skipping Mac — requires aarch64 host{{_reset}}"
   fi
   echo -e "\n{{_green}}{{_bold}}✓ All checks passed{{_reset}}"
-
-

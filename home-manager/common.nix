@@ -4,6 +4,10 @@ let
   gitemail = builtins.getEnv "GIT_EMAIL";
 in
 {
+  nixpkgs.config.permittedInsecurePackages = [
+    "pnpm-10.29.2"
+  ];
+
   programs.git = {
     enable = true;
     settings.user = {

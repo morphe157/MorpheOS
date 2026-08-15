@@ -19,6 +19,10 @@ in
 
   nix.settings = {
     auto-optimise-store = true;
+    extra-platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
     experimental-features = [
       "nix-command"
       "flakes"
@@ -30,8 +34,11 @@ in
 
   stylix.enable = false;
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   wsl.enable = true;
   wsl.defaultUser = "${username}";
+  wsl.interop.register = true;
 
   system.stateVersion = "24.11";
 }

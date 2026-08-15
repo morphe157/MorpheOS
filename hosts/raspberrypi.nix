@@ -79,6 +79,11 @@ in
 
   programs.nix-index.enable = true;
 
+  virtualisation.docker = {
+    enable = true;
+    autoPrune.enable = true;
+  };
+
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "no";
@@ -153,6 +158,7 @@ in
     isNormalUser = true;
     description = username;
     extraGroups = [
+      "docker"
       "networkmanager"
       "wheel"
     ];

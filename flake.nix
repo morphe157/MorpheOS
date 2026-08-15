@@ -30,6 +30,10 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -127,6 +131,21 @@
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             (lib.mkHomeManagerModule ./home-manager/home-wsl.nix)
+          ];
+        };
+
+        raspberrypi = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            lib = nixpkgs.lib;
+          };
+          modules = [
+            ./hosts/raspberrypi.nix
+            "${inputs.nixos-hardware}/raspberry-pi/common/config-txt.nix"
+            "${inputs.nixos-hardware}/raspberry-pi/common/firmware.nix"
+            stylix.nixosModules.stylix
+            home-manager.nixosModules.home-manager
+            (lib.mkHomeManagerModule ./home-manager/home-rpi.nix)
           ];
         };
       };

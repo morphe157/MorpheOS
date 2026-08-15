@@ -22,6 +22,8 @@ in
     enable = true;
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.loader.limine = {
     enable = true;
     extraConfig = ''
@@ -169,6 +171,10 @@ in
 
   nix.settings = {
     auto-optimise-store = true;
+    extra-platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
     experimental-features = [
       "nix-command"
       "flakes"
