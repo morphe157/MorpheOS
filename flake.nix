@@ -163,7 +163,7 @@
             "${inputs.nixos-hardware}/raspberry-pi/common/firmware.nix"
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
-            (lib.mkHomeManagerModule ./home-manager/home-rpi.nix)
+            (lib.mkHomeManagerModule users.personal ./home-manager/home-rpi.nix)
           ];
         };
       };

@@ -15,6 +15,9 @@ default:
 # Darwin profile: work machine has username mburdyna, everything else is personal
 profile := if shell('whoami') == "mburdyna" { "work" } else { "personal" }
 nix-output-monitor := shell('if command -v nom >/dev/null 2>&1; then printf nom; else printf cat; fi')
+username := env_var_or_default('USERNAME', shell('whoami'))
+git_user := env_var_or_default('GIT_USER', shell('git config user.name'))
+git_email := env_var_or_default('GIT_EMAIL', shell('git config user.email'))
 
 # Apply configuration (auto-detects Darwin vs Linux vs WSL)
 build:

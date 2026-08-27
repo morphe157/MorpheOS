@@ -14,6 +14,7 @@ in
   networking.hostName = "raspberrypi";
   networking.networkmanager.enable = true;
   networking.firewall.allowedTCPPorts = [ 8123 ];
+  networking.firewall.allowedUDPPorts = [ 38899 ];
 
   nixpkgs = {
     config.allowUnfree = true;
@@ -101,6 +102,21 @@ in
     sshHostname = "ssh.morphe.pl";
   };
 
+  # HA 2026.8 pins pywizlight==0.6.3 but nixpkgs ships 0.6.6, where
+  # wizlight.state became a list and breaks the wiz integration.
+  services.home-assistant.package = pkgs.home-assistant.override {
+    packageOverrides = self: super: {
+      pywizlight = super.pywizlight.overridePythonAttrs (old: rec {
+        version = "0.6.3";
+        src = pkgs.fetchPypi {
+          inherit (old) pname;
+          inherit version;
+          hash = "sha256-ddobuuMhzVhlaTPox/oDXQywGSbqb/OT5dXoMqSPnYY=";
+        };
+      });
+    };
+  };
+
   services.home-assistant = {
     enable = true;
     extraComponents = [
@@ -109,6 +125,8 @@ in
       "met"
       "radio_browser"
       "roborock"
+      "wiz"
+      "icloud"
       "zha"
     ];
     config = {
@@ -126,6 +144,19 @@ in
           "::1"
         ];
       };
+      template = [
+        {
+          light = [
+            {
+              name = "All Colors";
+              unique_id = "all_colors";
+              turn_on = [ ];
+              turn_off = [ ];
+              set_rgb = [ ];
+            }
+          ];
+        }
+      ];
     };
   };
 

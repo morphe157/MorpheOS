@@ -28,6 +28,13 @@ in
   home = {
     username = "${username}";
     homeDirectory = lib.mkForce "/home/${username}";
+    file.".local/bin/happier" = {
+      text = ''
+        #!/bin/sh
+        exec ${pkgs.nodejs}/bin/node /home/${username}/.local/lib/node_modules/@happier-dev/cli/bin/happier.mjs "$@"
+      '';
+      executable = true;
+    };
     packages = with pkgs; [
       gnumake
       gcc

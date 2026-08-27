@@ -1,5 +1,12 @@
-{ pkgs, user, ... }:
 {
+  config,
+  pkgs,
+  user,
+  ...
+}:
+{
+  home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
+
   nixpkgs.config.permittedInsecurePackages = [
     "pnpm-10.29.2"
   ];
@@ -34,6 +41,7 @@
     just
     tre-command
     python314
+    gh
     uv
   ];
 }
