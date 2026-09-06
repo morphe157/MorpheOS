@@ -5,6 +5,10 @@
   ...
 }:
 {
+  imports = [
+    ../configs/opencode.nix
+  ];
+
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
   nixpkgs.config.permittedInsecurePackages = [

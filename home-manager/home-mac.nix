@@ -29,7 +29,7 @@ in
       git-lfs
       btop
       delta
-      python312
+      python314
       fselect
       cursor-cli
       gdk
