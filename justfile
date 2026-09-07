@@ -45,7 +45,9 @@ build:
       elif [ "$(uname -m)" = "aarch64" ]; then
         echo -e "\n{{_bold}}{{_magenta}}━━━  Platform: macOS (Apple Silicon)  ━━━{{_reset}}"
         sudo cp /etc/nixos/hardware-configuration.nix ./hosts/hardware-configuration.nix
-        sudo nixos-rebuild switch --flake .#mac --show-trace 2>&1 | {{nix-output-monitor}}
+        sudo mkdir -p /etc/nixos/firmware || true
+        sudo cp /boot/vendorfw/firmware.cpio /etc/nixos/firmware || true
+        sudo nixos-rebuild switch --flake .#mac --show-trace --impure 2>&1 | {{nix-output-monitor}}
         echo -e "{{_green}}✓ Build complete{{_reset}}\n"
       else
         echo -e "\n{{_bold}}{{_yellow}}━━━  Platform: PC (NixOS)  ━━━{{_reset}}"

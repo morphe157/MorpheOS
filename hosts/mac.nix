@@ -78,9 +78,9 @@ in
 
   hardware.asahi = {
     enable = true;
-    setupAsahiSound = false;
-    extractPeripheralFirmware = false;
-    peripheralFirmwareDirectory = null;
+    setupAsahiSound = true;
+    extractPeripheralFirmware = true;
+    peripheralFirmwareDirectory = /etc/nixos/firmware;
   };
 
   networking = {

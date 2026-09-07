@@ -1,2 +1,4 @@
 .claude/
 .omo/
+firmware/
+hardware-configuration.nix
