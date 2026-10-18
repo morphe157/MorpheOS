@@ -154,6 +154,27 @@ in
               turn_off = [ ];
               set_rgb = [ ];
             }
+            {
+              name = "Livingroom Lights";
+              unique_id = "livingroom_lights";
+              turn_on = [ ];
+              turn_off = [ ];
+              set_rgb = [ ];
+            }
+            {
+              name = "Bedroom Lights";
+              unique_id = "bedroom_lights";
+              turn_on = [ ];
+              turn_off = [ ];
+              set_rgb = [ ];
+            }
+            {
+              name = "Corridor 30min";
+              unique_id = "corridor_30min";
+              turn_on = [ ];
+              turn_off = [ ];
+              set_rgb = [ ];
+            }
           ];
         }
       ];

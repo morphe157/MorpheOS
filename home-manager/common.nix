@@ -47,5 +47,6 @@
     python314
     gh
     uv
+    bun
   ];
 }

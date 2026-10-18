@@ -40,6 +40,7 @@ in
       gcc
       openjdk21
       nodejs
+      firefox
     ];
 
     sessionVariables = {
