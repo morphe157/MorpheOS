@@ -25,11 +25,11 @@
       };
       keymap = {
         preset = "super-tab";
-        "<C-j>" = [
+        "<C-n>" = [
           "select_next"
           "fallback"
         ];
-        "<C-k>" = [
+        "<C-p>" = [
           "select_prev"
           "fallback"
         ];
