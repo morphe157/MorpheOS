@@ -3,7 +3,6 @@
   stdenvNoCC,
   fetchzip,
   autoPatchelfHook,
-  alsa-lib,
   freetype,
   libX11,
   libXext,
@@ -36,8 +35,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     makeWrapper
   ];
 
+  autoPatchelfIgnoreMissingDeps = [ "libasound.so.2" ];
+
   buildInputs = [
-    alsa-lib
     freetype
     libX11
     libXext
