@@ -35,7 +35,7 @@ in
       gdk
       go
       uv
-      openjdk21
+      openjdk25
       nodejs
       mpv
     ];

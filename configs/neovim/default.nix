@@ -34,5 +34,23 @@
   ];
   extraConfigLua = ''
     require('popviewer').setup()
+    vim.diagnostic.config({
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = "E",
+          [vim.diagnostic.severity.WARN] = "W",
+          [vim.diagnostic.severity.INFO] = "I",
+          [vim.diagnostic.severity.HINT] = "H",
+        },
+        numhl = {
+          [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+          [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+          [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+          [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+        },
+      },
+      underline = true,
+      virtual_text = true,
+    })
   '';
 }

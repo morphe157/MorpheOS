@@ -1,29 +1,62 @@
 {
+  stdenv,
   stdenvNoCC,
   fetchzip,
+  autoPatchelfHook,
+  alsa-lib,
+  freetype,
+  libX11,
+  libXext,
+  libXi,
+  libXrender,
+  libXtst,
+  libxkbcommon,
+  jdk21,
+  jdk25,
   makeWrapper,
+  wayland,
+  zlib,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "kotlin-lsp";
-  version = "0.253.10629";
+  version = "263.7084.0";
   src = fetchzip {
-    #url = "https://download-cdn.jetbrains.com/kotlin-lsp/${finalAttrs.version}/kotlin-${finalAttrs.version}.zip";
-    #sha256 = "sha256-LCLGo3Q8/4TYI7z50UdXAbtPNgzFYtmUY/kzo2JCln0=";
-    url = "https://download-cdn.jetbrains.com/kotlin-lsp/261.13587.0/kotlin-lsp-261.13587.0-linux-aarch64.zip";
-    sha256 = "sha256-MhHEYHBctaDH9JVkN/guDCG1if9Bip1aP3n+JkvHCvA=";
-    stripRoot = false;
+    url = "https://download.jetbrains.com/language-server/kotlin-server/${finalAttrs.version}/kotlin-server-${finalAttrs.version}${
+      if stdenv.hostPlatform.isAarch64 then "-aarch64" else ""
+    }.tar.gz";
+    sha256 =
+      if stdenv.hostPlatform.isAarch64 then
+        "sha256-gxv8v1/zSQO9EPD7S1YA/2igI809uq/tah8AVdCKNds="
+      else
+        "sha256-Ld04XYQh62ahCzpAzZzwhFtI0apmhZIhQMVRm6ak+eQ=";
   };
 
   nativeBuildInputs = [
+    autoPatchelfHook
     makeWrapper
+  ];
+
+  buildInputs = [
+    alsa-lib
+    freetype
+    libX11
+    libXext
+    libXi
+    libXrender
+    libXtst
+    libxkbcommon
+    stdenv.cc.cc.lib
+    wayland
+    zlib
   ];
 
   installPhase = ''
     mkdir -p $out/bin
     cp -r $src $out/share
-    chmod +wx $out/share/kotlin-lsp.sh
-    sed "s|\$JAVA_BIN|java|" $src/kotlin-lsp.sh | \
-    sed "s|chmod.*||" > $out/share/kotlin-lsp.sh
-    makeWrapper $out/share/kotlin-lsp.sh $out/bin/kotlin-lsp
+    makeWrapper $out/share/bin/intellij-server $out/bin/intellij-server \
+      --prefix PATH : ${jdk25}/bin \
+      --set JAVA_HOME ${jdk25}/lib/openjdk \
+      --set JDK_HOME ${jdk25}/lib/openjdk \
+      --set JAVA_TOOL_OPTIONS "-Dcom.jetbrains.ls.imports.gradle.java.home=${jdk21}/lib/openjdk"
   '';
 })
