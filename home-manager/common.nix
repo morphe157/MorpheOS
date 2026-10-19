@@ -36,7 +36,7 @@
     bitwarden-cli
     rustup
     cargo-sweep
-    (callPackage ../modules/kotlin_lsp.nix { })
+    (callPackage ../modules/kmp_lsp.nix { })
     claude-code
     jq
     opencode
