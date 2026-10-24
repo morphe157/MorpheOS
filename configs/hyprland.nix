@@ -6,7 +6,7 @@
 }:
 let
   kitty = "${pkgs.kitty}/bin/kitty";
-  firefox = "${pkgs.firefox}/bin/firefox";
+  brave = "${pkgs.brave}/bin/brave";
   caprine = "${pkgs.caprine}/bin/caprine";
 in
 {
@@ -44,7 +44,7 @@ in
         # can paste it with Ctrl+V / Ctrl+Shift+V.
         "$mod,S, exec, sh -c 'hyprshot -m monitor output --clipboard-only; sleep 0.1; f=\"$HOME/Pictures/screenshot-$(date +%s).png\"; mkdir -p \"$HOME/Pictures\"; copyq read 0 > \"$f\" && echo \"$f\" | copyq copy - || true'"
         "$mod + SHIFT, S, exec, sh -c 'hyprshot -m region output --clipboard-only; sleep 0.1; f=\"$HOME/Pictures/screenshot-$(date +%s).png\"; mkdir -p \"$HOME/Pictures\"; copyq read 0 > \"$f\" && echo \"$f\" | copyq copy - || true'"
-        "$mod,P, exec, ${firefox}"
+        "$mod,P, exec, ${brave}"
         "$mod,O, exec, ${caprine}"
         "$mod,B, exec, pkill -SIGUSR1 waybar"
         "ALT,1, exec, copyq read 0 | copyq copy -"
@@ -127,7 +127,7 @@ in
         gesture = 3, horizontal, workspace
         exec-once = [workspace 1 silent] kitty
         exec-once = [workspace special:scratch silent] kitty --class kitty-scratch
-        exec-once = [workspace 2 silent] firefox
+        exec-once = [workspace 2 silent] brave
         exec-once = [workspace 3 silent] easyeffects
         exec-once = [workspace 4 silent] valent
       ''

@@ -36,6 +36,7 @@ in
     username = "${username}";
     homeDirectory = lib.mkForce "/home/${username}";
     packages = with pkgs; [
+      brave
       rofi-mpd
       spotify-player
       wev

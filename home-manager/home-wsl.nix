@@ -41,7 +41,7 @@ in
       openjdk25
       gradle
       nodejs
-      firefox
+      brave
       ghidra
       jadx
       apktool

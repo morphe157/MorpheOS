@@ -41,7 +41,6 @@ in
     ];
 
     sessionPath = [
-      "/opt/homebrew/bin/"
       "/Users/${username}/.cargo/bin/"
     ];
     sessionVariables = {
@@ -57,8 +56,12 @@ in
     ../configs/terminal
     ../configs/sketchybar.nix
     ../configs/vim.nix
-    ../configs/firefox.nix
   ];
+
+  # Brave is linked into ~/Applications/Home Manager Apps for the dock
+  # and AeroSpace.
+  targets.darwin.linkApps.enable = true;
+  programs.brave.enable = true;
 
   # Reuse home-manager's pkgs instead of letting nixvim re-elaborate the
   # platform, which fails on nixpkgs >= 26.11 (linux-kernel removed from

@@ -59,7 +59,7 @@ in
       dock = {
         autohide = true;
         persistent-apps = [
-          "/Applications/Firefox.app/"
+          "/Users/${username}/Applications/Home Manager Apps/Brave Browser.app/"
         ];
         persistent-others = [
           "/Users/${username}/Workspace/"
@@ -85,35 +85,6 @@ in
   programs.fish.enable = true;
   users.users."${username}" = {
     shell = pkgs.fish;
-  };
-
-  homebrew = {
-    enable = true;
-    onActivation = {
-      autoUpdate = true;
-      upgrade = true;
-      # removes formulae/casks not listed below (keeps their dependencies)
-      cleanup = "uninstall";
-    };
-    taps = [
-      "narugit/tap"
-      "felixkratz/formulae"
-    ];
-    casks = [
-      "sol"
-      "firefox"
-      "kitty"
-      "docker-desktop"
-      "hammerspoon"
-      "spotify"
-      "visual-studio-code"
-    ];
-    brews = [
-      "narugit/tap/smctemp"
-      "borders"
-      "appium"
-      "circleci"
-    ];
   };
 
   imports = [

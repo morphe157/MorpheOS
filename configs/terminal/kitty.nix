@@ -1,5 +1,5 @@
 # Kitty terminal: minimal, tmux-friendly, image support (kitty graphics protocol) built in.
-# App installed via homebrew cask on darwin (hosts/darwin.nix); via nixpkgs elsewhere.
+# App installed via nixpkgs on all platforms.
 { pkgs, lib, ... }:
 {
   home.packages = [ pkgs.kitty ];
