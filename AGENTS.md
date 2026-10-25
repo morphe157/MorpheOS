@@ -19,7 +19,7 @@ Nix flake managing 4 system targets (NixOS PC/WSL/Mac + nix-darwin) plus home-ma
 │   └── waybar/        # Waybar bar + weather widget
 ├── hosts/             # Host-specific configs (darwin/mac/pc/wsl)
 ├── home-manager/      # User envs: Linux, macOS, WSL + shared common.nix
-├── modules/           # Custom NixOS modules (hyprland/nvidia/sshfs/kotlin_lsp)
+├── modules/           # Custom NixOS modules (hyprland/nvidia/sshfs/kmp_lsp)
 ├── lib/               # Shared lib: mkHomeManagerModule helpers
 ├── codelldb/          # codelldb Nix package derivation
 ├── docs/              # keymaps.md + empty superpowers scaffolding

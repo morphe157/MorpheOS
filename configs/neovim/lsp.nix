@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   lsp.inlayHints.enable = false;
   lsp.servers.kmp_lsp = {
@@ -6,8 +6,10 @@
     package = pkgs.callPackage ../../modules/kmp_lsp.nix { };
     config = {
       cmd = [ "kmp-lsp" ];
+      capabilities = lib.nixvim.mkRaw ''
+        require("blink-cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+      '';
       filetypes = [
-        "kotlin"
         "java"
         "swift"
       ];
@@ -20,6 +22,23 @@
         "Package.swift"
         ".git"
       ];
+    };
+  };
+  # JetBrains' official IntelliJ-based server. Slow to index (JVM), but has a
+  # real Gradle/Maven project model. kotlin-lsp is in lspconfig, so only the
+  # package needs wiring.
+  lsp.servers.kotlin_lsp = {
+    enable = true;
+    package = pkgs.callPackage ../../modules/kotlin_lsp.nix { };
+    config = {
+      # Default is a throwaway /tmp dir, so every nvim restart re-imports the
+      # Gradle project from scratch. Keep the index across restarts instead.
+      cmd = lib.nixvim.mkRaw ''
+        { "intellij-server", "--stdio", "--system-path", vim.fn.stdpath("cache") .. "/kotlin-lsp" }
+      '';
+      capabilities = lib.nixvim.mkRaw ''
+        require("blink-cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+      '';
     };
   };
   plugins = {

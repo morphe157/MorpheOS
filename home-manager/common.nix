@@ -11,6 +11,10 @@
 
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
+  # Gradle (and IntelliJ) discover toolchains by scanning ~/.jdks; nixpkgs JDKs
+  # are not there, so projects asking for a Java 25 toolchain cannot find one.
+  home.file.".jdks/openjdk-25".source = "${pkgs.jdk25}/lib/openjdk";
+
   nixpkgs.config.permittedInsecurePackages = [
     "pnpm-10.29.2"
   ];
