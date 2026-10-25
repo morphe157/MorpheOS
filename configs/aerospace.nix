@@ -1,10 +1,16 @@
 # AeroSpace window manager: workspace assignments, keybindings,
 # and alt-shift-r shortcut sweeping all windows to their workspaces.
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  user,
+  ...
+}:
 let
+  inherit (user) username;
   appWorkspaces = {
     "net.kovidgoyal.kitty" = 1;
-    "org.mozilla.firefox" = 2;
+    "com.brave.Browser" = 2;
     "com.google.android.studio" = 4;
     "com.github.Electron" = 4;
     "us.zoom.xos" = 7;
@@ -52,9 +58,6 @@ in
   services.aerospace = {
     enable = true;
     settings = {
-      after-startup-command = [
-        "exec-and-forget borders active_color=0xff3d6bbf inactive_color=0xff494d64 width=5.0"
-      ];
       automatically-unhide-macos-hidden-apps = true;
       gaps = {
         inner = {
@@ -99,8 +102,8 @@ in
 
       mode.main.binding = {
         "alt-enter" = "exec-and-forget open -na kitty";
-        "alt-p" = "exec-and-forget open -n /Applications/Firefox.app/";
-        "alt-d" = "exec-and-forget open /Applications/Sol.app/";
+        "alt-p" =
+          "exec-and-forget open -n \"/Users/${username}/Applications/Home Manager Apps/Brave Browser.app/\"";
 
         "alt-q" = "close --quit-if-last-window";
 

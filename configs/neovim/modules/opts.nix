@@ -3,6 +3,7 @@
     autowriteall = true;
     number = true;
     relativenumber = true;
+    signcolumn = "yes";
     shiftwidth = 2;
     swapfile = false;
     smartindent = true;

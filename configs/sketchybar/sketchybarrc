@@ -1,6 +1,5 @@
 PLUGIN_DIR="$HOME/.config/sketchybar/scripts"
 RED=0xffff0000
-BLUE=0xff0000ff
 WHITE=0xffffffff
 
 sketchybar --default \
@@ -25,18 +24,6 @@ sketchybar --add item date_time center \
                           label="" \
                           script="$PLUGIN_DIR/date_time.sh" \
                           update_freq=1
-
-# cpu temperature
-sketchybar --add item temperature left \
-           --set temperature \
-           script="$PLUGIN_DIR/temperature.sh" \
-           icon="󱤋" \
-           icon.color=$BLUE \
-           icon.padding_right=5 \
-           padding_right=0 \
-           padding_left=0 \
-           label.padding_right=5 \
-           update_freq=5
 
 sketchybar -m --add       event              bluetooth_change "com.apple.bluetooth.status"                       \
                                                                                                                  \

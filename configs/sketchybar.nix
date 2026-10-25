@@ -22,11 +22,6 @@ in
       text = builtins.readFile ./sketchybar/battery.sh;
       executable = true;
     };
-    ".config/sketchybar/scripts/temperature.sh" = {
-      enable = true;
-      text = builtins.readFile ./sketchybar/cpu_temperature.sh;
-      executable = true;
-    };
     ".config/sketchybar/scripts/date_time.sh" = {
       enable = true;
       text = builtins.readFile ./sketchybar/date_time.sh;

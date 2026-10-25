@@ -1,8 +1,10 @@
 {
+  extraConfigLua = ''
+    vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { link = "Visual" })
+  '';
+
   # Disable copilot-lua for now: its source fixed-output hash changed upstream
   # which causes build failures. Re-enable after updating the pinned hash.
-  plugins.copilot-lua.enable = false;
-  plugins.blink-copilot.enable = true;
   plugins.blink-cmp = {
     enable = true;
     settings = {
@@ -25,6 +27,14 @@
       };
       keymap = {
         preset = "super-tab";
+        "<C-n>" = [
+          "select_next"
+          "fallback"
+        ];
+        "<C-p>" = [
+          "select_prev"
+          "fallback"
+        ];
         "<C-]>" = [
           "accept"
           "fallback"
@@ -48,29 +58,11 @@
             fallbacks = [ ];
             score_offset = 1000;
           };
-          copilot = {
-            async = true;
-            module = "blink-copilot";
-            name = "copilot";
-            score_offset = 100;
-            # Optional configurations
-            opts = {
-              max_completions = 3;
-              max_attempts = 4;
-              kind = "Copilot";
-              debounce = 750;
-              auto_refresh = {
-                backward = true;
-                forward = true;
-              };
-            };
-          };
         };
         default = [
           "lsp"
           "path"
           "buffer"
-          "copilot"
         ];
       };
     };
