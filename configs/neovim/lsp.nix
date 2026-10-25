@@ -21,10 +21,10 @@
         };
         nil_ls.enable = true;
         kotlin_lsp = {
-          enable = false;
+          enable = true;
           package = pkgs.callPackage ../../modules/kotlin_lsp.nix { };
         };
-        kotlin_language_server.enable = true;
+        kotlin_language_server.enable = false;
         java_language_server.enable = true;
         html.enable = true;
         nixd = {

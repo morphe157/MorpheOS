@@ -13,7 +13,6 @@ in
     ../modules/nvidia-drivers.nix
     ../modules/sshfs.nix
     ../modules/hyprland.nix
-    ../configs/ollama.nix
     ../configs/stylix.nix
   ];
   drivers.nvidia.enable = true;
@@ -38,23 +37,8 @@ in
     extraEntries = ''
       /Windows
         protocol: efi
-        path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+        path: boot(1):/EFI/Microsoft/Boot/bootmgfw.efi
     '';
-  };
-
-  fileSystems."/home/morphe/rpi" = {
-    device = "morphe@192.168.0.221:/home/morphe";
-    fsType = "fuse.sshfs";
-    options = [
-      "IdentityFile=/home/morphe/.ssh/id_morphe"
-      "allow_other"
-      "reconnect"
-      "ServerAliveInterval=15"
-      "ServerAliveCountMax=3"
-      "_netdev"
-      "x-systemd.automount"
-      "noauto"
-    ];
   };
 
   time.timeZone = "Europe/Warsaw";
@@ -79,9 +63,40 @@ in
   };
 
   users.groups."${username}" = { };
+  services = {
 
-  # Enable automatic login for the user.
-  services.getty.autologinUser = "${username}";
+    # Enable automatic login for the user.
+    getty.autologinUser = "${username}";
+
+    pumpkin = {
+      enable = true;
+      openFirewall = true;
+      settings.networking.rcon = {
+        enabled = true;
+        address = "127.0.0.1:25575";
+        passwordFile = "/etc/pumpkin-rcon-password";
+      };
+    };
+
+    pulseaudio.support32Bit = true;
+    blueman.enable = true;
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd start-hyprland";
+          user = "${username}";
+        };
+      };
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -91,6 +106,7 @@ in
     git
     kitty
     gnumake
+    mcrcon
     tuigreet
     sbctl
     sshfs
@@ -154,25 +170,6 @@ in
   programs.nix-index.enable = true;
 
   qt.enable = true;
-  services = {
-    pulseaudio.support32Bit = true;
-    blueman.enable = true;
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a %h | %F' --cmd start-hyprland";
-          user = "${username}";
-        };
-      };
-    };
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
-  };
 
   nix.settings = {
     auto-optimise-store = true;

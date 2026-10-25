@@ -1,17 +1,22 @@
 {
   stdenvNoCC,
-  fetchzip,
+  fetchurl,
   makeWrapper,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "kotlin-lsp";
-  version = "0.253.10629";
-  src = fetchzip {
-    #url = "https://download-cdn.jetbrains.com/kotlin-lsp/${finalAttrs.version}/kotlin-${finalAttrs.version}.zip";
-    #sha256 = "sha256-LCLGo3Q8/4TYI7z50UdXAbtPNgzFYtmUY/kzo2JCln0=";
-    url = "https://download-cdn.jetbrains.com/kotlin-lsp/261.13587.0/kotlin-lsp-261.13587.0-linux-aarch64.zip";
-    sha256 = "sha256-MhHEYHBctaDH9JVkN/guDCG1if9Bip1aP3n+JkvHCvA=";
-    stripRoot = false;
+  version = "263.7084.0";
+  src = fetchurl {
+    url =
+      if stdenvNoCC.hostPlatform.isAarch64 then
+        "https://download.jetbrains.com/language-server/kotlin-server/${finalAttrs.version}/kotlin-server-${finalAttrs.version}-aarch64.tar.gz"
+      else
+        "https://download.jetbrains.com/language-server/kotlin-server/${finalAttrs.version}/kotlin-server-${finalAttrs.version}.tar.gz";
+    hash =
+      if stdenvNoCC.hostPlatform.isAarch64 then
+        "sha256-RQq3wdgOSBBqpCm0jLQibYLKEqiiQARHrgI4Z5R4DKw="
+      else
+        "sha256-rgxLAeF6tzpKUienjqmebcvj5JlgAxWyJ1mk5M3dEd8=";
   };
 
   nativeBuildInputs = [
@@ -19,11 +24,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   ];
 
   installPhase = ''
-    mkdir -p $out/bin
-    cp -r $src $out/share
-    chmod +wx $out/share/kotlin-lsp.sh
-    sed "s|\$JAVA_BIN|java|" $src/kotlin-lsp.sh | \
-    sed "s|chmod.*||" > $out/share/kotlin-lsp.sh
-    makeWrapper $out/share/kotlin-lsp.sh $out/bin/kotlin-lsp
+    mkdir -p $out/bin $out/share
+    cp -r . $out/share/kotlin-server
+    chmod +x $out/share/kotlin-server/kotlin-lsp.sh
+    makeWrapper $out/share/kotlin-server/kotlin-lsp.sh $out/bin/kotlin-lsp
   '';
 })
