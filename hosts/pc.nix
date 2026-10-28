@@ -68,16 +68,6 @@ in
     # Enable automatic login for the user.
     getty.autologinUser = "${username}";
 
-    pumpkin = {
-      enable = true;
-      openFirewall = true;
-      settings.networking.rcon = {
-        enabled = true;
-        address = "127.0.0.1:25575";
-        passwordFile = "/etc/pumpkin-rcon-password";
-      };
-    };
-
     pulseaudio.support32Bit = true;
     blueman.enable = true;
     greetd = {
